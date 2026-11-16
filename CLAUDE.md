@@ -40,7 +40,7 @@ Model IDs in section 5 were supplied by the user and **not verified**. Run `prim
 
 **Local machine:** Windows laptop, VS Code + Claude Code extension, 16 GB RAM (~4 GB free), RTX 2050 (4 GB VRAM).
 - Do **not** run local LLMs (Ollama/vLLM), Docker, or WSL2 (they eat the RAM headroom).
-- Do **not** install torch, vllm, sentence-transformers, or other heavy ML packages locally. Contamination checks use MinHash + string similarity only.
+- Do **not** install torch, vllm, sentence-transformers, or other heavy ML packages locally. Contamination checks use exact n-gram/string similarity plus a remote LLM-judge rephrase check (no local embedding models).
 - **Never execute model-generated code on the laptop.** The `subprocess` runtime runs on the evaluator host, so it is forbidden for anything touching model output. All code execution happens in **Prime Sandboxes** (`--runtime.type prime`).
 - Commands must work in **PowerShell**. No bash-only syntax in scripts or docs; use Python for glue, not shell scripts.
 - Python **3.12** (verifiers v1 needs >=3.11). Manage everything with `uv`.
@@ -132,7 +132,7 @@ The v1 API is still changing. Verify names against the installed version instead
 |   |-- 01_generate.py          # LLM -> candidates.jsonl (spec, reference, tests, mutants)
 |   |-- 02_validate.py          # drives vf-validate; keeps ids that pass gold+mutant check
 |   |-- 03_difficulty.py        # drives vf-run -r 8 w/ filter model; computes pass rates
-|   |-- 04_contamination.py     # MinHash + n-gram overlap + (optional) perturbation test
+|   |-- 04_contamination.py     # exact n-gram overlap + LLM-judge rephrase check + (optional) perturbation test
 |   |-- 05_split_export.py      # stratified train/test split -> dataset.jsonl
 |   |-- 06_audit_sample.py      # random 40-task sample -> audit.csv for manual review
 |   `-- stats.py                # Wilson CIs, pass-rate histograms
@@ -171,7 +171,10 @@ Implement the task's `validate()` so that it returns `True` only if the **refere
 
 **Stage 3: difficulty filter.** Run the filter model with `-r 8` at temperature 1.0 on validated tasks. Keep tasks with pass rate in **[1/8, 7/8]**. Inspect all 0/8 tasks manually (usually broken tests or underspecified prompts); fix or drop. Save the histogram.
 
-**Stage 4: contamination.** (a) MinHash-LSH + 5-gram Jaccard of prompt and reference against HumanEval (`openai/openai_humaneval`), MBPP (`google-research-datasets/mbpp`), LiveCodeBench (`livecodebench/code_generation_lite`; all releases). Verify dataset IDs before use. Drop on Jaccard >= 0.5; log near-misses. (b) Optional memorization probe: give the first half of the prompt; flag verbatim completions. (c) Optional perturbation test: rename identifiers/constants, compare pass rates original vs. perturbed (large drop => suspect). Report counts per check.
+**Stage 4: contamination** (revised 2026-11-16, see NOTES.md). Reference corpora: HumanEval (`openai/openai_humaneval`), MBPP (`google-research-datasets/mbpp`), LiveCodeBench (`livecodebench/code_generation_lite`; all releases). Verify dataset IDs and pin revisions before use.
+(a) **Exact lexical overlap, all pairs** (about 500 x a few thousand is small, so no MinHash/LSH approximation is needed): normalized-token 5-gram Jaccard **and** longest common token run, on prompt and on reference. Drop on Jaccard >= 0.5 or a long verbatim run; log near-misses. This is the standard n-gram decontamination (GPT-3: 13-gram; GPT-4: 50-char).
+(b) **Rephrase check (LLM decontaminator, LMSYS 2023):** n-gram checks miss paraphrases, and our generator is an LLM, so for each task take its top-k most similar benchmark problems from (a) and ask a cheap judge model, preferably not on the leaderboard, whether it is the same problem reworded. Drop on "yes", log the judge's reason. Estimated < $0.10.
+(c) Optional perturbation test: rename identifiers/constants, compare pass rates original vs. perturbed (large drop => suspect). (d) Optional memorization probe: give the first half of the prompt; flag verbatim completions. Report counts per check.
 
 **Stage 5: split + export.** Stratify by topic and pass-rate bucket. ~70% train / 30% held-out test. Never tune prompts or thresholds on the test split after seeing its scores.
 

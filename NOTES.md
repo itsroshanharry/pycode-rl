@@ -4,6 +4,19 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
+## 2026-11-16: Contamination plan revised (Stage 4)
+
+- **Change:** drop MinHash-LSH and use exact all-pairs n-gram overlap (5-gram Jaccard + longest common token run) plus an **LLM-judge rephrase check** on the top-k nearest benchmark problems. CLAUDE.md Stage 4, section 3 and the layout comment are updated.
+- **Why:**
+  - MinHash is an *approximation* of Jaccard used for near-duplicate removal at web-corpus scale. Our scale (about 500 tasks x a few thousand benchmark problems) allows exact comparison in seconds.
+  - Lab-standard benchmark decontamination is exact n-gram overlap (GPT-3: 13-gram; GPT-4: 50-char substring).
+  - n-gram checks miss paraphrases. LMSYS (arXiv 2311.04850) found 8-18% rephrased HumanEval overlap in RedPajama/StarCoder-Data, and showed a model trained on rephrased test data passes n-gram decontamination. Their fix is embedding shortlist + LLM judge. Our tasks are LLM-written, so paraphrase leakage is the realistic risk.
+  - We can't run embedding models locally (no heavy ML deps), so the n-gram scores provide the shortlist.
+- Judge model: a cheap catalog model, ideally not one on the leaderboard. Estimate < $0.10 for about 500 tasks x top-3 candidates.
+- Wallet check (2026-11-16): balance **$9.9987**. Listed billing rows total $0.0164 (sandboxes $0.0151, inference $0.0013), and only the inference amount has been deducted so far, so treat about $9.98 as available.
+
+---
+
 ## 2026-11-16: Phase 1 built and verified (spend so far: about $0.002)
 
 **Grader design** (`environments/pycode/src/pycode_env/grader/run_pytest.py`, docstring has the threat model):
