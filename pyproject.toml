@@ -1,0 +1,21 @@
+[project]
+name = "pycode-rl"
+version = "0.0.0"
+description = "Dev workspace: pipeline scripts + the pycode-env verifiers v1 taskset."
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "verifiers",
+    "pycode-env",
+]
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+# Pinned to the exact verifiers commit inside Prime's hosted-eval runner
+# (prime-rl 3bd59c1 -> deps/verifiers 20c549f). Bump only after re-checking the runner.
+verifiers = { git = "https://github.com/PrimeIntellect-ai/verifiers", rev = "20c549fba0b32b1961d337a6be1960ade9557e93" }
+pycode-env = { path = "environments/pycode", editable = true }

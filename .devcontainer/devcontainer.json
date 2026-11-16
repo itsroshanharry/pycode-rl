@@ -1,0 +1,11 @@
+{
+  "name": "pycode-rl",
+  "image": "mcr.microsoft.com/devcontainers/python:1-3.12-bookworm",
+  "hostRequirements": { "cpus": 2 },
+  "secrets": {
+    "PRIME_API_KEY": { "description": "Prime Intellect API key (verifiers CLIs + Prime sandboxes)" }
+  },
+  "postCreateCommand": "pip install --user 'uv>=0.13' && ~/.local/bin/uv sync && ~/.local/bin/uv tool install prime --python 3.12",
+  "remoteEnv": { "PATH": "${containerEnv:PATH}:/home/vscode/.local/bin", "PRIME_TRACES_OPT_OUT": "false" },
+  "customizations": { "vscode": { "extensions": ["ms-python.python", "charliermarsh.ruff"] } }
+}

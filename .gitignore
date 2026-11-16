@@ -1,0 +1,20 @@
+# secrets
+.env
+
+# read-only reference clones
+_refs/
+
+# python / uv
+.venv/
+__pycache__/
+*.pyc
+dist/
+build/
+
+# run outputs (vf-run / vf-validate default)
+outputs/
+
+# tooling caches
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
