@@ -4,6 +4,35 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
+## 2026-11-16: Phase 1 built and verified (spend so far: about $0.002)
+
+**Grader design** (`environments/pycode/src/pycode_env/grader/run_pytest.py`, docstring has the threat model):
+- Trusted pytest runs in the grader process. The candidate runs in a separate spawned worker behind a `solution` proxy module. Calls cross as **JSON with a tagged exact-type codec** (no pickle: a malicious worker could otherwise execute code in the grader).
+- As root, the worker drops to uid 65534. Also: rlimits (AS 512 MB, FSIZE 0, NPROC 32, no core dumps), fd-level `/dev/null` stdio, per-call 5 s and total 60 s timeouts, `PYTHONHASHSEED=0`.
+- Input files are deleted on read; hidden tests live only in a 0700 temp dir.
+- Exit 2 (raises in the task) for broken or empty test files, so a task bug is never scored as a model failure.
+- **Dataset constraint this implies:** pure functions over plain data (no class entry points, no in-place mutation checks, no generators).
+- The taskset **refuses a grade with `isolated: false`**, so a scoring path that could read the tests never produces a reward.
+
+**Cheat suite** (`tests/test_grader.py`, 19 cheats + 4 legit + 3 protocol tests): **26/26 pass as root** in the Codespace.
+- Cheats covered: empty, wrong name, hard-coded examples, `sys.exit` on import, `os._exit`, `raise SystemExit` / `KeyboardInterrupt`, always-equal object, int subclass with rigged `__eq__`, printing a fake result (Python and fd level), patching `_pytest` and `AssertionError`, reading the hidden tests, killing the grader, writing `conftest.py`, infinite loop (in a call and at import), memory bomb, 100 MB return value, syntax error.
+- **Control experiment (REPORT finding):** without the uid drop, `read_hidden_tests` scores **8/8 (reward 1.0)** and `kill_grader` kills the grader (exit 137). The privilege drop is what defeats both.
+
+**Hand-written tasks** (`tasks/handwritten/`, built by `pipeline/00_build_handwritten.py`; data sha256 `ecb878e9...f2a8`):
+- 10 tasks across strings, parsing, DP x2, data structures, numeric, graphs, sweep line, wrapping, and binary search. Each has 10-33 hidden tests, and most include a differential check against an independently written oracle on seeded random inputs (anti-hard-coding).
+- Mutants are `(desc, find, replace)` patches over the reference. **30/30 mutants killed.**
+- No prompt contains a test line or a reference-body line (checked).
+
+**Test ladder (Prime sandboxes, from the Codespace):**
+- `--only-setup` -n 1: valid, 12 s.
+- `--only-gold` -n 3 and `--only-noop` -n 3: 3/3 each.
+- Full gold+noop on all 10: **10/10 valid**, 0 stray sandboxes.
+- `vf-run -n 1 -r 1` with `deepseek/deepseek-v4.1-flash-1017`, `--sampling.reasoning_effort low --sampling.max_tokens 2048`: **reward 1.0**. `harness=null`; the egress policy allowed only the tunnel host. The grade had 14/14 tests and `isolated: true`. Usage: 290 prompt tokens, **1294 completion (884 reasoning) at effort=low**, so 2048 is close to the cap; watch truncation in the pilot. Token cost about $0.0009 per rollout.
+- **Phase 1 exit criteria met:** gold/noop pass on all 10, `vf-run` returns a score, every cheat scores 0.
+- Wallet 10.0000 -> 9.9987 (sandbox rows may still be posting).
+
+---
+
 ## 2026-11-16: Project setup + Windows blocker
 
 - Root dev project `pyproject.toml` (Python 3.12, `package = false`) pins `verifiers` to git `20c549f` (the runner's). It resolves as **0.4.1.dev150, identical to the runner**. `pycode-env` is installed editable from `environments/pycode`. `.venv` is about 300 MB; no torch.
