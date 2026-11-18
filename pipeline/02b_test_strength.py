@@ -26,6 +26,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import zlib
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -163,7 +164,7 @@ def hardcode_solution(prompt: str, entry_point: str) -> str | None:
 
 # --------------------------------------------------------------------------- main
 def assess(row: dict, max_mutants: int) -> dict:
-    mutants = make_mutants(row["reference"], max_mutants, seed=hash(row["id"]) & 0xFFFF)
+    mutants = make_mutants(row["reference"], max_mutants, seed=zlib.crc32(row["id"].encode()))  # stable across processes
     results = [(desc, grade(code, row["tests"])) for desc, code in mutants]
     killed = sum(1 for _, g in results if g.get("score") == 0.0)
     survivors = [desc for desc, g in results if g.get("score") != 0.0]
