@@ -55,7 +55,7 @@ import tempfile
 import time
 import types
 
-GRADER_VERSION = "1"
+GRADER_VERSION = "2"
 NOBODY = 65534
 MAX_MSG_BYTES = 8 * 1024 * 1024
 MAX_DEPTH = 200
@@ -78,19 +78,15 @@ class Unencodable(Exception):
 
 
 def encode(x, depth=0):
+    # None, bool, int and str travel as native JSON values (cheap for large inputs);
+    # everything else is a tagged list. Exact type checks reject subclasses.
     if depth > MAX_DEPTH:
         raise Unencodable("value nested too deeply")
     t = type(x)
-    if x is None:
-        return ["N"]
-    if t is bool:
-        return ["b", x]
-    if t is int:
-        return ["i", str(x)]
+    if x is None or t is bool or t is int or t is str:
+        return x
     if t is float:
         return ["f", repr(x)]
-    if t is str:
-        return ["s", x]
     if t is bytes:
         return ["y", base64.b64encode(x).decode("ascii")]
     if t is list:
@@ -107,22 +103,14 @@ def encode(x, depth=0):
 
 
 def decode(v, depth=0):
-    if depth > MAX_DEPTH or not isinstance(v, list) or not v or not isinstance(v[0], str):
+    if v is None or type(v) in (bool, int, str):
+        return v
+    # A raw JSON float (or anything else untagged) is rejected: floats must be tagged.
+    if depth > MAX_DEPTH or type(v) is not list or len(v) != 2 or type(v[0]) is not str:
         raise ValueError("malformed value")
-    tag = v[0]
-    if tag == "N" and len(v) == 1:
-        return None
-    if len(v) != 2:
-        raise ValueError("malformed value")
-    body = v[1]
-    if tag == "b" and type(body) is bool:
-        return body
-    if tag == "i" and type(body) is str:
-        return int(body)
+    tag, body = v
     if tag == "f" and type(body) is str:
         return float(body)
-    if tag == "s" and type(body) is str:
-        return body
     if tag == "y" and type(body) is str:
         return base64.b64decode(body, validate=True)
     if type(body) is not list:
