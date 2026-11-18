@@ -28,11 +28,12 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 **Next steps, in order:**
 1. ~~Review the 02b results on b01~~ done: 0 flagged.
-2. Write batches b03-b05 (30 more Claude candidates with **generate_v2**, 10 per batch, new seeds each; hard tasks get `slow.py`), each through assemble -> 02a -> 02b (inspect survivors) -> vf-validate. b01-b02 done.
-3. Write `01b_generate_api.py` (cheap model not on the leaderboard, same template) for about 450 more candidates; run the same gates. Report pass rates per generator.
-4. Pilot (20 tasks x 4 rollouts) to measure $/rollout and truncation.
-5. Difficulty filter (-r 8, temperature 1.0, keep 1/8..7/8; 0/8 -> one stronger-model try, then manual). Ask first (> $1).
-6. Contamination (`04_contamination.py`), split (`05`), audit 40 tasks (`06`), freeze the dataset hash, push, leaderboard, REPORT.md.
+2. **Re-push the Hub package** (grader v2 + UnicodeDecodeError fix) with `--auto-bump`, then run one hosted smoke run.
+3. Write batches b04-b05 (20 more Claude candidates with **generate_v2**, 10 per batch, new seeds each; hard tasks with efficiency get `slow.py`), each through assemble -> 02a -> 02b (inspect survivors) -> vf-validate. **b01-b03 done: 30 candidates, all valid.**
+4. Write `01b_generate_api.py` (cheap model not on the leaderboard, same template) for about 450 more candidates; run the same gates. Report pass rates per generator.
+5. Pilot (20 tasks x 4 rollouts) to measure $/rollout and truncation.
+6. Difficulty filter (-r 8, temperature 1.0, keep 1/8..7/8; 0/8 -> one stronger-model try, then manual). Ask first (> $1).
+7. Contamination (`04_contamination.py`), split (`05`), audit 40 tasks (`06`), freeze the dataset hash, push, leaderboard, REPORT.md.
 
 **How to run things:** see CLAUDE.md section 3 (Codespace workflow), section 7 (gate order) and section 9 (hosted command).
 
@@ -57,6 +58,18 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
   The reference is under the 0.3 s target. `slow.py` is about 8x the 5 s limit on the faster machine, so more on the 1-vCPU sandbox. Note: the whole-file time (`reference_seconds`) includes the trusted test side's own input generation and checking, which doesn't count toward the candidate's call limit.
 - **Hub package is outdated** (old grader v1, no UnicodeDecodeError fix): re-push before the next hosted run.
+- **Gates on all 30 candidates:** `vf-validate` **30/30 valid** in real 1-vCPU Prime sandboxes (the 30k-element tests pass there); 0 stray sandboxes.
+- **`02b` on b03:**
+  - mean 0.952;
+  - 1 flagged: c0022 natural_sort at 0.643 (9/14). **All 5 survivors are equivalent** (sort-tag constants 0/1 -> -1/2, and `run[-1]` vs `run[0]` on runs that are all digits or all non-digits). **Flag overridden after manual review**; the low score is an artifact of a small mutant count dominated by tag constants.
+  - **2 real gaps found and closed:**
+    1. c0023 `startswith('[') or endswith(']')` accepted the unclosed `"[abc"`;
+    2. c0029 an invalid prefix line was ignored when the counts still matched.
+
+    Both are now at 1.0 (31/31, 40/40).
+  - Other survivors (c0024 x4, c0026 x2) are equivalent init values.
+- **02b `--ids`** reruns only selected tasks and merges into the existing report (a full run on 30 tasks takes about 15 min).
+- **Running total of real test gaps found by auto-mutants: 5** (b02: 3, b03: 2) that the authored mutants missed. Equivalent survivors are about 70% of all survivors.
 
 ---
 

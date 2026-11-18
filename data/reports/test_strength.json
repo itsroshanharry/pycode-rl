@@ -337,11 +337,9 @@
   {
     "id": "pc-c-0023",
     "auto_mutants": 31,
-    "killed": 30,
-    "mutation_score": 0.968,
-    "survivors": [
-      "boolop@57"
-    ],
+    "killed": 31,
+    "mutation_score": 1.0,
+    "survivors": [],
     "coverage": {
       "line": 1.0,
       "branch": 1.0
@@ -425,11 +423,9 @@
   {
     "id": "pc-c-0029",
     "auto_mutants": 40,
-    "killed": 39,
-    "mutation_score": 0.975,
-    "survivors": [
-      "stmt->pass@236"
-    ],
+    "killed": 40,
+    "mutation_score": 1.0,
+    "survivors": [],
     "coverage": {
       "line": 1.0,
       "branch": 1.0
