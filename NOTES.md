@@ -4,6 +4,29 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
+## 2026-11-18: Direction decision: stay function-level (no repo pivot)
+
+- An external review proposed pivoting to SWE-bench-style repo bug-injection. **Decision (user, 2026-11-18): keep `pycode-env` (single-function tasks) and finish it.**
+- Reasons:
+  - Prime already hosts about 19 SWE envs (`prime-envs/environments/swe/`), incl. `swesmith_env` (SWE-smith: 88k injected-bug tasks, about 51k Python), `r2e_gym`, `swebench_verified`/`pro`. A 50-task injected-bug set would be a small duplicate.
+  - Repo rollouts cost about $0.01-0.06 each (multi-turn, no cache discount on laguna/gpt-oss, minutes of sandbox time), versus about $0.001-0.002 here.
+  - The methodology (validation funnel, reward-hack hardening + control experiment, decontamination, audit, CIs) is the portfolio signal.
+- Adopted from the review:
+  - seed-grounded generation (`meta.seed`);
+  - pass@k + **pass^k** reporting;
+  - failure-mode breakdown chart;
+  - 0/8 tasks get one stronger-model rollout before manual inspection;
+  - the filter model may appear on the leaderboard as a disclosed baseline row;
+  - the contamination judge also asks an open "is this a known LeetCode/Codeforces problem?" question.
+  CLAUDE.md sections 7 and 9 are updated.
+- Rejected or corrected from the review:
+  - it described the v0 API (`SandboxEnv`, `load_environment`, `Rubric`, `vf-eval`);
+  - it claimed "50 tasks make 10-point gaps credible" (CIs are about +/-13 points; use paired comparisons);
+  - its leaderboard estimate (about $2 for 800 multi-turn rollouts) was optimistic.
+- **Out of scope (separate, later project):** a reward-hack audit of Prime's existing SWE envs. Lead: `swesmith_env/taskset.py:206` notes agent edits to test files are kept as-is at scoring.
+
+---
+
 ## 2026-11-16: Contamination plan revised (Stage 4)
 
 - **Change:** drop MinHash-LSH and use exact all-pairs n-gram overlap (5-gram Jaccard + longest common token run) plus an **LLM-judge rephrase check** on the top-k nearest benchmark problems. CLAUDE.md Stage 4, section 3 and the layout comment are updated.
