@@ -28,7 +28,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 **Next steps, in order:**
 1. ~~Review the 02b results on b01~~ done: 0 flagged.
-2. **Re-push the Hub package** (grader v2 + UnicodeDecodeError fix) with `--auto-bump`, then run one hosted smoke run.
+2. ~~Re-push the Hub package~~ **done:** `itsroshanharry/pycode-env` **0.1.1** (PRIVATE, wheel sha256 `8ea95510...`). Hosted smoke run `tajnohon1b6p3cf6hhmksirk`: 2/2 reward 1.0, 0% error/truncation; the trace shows `grader: "2"`, `isolated: true`, `temperature: 0.0`. Wallet $9.98.
 3. Write batches b04-b05 (20 more Claude candidates with **generate_v2**, 10 per batch, new seeds each; hard tasks with efficiency get `slow.py`), each through assemble -> 02a -> 02b (inspect survivors) -> vf-validate. **b01-b03 done: 30 candidates, all valid.**
 4. Write `01b_generate_api.py` (cheap model not on the leaderboard, same template) for about 450 more candidates; run the same gates. Report pass rates per generator.
 5. Pilot (20 tasks x 4 rollouts) to measure $/rollout and truncation.
