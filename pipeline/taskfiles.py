@@ -46,7 +46,15 @@ def build_row(task_dir: Path, split: str, extra_meta: dict | None = None) -> dic
     row_meta = {k: v for k, v in meta.items() if k not in ("id", "entry_point")}
     row_meta.update(mutant_descriptions=descriptions, source_dir=task_dir.relative_to(ROOT).as_posix(), version="v1")
     row_meta.update(extra_meta or {})
+    extra = {}
+    slow = task_dir / "slow.py"
+    if slow.exists():  # v2 efficiency lever: a correct-but-naive solution that must time out
+        extra["slow_reference"] = slow.read_text(encoding="utf-8")
+        compile(extra["slow_reference"], f"{task_dir.name}/slow.py", "exec")
+    elif "efficiency" in meta.get("levers", []):
+        raise TaskFormatError(f"{task_dir.name}: efficiency lever declared but slow.py is missing")
     return {
+        **extra,
         "id": meta["id"],
         "split": split,
         "prompt": (task_dir / "prompt.md").read_text(encoding="utf-8").strip(),

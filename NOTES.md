@@ -37,6 +37,30 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
+## 2026-11-18: Prompt generate_v2 (difficulty levers)
+
+- **Motivation (user):** company DSA interviews use questions that are hard to answer with AI or recall. Adopt their *principles*, not the questions: real interview questions get posted to LeetCode/GfG and are contaminated.
+- **v2 levers:** twist / combo / efficiency / spec-trap (see CLAUDE.md Stage 1). Medium tasks use 1 or more, hard tasks 2 or more, recorded in `meta.levers`. If a task resembles a known problem, the twist must change the answer for tested inputs.
+- **Efficiency lever closes a real gap:** b01/b02 tests check correctness mostly on small inputs, so an O(n^3) brute force would usually pass. v2 hard tasks ship `slow.py` (correct but naive). `02a` requires it to score 0 **by timing out** (`timeouts > 0`, not by being wrong) and records `reference_seconds`. `taskfiles.build_row` reads the optional `slow.py` into the row's `slow_reference` and errors if `levers` contains "efficiency" without it. Builder output for existing tasks is unchanged (candidates sha `c4408cda...`).
+- **Design note:** wall-clock-based rejection is acceptable only with a large margin (reference well under 1 s vs naive above 200 s), so machine speed can't flip the result. This is consistent with the "no flaky timing assertions" rule: the test asserts outputs; the grader's time limit does the rejecting.
+
+---
+
+## 2026-11-18: Grader false-negative fix + batch b02
+
+- **Grader bug found while authoring c0014 (query parsing), a false negative (correct code scored 0):**
+  - The worker sends the candidate's exception as (nearest builtin class name, message), and the trusted side rebuilt it with `cls(message)`.
+  - `UnicodeDecodeError` needs 5 constructor args, so the rebuild failed and it became a generic `CandidateError`.
+  - A *correct* solution raising `UnicodeDecodeError` (e.g. via `bytes.decode`) would therefore fail `pytest.raises(ValueError)`.
+  - **Fix:** walk the MRO to the nearest builtin ancestor constructible from a message (`UnicodeError`, still a `ValueError`).
+  - **Regression test** `test_unicode_decode_error_matches_value_error` added. Grader suite now **27/27 as root**.
+  - **The published Hub package (0.1.0) still has the old grader**, so re-push before the next hosted run.
+- **Batch b02** (`tasks/generated/b02_claude/`, c0011-c0020; seeds s005, s026, s033, s021, s088, s078, s092, s041, s035, s052): difficulty 3 easy / 5 medium / 2 hard (labels honest rather than forced to 3/4/3; the difficulty filter measures real difficulty).
+  - Skipped seeds that are famous puzzles (Roman numerals = LeetCode 13, text justification = LeetCode 68, rectangle union area = LeetCode 850).
+  - Funnel: assembled 10/10; local check 10/10 (30/30 authored mutants killed); test-strength and vf-validate results below once run.
+
+---
+
 ## 2026-11-18: Generation pipeline + batch b01 (10 Claude-written candidates)
 
 - `pipeline/prompts/seeds.jsonl` (written by `make_seeds.py`): **102 seeds across 11 categories** of real-world rules. No classic benchmark puzzles.

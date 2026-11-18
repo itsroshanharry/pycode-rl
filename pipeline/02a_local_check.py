@@ -21,6 +21,7 @@ import json
 import subprocess
 import sys
 import tempfile
+import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -43,13 +44,21 @@ def grade(code: str, tests: str) -> dict:
 
 
 def check(row: dict) -> dict:
+    started = time.monotonic()
     ref = grade(row["reference"], row["tests"])
+    ref_seconds = round(time.monotonic() - started, 2)  # includes grader start-up (~1 s)
     out = {"id": row["id"], "seed_id": row["meta"].get("seed_id"), "difficulty": row["meta"].get("difficulty_hint")}
     if "grader_error" in ref:
         return {**out, "ok": False, "reason": "tests broken (grader error)", "detail": ref["grader_error"]}
-    out.update(tests=ref["total"], reference_score=ref["score"], isolated=ref["isolated"])
+    out.update(tests=ref["total"], reference_score=ref["score"], isolated=ref["isolated"], reference_seconds=ref_seconds)
     if ref["score"] != 1.0:
         return {**out, "ok": False, "reason": "reference fails its own tests", "detail": ref["first_failure"]}
+    if "slow_reference" in row:
+        slow = grade(row["slow_reference"], row["tests"])
+        out["slow_timeouts"] = slow.get("timeouts")
+        # The naive solution must lose specifically by timing out, not by being wrong.
+        if slow.get("score") != 0.0 or not slow.get("timeouts"):
+            return {**out, "ok": False, "reason": "efficiency test does not reject the naive slow.py", "detail": slow.get("first_failure")}
     survived = []
     for desc, mutant in zip(row["meta"]["mutant_descriptions"], row["mutants"]):
         g = grade(mutant, row["tests"])
