@@ -1,0 +1,102 @@
+{"id": "s001", "category": "dates", "seed": "ISO-8601 week numbering: week 1 contains the year's first Thursday; weeks start Monday"}
+{"id": "s002", "category": "dates", "seed": "RFC 3339 timestamps with numeric UTC offsets (e.g. 2024-03-01T10:00:00+05:30) compared or normalized to UTC"}
+{"id": "s003", "category": "dates", "seed": "Business-day arithmetic: add N working days skipping weekends and a given holiday list"}
+{"id": "s004", "category": "dates", "seed": "Cron-style schedule fields (minute hour day-of-month month day-of-week) with lists, ranges and */step"}
+{"id": "s005", "category": "dates", "seed": "Recurring monthly billing dates clamped to month end (Jan 31 -> Feb 28/29 -> Mar 31)"}
+{"id": "s006", "category": "dates", "seed": "Wall-clock gaps and overlaps given an explicit UTC-offset change table (no tz database)"}
+{"id": "s007", "category": "dates", "seed": "Human duration formatting: seconds to '2h 5m' style strings with largest-unit rounding rules"}
+{"id": "s008", "category": "dates", "seed": "Fiscal year / quarter labelling where the fiscal year starts in a configurable month"}
+{"id": "s009", "category": "dates", "seed": "Age in full years on a date, with Feb 29 birthdays treated as Mar 1 in non-leap years"}
+{"id": "s010", "category": "dates", "seed": "Common free slots of minimum length from several people's busy intervals within working hours"}
+{"id": "s011", "category": "identifiers", "seed": "Semantic Versioning 2.0 precedence including pre-release identifiers and ignored build metadata"}
+{"id": "s012", "category": "identifiers", "seed": "Version range expressions with comparators, AND-ed by spaces and OR-ed by '||' (npm-like subset)"}
+{"id": "s013", "category": "identifiers", "seed": "IBAN structure check: country length table, move first four chars, letters to numbers, mod 97 == 1"}
+{"id": "s014", "category": "identifiers", "seed": "ISBN-10 and ISBN-13 conversion and check-digit validation (X as 10 for ISBN-10)"}
+{"id": "s015", "category": "identifiers", "seed": "UUID string normalization: accept braces/urn/no-dash forms, output canonical lowercase 8-4-4-4-12"}
+{"id": "s016", "category": "identifiers", "seed": "Natural sort order for file names: digit runs compared numerically, case-insensitive, stable tie-break"}
+{"id": "s017", "category": "identifiers", "seed": "Resolving Python relative imports (from ..a import b) against the importing module's package path"}
+{"id": "s018", "category": "identifiers", "seed": "Slug generation from titles: given transliteration map, collapsed separators, max length at a word boundary"}
+{"id": "s019", "category": "text-formats", "seed": "CSV field parsing with quotes, doubled quotes inside quotes, and a configurable delimiter"}
+{"id": "s020", "category": "text-formats", "seed": "INI files with [sections], key=value, ; comments, and duplicate keys where the last wins"}
+{"id": "s021", "category": "text-formats", "seed": "URL query strings: percent-decoding, '+' as space, repeated keys collected into lists"}
+{"id": "s022", "category": "text-formats", "seed": "HTTP Accept header with q-values: choose the best match among offered media types incl. wildcards"}
+{"id": "s023", "category": "text-formats", "seed": "Markdown headings to a nested, numbered table of contents (1, 1.1, 1.2, 2)"}
+{"id": "s024", "category": "text-formats", "seed": "Dotenv files: export prefix, single/double quotes, escapes in double quotes, inline comments"}
+{"id": "s025", "category": "text-formats", "seed": "Unified diff hunk headers (@@ -a,b +c,d @@) and applying one hunk to a list of lines"}
+{"id": "s026", "category": "text-formats", "seed": "Template strings with ${name} and ${name:-default} substitution and $$ as a literal dollar"}
+{"id": "s027", "category": "text-formats", "seed": "Log lines in a fixed format with optional fields, aggregated into counts by level and minute"}
+{"id": "s028", "category": "text-formats", "seed": "Roman numerals restricted to the strict subtractive standard (reject IIII, IC, VX)"}
+{"id": "s029", "category": "text-formats", "seed": "Fixed-width record layouts: slice fields by a column spec, trim padding, convert typed fields"}
+{"id": "s030", "category": "text-formats", "seed": "Number formatting with explicitly given locale rules (group separator, decimal mark, grouping size)"}
+{"id": "s031", "category": "structured-data", "seed": "JSON Pointer (RFC 6901) lookup including ~0 and ~1 escapes and array indices"}
+{"id": "s032", "category": "structured-data", "seed": "Deep merge of nested dicts where lists are replaced, None deletes a key, and conflicts follow a policy"}
+{"id": "s033", "category": "structured-data", "seed": "Flatten nested dicts to dotted keys and back, with list indices as [i] segments"}
+{"id": "s034", "category": "structured-data", "seed": "Diff two flat records into added/removed/changed key lists in sorted order"}
+{"id": "s035", "category": "structured-data", "seed": "Schema-lite validation: type names, required keys, numeric min/max, returning error paths"}
+{"id": "s036", "category": "structured-data", "seed": "Environment-variable overrides of nested config using a prefix and double-underscore nesting"}
+{"id": "s037", "category": "structured-data", "seed": "Ordering config files by their includes, reporting the offending chain on a cycle"}
+{"id": "s038", "category": "structured-data", "seed": "Feature-flag rollout: deterministic percentage bucketing of user ids via a specified hash"}
+{"id": "s039", "category": "business-rules", "seed": "Progressive income tax with brackets and a personal allowance that tapers above a threshold"}
+{"id": "s040", "category": "business-rules", "seed": "Splitting a bill among people by weights in integer cents, distributing leftover cents deterministically"}
+{"id": "s041", "category": "business-rules", "seed": "Loan amortization schedule with a fixed payment, per-period rounding, final payment absorbing drift"}
+{"id": "s042", "category": "business-rules", "seed": "Shipping cost from a weight/zone rate table with dimensional weight and a free-shipping threshold"}
+{"id": "s043", "category": "business-rules", "seed": "Loyalty points expiring first-in-first-out after N days, redeeming from the oldest batch first"}
+{"id": "s044", "category": "business-rules", "seed": "Discount stacking: percentage vs fixed coupons, exclusivity groups, total never below zero"}
+{"id": "s045", "category": "business-rules", "seed": "Currency conversion through pairwise rates, finding a path when no direct rate exists"}
+{"id": "s046", "category": "business-rules", "seed": "Inventory reservation: allocate orders to warehouses by priority with partial fulfilment"}
+{"id": "s047", "category": "business-rules", "seed": "Payroll overtime with daily and weekly thresholds, the higher rate winning per hour"}
+{"id": "s048", "category": "business-rules", "seed": "Invoice tax rounding per line vs per invoice and the resulting difference"}
+{"id": "s049", "category": "business-rules", "seed": "Subscription proration when upgrading mid-cycle, with credit for unused time"}
+{"id": "s050", "category": "business-rules", "seed": "Sales commission tiers applied marginally over a period"}
+{"id": "s051", "category": "scheduling", "seed": "Meeting room assignment: minimal number of rooms and a concrete assignment preferring the lowest room index"}
+{"id": "s052", "category": "scheduling", "seed": "Round-robin tournament schedule (circle method) with byes for an odd number of teams"}
+{"id": "s053", "category": "scheduling", "seed": "Shift rotation pattern repeated over a period, counting hours per worker around holidays"}
+{"id": "s054", "category": "scheduling", "seed": "Job queue with priorities, FIFO within a priority, and aging that bumps long-waiting jobs"}
+{"id": "s055", "category": "scheduling", "seed": "Token-bucket rate limiter deciding accept/reject for timestamped requests"}
+{"id": "s056", "category": "scheduling", "seed": "Sliding-window rate limit per client key with a window length and a max count"}
+{"id": "s057", "category": "scheduling", "seed": "Elevator requests served in SCAN order from a start floor and direction"}
+{"id": "s058", "category": "scheduling", "seed": "Exam timetabling so no student sits two exams at once, greedy by most-constrained exam"}
+{"id": "s059", "category": "scheduling", "seed": "Retry schedule with exponential backoff, deterministic jitter sequence, and a cap"}
+{"id": "s060", "category": "scheduling", "seed": "Dependency-aware build order grouped into parallel waves"}
+{"id": "s061", "category": "games", "seed": "Ten-pin bowling score from a roll list including strikes, spares and the tenth-frame bonus"}
+{"id": "s062", "category": "games", "seed": "Tennis game/set scoring with deuce, advantage and a tie-break at 6-6"}
+{"id": "s063", "category": "games", "seed": "Darts checkouts for a remaining score where the last dart must be a double"}
+{"id": "s064", "category": "games", "seed": "Card hand ranking for a simplified deck with an explicit ranking table and tie-breakers"}
+{"id": "s065", "category": "games", "seed": "Elo rating updates for a sequence of results with a K-factor depending on games played"}
+{"id": "s066", "category": "games", "seed": "Golf Stableford points from strokes, par and handicap strokes allocated by hole index"}
+{"id": "s067", "category": "games", "seed": "Crossword grid validation: every across/down run of length >= 2 must be a dictionary word"}
+{"id": "s068", "category": "games", "seed": "Board word scoring with letter/word multiplier squares given as a board map"}
+{"id": "s069", "category": "games", "seed": "Sudoku-variant constraint check with an extra diagonal rule, reporting the first violated cell"}
+{"id": "s070", "category": "games", "seed": "League table ranking by points, goal difference, goals scored, then head-to-head"}
+{"id": "s071", "category": "numeric", "seed": "Unit conversion through a graph of factors (ft->in->cm), exact with fractions"}
+{"id": "s072", "category": "numeric", "seed": "Fixed-point money arithmetic in integer cents with banker's rounding on division"}
+{"id": "s073", "category": "numeric", "seed": "Area of the union of axis-aligned rectangles"}
+{"id": "s074", "category": "numeric", "seed": "Point-in-polygon (even-odd rule) where points exactly on an edge count as inside"}
+{"id": "s075", "category": "numeric", "seed": "Streaming mean and variance with Welford's update"}
+{"id": "s076", "category": "numeric", "seed": "Percentile by linear interpolation between closest ranks, following a named convention"}
+{"id": "s077", "category": "numeric", "seed": "Histogram binning with fixed width, edge inclusion rules and an overflow bin"}
+{"id": "s078", "category": "numeric", "seed": "Exact fraction simplification and mixed-number formatting ('-1 2/3')"}
+{"id": "s079", "category": "numeric", "seed": "Base conversion between bases 2..36 with sign and truncated fractional digits"}
+{"id": "s080", "category": "numeric", "seed": "Physical quantity strings like '12.5 kPa' parsed and converted to a canonical unit"}
+{"id": "s081", "category": "networking", "seed": "IPv4 CIDR containment and merging overlapping/adjacent blocks into a minimal list"}
+{"id": "s082", "category": "networking", "seed": "IPv6 address compression and expansion (longest zero run, leftmost on ties)"}
+{"id": "s083", "category": "networking", "seed": "HTTP Cache-Control parsing and freshness lifetime from max-age / s-maxage"}
+{"id": "s084", "category": "networking", "seed": "Cookie header parsing with quoted values, filtered by path prefix"}
+{"id": "s085", "category": "networking", "seed": "MAC address normalization from several notations to a canonical colon form"}
+{"id": "s086", "category": "networking", "seed": "Bit-packed flags: decode/encode a field layout given as (name, bit offset, width)"}
+{"id": "s087", "category": "networking", "seed": "PackBits-style run-length encoding of byte sequences with literal runs"}
+{"id": "s088", "category": "networking", "seed": "16-bit one's-complement checksum with end-around carry"}
+{"id": "s089", "category": "data-cleaning", "seed": "Deduplicate contact records by normalized email and phone, merging non-empty fields"}
+{"id": "s090", "category": "data-cleaning", "seed": "Phone number normalization to E.164 for a default country code and trunk prefix"}
+{"id": "s091", "category": "data-cleaning", "seed": "Group-by over multiple keys with sum/min/max/count, sorted output"}
+{"id": "s092", "category": "data-cleaning", "seed": "Sessionize per-user events by an inactivity gap, returning session start/end/count"}
+{"id": "s093", "category": "data-cleaning", "seed": "Forward-fill missing time-series values, limited to N consecutive steps"}
+{"id": "s094", "category": "data-cleaning", "seed": "Top-k per group with ties broken by a secondary key and original order"}
+{"id": "s095", "category": "data-cleaning", "seed": "Pivot (row, column, value) triples into a matrix with a default value"}
+{"id": "s096", "category": "data-cleaning", "seed": "Reconcile two ledgers by amount and date tolerance, listing unmatched entries"}
+{"id": "s097", "category": "data-cleaning", "seed": "Address line normalization with an abbreviation table and casing rules"}
+{"id": "s098", "category": "data-cleaning", "seed": "Hex color codes (#RGB, #RRGGBB, #RRGGBBAA) validated and canonicalized to lowercase 8-digit form"}
+{"id": "s099", "category": "text", "seed": "Full justification to a width, extra spaces distributed left-first, ragged last line"}
+{"id": "s100", "category": "text", "seed": "Word frequency with a stop-word list, case folding, and alphabetical tie-breaks"}
+{"id": "s101", "category": "text", "seed": "Abbreviation expansion from a dictionary, preserving the case of the first letter"}
+{"id": "s102", "category": "text", "seed": "Word-level diff into keep/insert/delete operations with minimal edits (LCS based)"}

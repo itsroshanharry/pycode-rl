@@ -1,0 +1,1 @@
+{"id": "pc-c-0007", "entry_point": "merge_cidrs", "topic": "IP range aggregation", "difficulty_hint": "hard", "seed_id": "s081", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v1"}

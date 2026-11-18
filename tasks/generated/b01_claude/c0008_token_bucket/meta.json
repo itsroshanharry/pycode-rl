@@ -1,0 +1,1 @@
+{"id": "pc-c-0008", "entry_point": "token_bucket", "topic": "rate limiting", "difficulty_hint": "medium", "seed_id": "s055", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v1"}
