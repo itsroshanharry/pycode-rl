@@ -1,0 +1,13 @@
+# Hosted smoke test of our own environment (2 tasks x 1 rollout).
+# Sampling is passed on the CLI with -S, because a TOML [sampling] table moves
+# reasoning_effort into extra_body.chat_template_kwargs (see NOTES.md H7).
+model = "deepseek/deepseek-v4.1-flash-1017"
+num_examples = 2
+rollouts_per_example = 1
+max_concurrent = 2
+timeout_minutes = 120
+eval_name = "smoke-pycode-env"
+
+[[eval]]
+env_id = "itsroshanharry/pycode-env"
+taskset = { split = "train" }
