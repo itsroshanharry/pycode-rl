@@ -12,7 +12,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 - **Generation:**
   - 102 seeds (`pipeline/prompts/seeds.jsonl`) and prompt `generate_v1.md`.
   - **Batch b01:** 10 Claude-written candidates, all passing assembly, local check (30/30 authored mutants killed) and `vf-validate` (10/10).
-  - Test-strength check (`02b`: auto mutation score, branch coverage, hard-code check) written; results on b01 are recorded in the entry below once run.
+  - Test-strength check (`02b`) on b01: mutation 0.949 mean, all 17 survivors equivalent, branch coverage 100%, hard-code fake fails on all 10, 0 flagged.
 - **Wallet:** about $9.98 (about $0.02 spent). The user has not set a dashboard usage limit yet.
 
 **Agreed decisions (don't relitigate):**
@@ -24,7 +24,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 - SWE-env reward-hack audit is out of scope (separate later project).
 
 **Next steps, in order:**
-1. Review the 02b results on b01; strengthen or drop any flagged task.
+1. ~~Review the 02b results on b01~~ done: 0 flagged.
 2. Write batches b02-b05 (40 more Claude candidates, 10 per batch, 3 easy / 4 medium / 3 hard, new seeds each), each through assemble -> 02a -> 02b -> vf-validate.
 3. Write `01b_generate_api.py` (cheap model not on the leaderboard, same template) for about 450 more candidates; run the same gates. Report pass rates per generator.
 4. Pilot (20 tasks x 4 rollouts) to measure $/rollout and truncation.
@@ -48,6 +48,13 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 - **Batch b01** (`tasks/generated/b01_claude/`, generator `claude-code (claude-opus-5-5)`, prompt `generate_v1`): 10 seeds, 10 categories, difficulty 3 easy / 4 medium / 3 hard. 15-36 hidden tests each; 9/10 include a differential test against an independent oracle (for CIDR, `ipaddress.collapse_addresses`).
   - Funnel: assembled 10/10 (0 format rejects); local check 10/10 (reference passes, **30/30 mutants killed**); `vf-validate` in Prime sandboxes (gold+noop) **10/10 valid**, 0 stray sandboxes. Candidates sha256 `35b678cc0737...`.
   - Authoring note (honest): one hand-computed expected value in c0006 was wrong (13 vs 12) and was caught by re-derivation before any check ran. This is the class of error the reference-vs-literal check exists to catch.
+  - **Test strength (`02b_test_strength.py`, author-independent; report `data/reports/test_strength.json`):**
+    - automatic AST mutation score **mean 0.949** (range 0.829-1.0; 20-40 mutants per task);
+    - **line and branch coverage 100% on all 10**;
+    - the hard-coded-doctest fake **fails on all 10**;
+    - **0/10 flagged.**
+  - **All 17 surviving auto-mutants were inspected by hand and every one is equivalent**, so the tests kill every behaviour-changing mutant. Examples: semver internal sort tags `0/1 -> -1/2` keep the order; `>=` -> `>` on a list index still raises IndexError one step later; token-bucket `last = -1` is a no-op because the bucket starts full; CIDR `prefix > 33` still ends in ValueError via a negative shift.
+  - **Lesson:** the raw mutation score understates strength by about 5 points on tasks with tag constants or redundant guards. Report it with "equivalent mutants manually verified" for a sample, not as a hard 1.0 target.
 
 ---
 

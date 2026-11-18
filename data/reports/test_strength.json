@@ -1,0 +1,155 @@
+[
+  {
+    "id": "pc-c-0001",
+    "auto_mutants": 35,
+    "killed": 29,
+    "mutation_score": 0.829,
+    "survivors": [
+      "const+1@256",
+      "const+1@92",
+      "const+1@255",
+      "const-1@256",
+      "const-1@91",
+      "const-1@249"
+    ],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0002",
+    "auto_mutants": 35,
+    "killed": 32,
+    "mutation_score": 0.914,
+    "survivors": [
+      "stmt->pass@45",
+      "const-1@202",
+      "cmp@175"
+    ],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0003",
+    "auto_mutants": 20,
+    "killed": 20,
+    "mutation_score": 1.0,
+    "survivors": [],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0004",
+    "auto_mutants": 40,
+    "killed": 40,
+    "mutation_score": 1.0,
+    "survivors": [],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0005",
+    "auto_mutants": 40,
+    "killed": 39,
+    "mutation_score": 0.975,
+    "survivors": [
+      "cmp@214"
+    ],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0006",
+    "auto_mutants": 40,
+    "killed": 40,
+    "mutation_score": 1.0,
+    "survivors": [],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0007",
+    "auto_mutants": 40,
+    "killed": 37,
+    "mutation_score": 0.925,
+    "survivors": [
+      "const+1@180",
+      "const+1@370",
+      "const+1@318"
+    ],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0008",
+    "auto_mutants": 35,
+    "killed": 33,
+    "mutation_score": 0.943,
+    "survivors": [
+      "const-1@114",
+      "const-1@20"
+    ],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0009",
+    "auto_mutants": 20,
+    "killed": 18,
+    "mutation_score": 0.9,
+    "survivors": [
+      "const+1@36",
+      "const-1@36"
+    ],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0010",
+    "auto_mutants": 40,
+    "killed": 40,
+    "mutation_score": 1.0,
+    "survivors": [],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  }
+]
