@@ -42,7 +42,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ## 2026-11-16: Phase 1 built and verified (spend so far: about $0.002)
 
-**Grader design** (`environments/pycode/src/pycode_env/grader/run_pytest.py`, docstring has the threat model):
+**Grader design** (`environments/pycode/pycode_env/grader/run_pytest.py`, docstring has the threat model):
 - Trusted pytest runs in the grader process. The candidate runs in a separate spawned worker behind a `solution` proxy module. Calls cross as **JSON with a tagged exact-type codec** (no pickle: a malicious worker could otherwise execute code in the grader).
 - As root, the worker drops to uid 65534. Also: rlimits (AS 512 MB, FSIZE 0, NPROC 32, no core dumps), fd-level `/dev/null` stdio, per-call 5 s and total 60 s timeouts, `PYTHONHASHSEED=0`.
 - Input files are deleted on read; hidden tests live only in a 0700 temp dir.

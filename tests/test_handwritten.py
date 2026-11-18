@@ -16,7 +16,7 @@ import pytest
 pytestmark = pytest.mark.skipif(sys.platform == "win32", reason="the grader needs Linux")
 
 ROOT = Path(__file__).resolve().parents[1]
-GRADER = ROOT / "environments" / "pycode" / "src" / "pycode_env" / "grader" / "run_pytest.py"
+GRADER = ROOT / "environments" / "pycode" / "pycode_env" / "grader" / "run_pytest.py"
 ROWS = [json.loads(line) for line in (ROOT / "data" / "handwritten.jsonl").read_text().splitlines() if line.strip()]
 
 

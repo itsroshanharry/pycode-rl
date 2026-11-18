@@ -141,7 +141,7 @@ The v1 API is still changing. Verify names against the installed version instead
 `-- environments/pycode/        # the publishable verifiers v1 package
     |-- pyproject.toml
     |-- README.md               # shown on the Hub
-    `-- src/pycode_env/
+    `-- pycode_env/                # flat layout: `prime env push` does not detect src/ layouts
         |-- __init__.py         # re-exports PyCodeTaskset
         |-- taskset.py
         |-- grader/run_pytest.py  # PEP 723 grader script (generic; no task tests inside)
@@ -192,7 +192,7 @@ Design: single-turn by default: **`null` harness + shared scoring**. The model h
 Sketch (**verify every name against the docs/`--help` and the prime-envs HumanEval env; this is the shape, not guaranteed-exact code**):
 
 ```python
-# environments/pycode/src/pycode_env/taskset.py
+# environments/pycode/pycode_env/taskset.py
 import json, re
 from importlib.resources import files
 import verifiers.v1 as vf

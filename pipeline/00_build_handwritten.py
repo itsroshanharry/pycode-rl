@@ -9,7 +9,7 @@ Each task directory holds:
                 turn reference.py into a plausible buggy variant
 
 Writes data/handwritten.jsonl and the package copy
-environments/pycode/src/pycode_env/data/dataset.jsonl (rows in a seeded shuffled order,
+environments/pycode/pycode_env/data/dataset.jsonl (rows in a seeded shuffled order,
 so `-n N` on a hosted eval, which cannot shuffle, takes a representative prefix).
 Run: uv run python pipeline/00_build_handwritten.py
 """
@@ -25,7 +25,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 TASKS = ROOT / "tasks" / "handwritten"
 OUT = ROOT / "data" / "handwritten.jsonl"
-PACKAGE_OUT = ROOT / "environments" / "pycode" / "src" / "pycode_env" / "data" / "dataset.jsonl"
+PACKAGE_OUT = ROOT / "environments" / "pycode" / "pycode_env" / "data" / "dataset.jsonl"
 SEED = 0
 
 

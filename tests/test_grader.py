@@ -21,7 +21,7 @@ import pytest
 pytestmark = pytest.mark.skipif(sys.platform == "win32", reason="the grader needs Linux")
 
 ROOT = Path(__file__).resolve().parents[1]
-GRADER = ROOT / "environments" / "pycode" / "src" / "pycode_env" / "grader" / "run_pytest.py"
+GRADER = ROOT / "environments" / "pycode" / "pycode_env" / "grader" / "run_pytest.py"
 FIXTURE = Path(__file__).parent / "grader_fixture"
 TESTS_SRC = (FIXTURE / "tests.py").read_text()
 IS_ROOT = sys.platform != "win32" and os.geteuid() == 0
