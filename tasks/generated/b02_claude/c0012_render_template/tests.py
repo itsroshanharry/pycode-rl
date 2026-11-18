@@ -38,7 +38,8 @@ def test_missing_variable(template, variables):
         render_template(template, variables)
 
 
-@pytest.mark.parametrize("template", ["$", "a$", "$a", "${}", "${1a}", "${a", "${a-b}", "${a:b}", "$ {a}", "${ a}", "${a b}"])
+@pytest.mark.parametrize("template", ["$", "a$", "$a", "${}", "${1a}", "${a", "${a-b}", "${a:b}", "$ {a}", "${ a}", "${a b}",
+                                      "$ab}", "x$ya}z", "${ab", "x ${abc", "${a:-x"])
 def test_malformed(template):
     with pytest.raises(ValueError):
         render_template(template, {"a": "1"})

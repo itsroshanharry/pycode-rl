@@ -41,6 +41,8 @@ USER = {
          ["$.m[0][0].v: above max 10", "$.m[0][0].w: missing required field"]),
         ({"b": 1, "a": "x"}, {"type": "dict", "fields": {"a": {"type": "int"}, "b": {"type": "str"}}}, ["$.a: expected int", "$.b: expected str"]),
         ({"t": True}, {"type": "dict", "fields": {"t": {"type": "bool"}}, "required": ["t"]}, []),
+        ([1, "a", None], {"type": "list"}, []),
+        ({"x": [1, {}]}, {"type": "dict", "fields": {"x": {"type": "list"}}}, []),
     ],
 )
 def test_errors(value, schema, expected):
