@@ -88,7 +88,7 @@ def test_unicode_decode_error_matches_value_error(tmp_path):
     tests = (
         "import pytest\nfrom solution import decode\n\n"
         "def test_ok():\n    assert decode(b'hi') == 'hi'\n\n"
-        "def test_bad_utf8_is_a_value_error():\n    with pytest.raises(ValueError):\n        decode(b'\xff')\n"
+        "def test_bad_utf8_is_a_value_error():\n    with pytest.raises(ValueError):\n        decode(bytes([255]))\n"
     )
     proc, result = grade(solution, tmp_path, tests_src=tests)
     assert proc.returncode == 0, proc.stderr[-2000:]
