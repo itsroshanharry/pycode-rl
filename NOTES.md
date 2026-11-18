@@ -4,6 +4,21 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
+## 2026-11-18: Published (PRIVATE) + hosted smoke test PASSED
+
+- **Flat layout required:** `prime env push` only detects `*.py` or `<subdir>/__init__.py` directly under the env dir (`commands/env.py:916-932`), so the `uv init --lib` **src/ layout fails** with "No environment Python file found". Moved to `environments/pycode/pycode_env/` (the prime-envs convention). Dataset hash unchanged (`ecb878e9...`). (Possible docs/CLI PR candidate.)
+- Pushed `itsroshanharry/pycode-env` 0.1.0, **PRIVATE**, `--runtime v1`, wheel sha256 `f9592b92...`. Private envs can't be pip/uv-installed directly, only via `prime env pull`. `.prime/.env-metadata.json` (env id/owner/version, no secrets) is committed.
+- **Hosted run 1 FAILED** (`ohm1si53...`): a TOML `taskset = {split = "train"}` becomes `env_args = {"config": {"taskset": ...}}`. The runner's prime-rl (`3bd59c1`, `src/prime_rl/entrypoints/eval.py` + `configs/orchestrator.py`) puts env_args directly into `source[0].env`, a **`vf.EnvConfig`**, which rejects `config` ("Extra inputs are not permitted").
+- **Correct shape:** `-a '{"taskset": {"split": "train"}}'` on the CLI. This corrects H4: hosted runs *can* set any `vf.EnvConfig` field through `-a`, e.g. `{"agent": {...}}` and `{"taskset": {...}}`. Don't use the CLI's TOML `taskset`/`harness` sections with this runner.
+- **Hosted run 2 PASSED** (`b3hl8md098kmqisdv67c7cay`), command: `prime eval run itsroshanharry/pycode-env --hosted -m deepseek/deepseek-v4.1-flash-1017 -n 2 -r 1 -c 2 -a '{"taskset": {"split": "train"}}' -S '{"reasoning_effort": "low", "max_tokens": 2048}' --timeout-minutes 120`.
+  - 2/2 reward 1.0, 0% error/truncation/timeout.
+  - `harness=null` (the package-default Env is honored on hosted), and the egress policy was applied.
+- **Results live in Prime Traces**, not `prime eval samples` (empty for v1). `prime traces list --run-id <eval id> --output json` gives per-rollout reward, our metrics (`frac_tests_passed`, `no_code`, `load_error`, `call_timeouts`), `is_truncated`, `has_error`, `total_tokens`, `duration_ms`. About 15 KB per trace, so ingestion cost is negligible.
+- **Sampling verified in the raw trace** (`prime traces get <id> --raw`): `reasoning_effort: "low"` and `max_tokens: 2048` reached the request (777 reasoning / 1142 completion tokens). **`temperature: null`**, so leaderboard and filter runs must pass `temperature` explicitly in `-S`.
+- Wallet: 9.9815, so about $0.018 spent cumulatively (sandbox rows now posting).
+
+---
+
 ## 2026-11-18: Direction decision: stay function-level (no repo pivot)
 
 - An external review proposed pivoting to SWE-bench-style repo bug-injection. **Decision (user, 2026-11-18): keep `pycode-env` (single-function tasks) and finish it.**
