@@ -1,0 +1,1 @@
+{"id": "pc-c-0026", "entry_point": "assign_rooms", "topic": "interval scheduling with heaps", "difficulty_hint": "hard", "seed_id": "s051", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["efficiency", "combo", "spec-trap"]}

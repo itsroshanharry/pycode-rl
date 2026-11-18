@@ -1,0 +1,1 @@
+{"id": "pc-c-0028", "entry_point": "matching_versions", "topic": "version range expressions", "difficulty_hint": "hard", "seed_id": "s012", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["combo", "spec-trap"]}

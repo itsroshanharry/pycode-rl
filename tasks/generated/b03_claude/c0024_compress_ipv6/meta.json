@@ -1,0 +1,1 @@
+{"id": "pc-c-0024", "entry_point": "compress_ipv6", "topic": "address canonicalization", "difficulty_hint": "medium", "seed_id": "s082", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["spec-trap"]}

@@ -1,0 +1,1 @@
+{"id": "pc-c-0030", "entry_point": "top_k_per_group", "topic": "grouped ranking", "difficulty_hint": "easy", "seed_id": "s094", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["spec-trap"]}

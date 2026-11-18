@@ -1,0 +1,1 @@
+{"id": "pc-c-0027", "entry_point": "rate_limit", "topic": "sliding-window rate limiting", "difficulty_hint": "hard", "seed_id": "s056", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["efficiency", "spec-trap"]}

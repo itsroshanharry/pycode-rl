@@ -1,0 +1,1 @@
+{"id": "pc-c-0025", "entry_point": "loyalty_balance", "topic": "FIFO ledger with expiry", "difficulty_hint": "medium", "seed_id": "s043", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["combo", "spec-trap"]}
