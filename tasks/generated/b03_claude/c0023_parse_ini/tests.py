@@ -28,7 +28,8 @@ def test_parse(text, expected):
     assert parse_ini(text) == expected
 
 
-@pytest.mark.parametrize("text", ["[]", "[ ]", "[a]b]", "[a", "just text", "=value", " = v", "[x]\nnoequals"])
+@pytest.mark.parametrize("text", ["[]", "[ ]", "[a]b]", "[a", "just text", "=value", " = v", "[x]\nnoequals",
+                                  "[abc", "key]", "[S]\nk=1\n[open"])
 def test_invalid(text):
     with pytest.raises(ValueError):
         parse_ini(text)

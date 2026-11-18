@@ -189,12 +189,19 @@ def assess(row: dict, max_mutants: int) -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--max-mutants", type=int, default=40)
+    ap.add_argument("--ids", nargs="*", help="only these task ids (report is merged into the existing one)")
     args = ap.parse_args()
     rows = [json.loads(line) for line in CANDIDATES.read_text().splitlines() if line.strip()]
+    previous = {}
+    if args.ids:
+        rows = [r for r in rows if r["id"] in set(args.ids)]
+        if REPORT.exists():
+            previous = {r["id"]: r for r in json.loads(REPORT.read_text())}
     with ThreadPoolExecutor(max_workers=4) as pool:
         results = sorted(pool.map(lambda r: assess(r, args.max_mutants), rows), key=lambda r: r["id"])
     REPORT.parent.mkdir(parents=True, exist_ok=True)
-    REPORT.write_text(json.dumps(results, indent=2) + "\n")
+    merged = sorted({**previous, **{r["id"]: r for r in results}}.values(), key=lambda r: r["id"])
+    REPORT.write_text(json.dumps(merged, indent=2) + "\n")
     for r in results:
         cov = r["coverage"]
         print(f"{r['id']:<12} mutation={r['killed']}/{r['auto_mutants']} ({r['mutation_score']})  "

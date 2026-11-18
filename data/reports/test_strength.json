@@ -168,15 +168,11 @@
   {
     "id": "pc-c-0012",
     "auto_mutants": 40,
-    "killed": 33,
-    "mutation_score": 0.825,
+    "killed": 37,
+    "mutation_score": 0.925,
     "survivors": [
-      "stmt->pass@68",
-      "const+1@185",
       "const-1@182",
-      "stmt->pass@72",
       "stmt->pass@147",
-      "const-1@185",
       "const+1@182"
     ],
     "coverage": {
@@ -277,10 +273,9 @@
   {
     "id": "pc-c-0019",
     "auto_mutants": 37,
-    "killed": 35,
-    "mutation_score": 0.946,
+    "killed": 36,
+    "mutation_score": 0.973,
     "survivors": [
-      "boolop@190",
       "stmt->pass@12"
     ],
     "coverage": {
@@ -298,6 +293,156 @@
     "survivors": [
       "binop@211"
     ],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0021",
+    "auto_mutants": 40,
+    "killed": 40,
+    "mutation_score": 1.0,
+    "survivors": [],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0022",
+    "auto_mutants": 14,
+    "killed": 9,
+    "mutation_score": 0.643,
+    "survivors": [
+      "const-1@89",
+      "const+1@89",
+      "const-1@82",
+      "const-1@70",
+      "const+1@88"
+    ],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": [
+      "low mutation score"
+    ]
+  },
+  {
+    "id": "pc-c-0023",
+    "auto_mutants": 31,
+    "killed": 30,
+    "mutation_score": 0.968,
+    "survivors": [
+      "boolop@57"
+    ],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0024",
+    "auto_mutants": 40,
+    "killed": 36,
+    "mutation_score": 0.9,
+    "survivors": [
+      "const-1@109",
+      "const+1@189",
+      "stmt->pass@40",
+      "const-1@189"
+    ],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0025",
+    "auto_mutants": 40,
+    "killed": 40,
+    "mutation_score": 1.0,
+    "survivors": [],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0026",
+    "auto_mutants": 33,
+    "killed": 31,
+    "mutation_score": 0.939,
+    "survivors": [
+      "const-1@101",
+      "const+1@101"
+    ],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0027",
+    "auto_mutants": 26,
+    "killed": 26,
+    "mutation_score": 1.0,
+    "survivors": [],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0028",
+    "auto_mutants": 37,
+    "killed": 37,
+    "mutation_score": 1.0,
+    "survivors": [],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0029",
+    "auto_mutants": 40,
+    "killed": 39,
+    "mutation_score": 0.975,
+    "survivors": [
+      "stmt->pass@236"
+    ],
+    "coverage": {
+      "line": 1.0,
+      "branch": 1.0
+    },
+    "hardcode_fails": true,
+    "flags": []
+  },
+  {
+    "id": "pc-c-0030",
+    "auto_mutants": 13,
+    "killed": 13,
+    "mutation_score": 1.0,
+    "survivors": [],
     "coverage": {
       "line": 1.0,
       "branch": 1.0
