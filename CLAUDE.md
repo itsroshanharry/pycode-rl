@@ -44,12 +44,14 @@ Model IDs in section 5 were supplied by the user and **not verified**. Run `prim
 - **Never execute model-generated code on the laptop.** The `subprocess` runtime runs on the evaluator host, so it is forbidden for anything touching model output. All code execution happens in **Prime Sandboxes** (`--runtime.type prime`).
 - Commands must work in **PowerShell**. No bash-only syntax in scripts or docs; use Python for glue, not shell scripts.
 - Python **3.12** (verifiers v1 needs >=3.11). Manage everything with `uv`.
+- **verifiers' runtimes do not import on native Windows** (`import fcntl`). Run every `vf-validate` / `vf-run` / `vf-debug`, and the Linux-only grader checks (`tests/`, `pipeline/02a`, `02b`), in the **GitHub Codespace** `pycode-rl-dev-x765vwxpjwjf4p9` (repo `itsroshanharry/pycode-rl`). Use `gh codespace ssh -c <name> -- 'bash -lc "cd /workspaces/pycode-rl && git pull -q && ..."'`; `PRIME_API_KEY` is a Codespaces secret visible in login shells only. Grader checks run as root (`sudo .venv/bin/python ...`). Windows handles editing, `prime` CLI, hosted evals, and data-only scripts. Commits use the repo-local identity (Roshan Kumar); never change the laptop's global git identity.
+- verifiers is pinned (root `pyproject.toml`) to git `20c549f` = the hosted runner's version (0.4.1.dev150). The package requires `verifiers>=0.4.1.dev150`.
 
-**Money:** a single **$10 prepaid wallet** (balance $10.00, spend $0.00, **auto top-up not configured, keep it that way**) covers Prime Inference, Sandboxes, and Traces.
+**Money:** a single **$10 prepaid wallet** (started at $10.00; **auto top-up not configured, keep it that way**) covers Prime Inference, Sandboxes, and Traces. Check with `prime wallet --output json`; the running spend is logged in NOTES.md (about $0.02 as of 2026-11-18). The API key is capped at 16 concurrent sandboxes and 16 tunnels.
 - Run a **pilot** (20 tasks x 4 rollouts) before any scaled run; measure real $/rollout and extrapolate.
 - **Ask the user before any single step whose estimate exceeds $1**, and stop if projected total spend exceeds **$7** (keep >= $3 reserve).
 - Always cap output tokens (`max_tokens`, start at 2048) and concurrency (`-c 8`).
-- Turn off Prime Traces upload: `prime config set-traces-opt-out true` (needs a recent Prime CLI, >= 0.9.4) and `PRIME_TRACES_OPT_OUT=true` (traces cost $1/GiB ingested). Ask the user to also disable "Upload runs to Prime Traces" in dashboard Billing -> Usage Limits (account-level), and to set a usage limit there.
+- **Prime Traces uploads stay ON** (user decision, 2026-11-16, reversing the original rule). Hosted v1 results are stored only in Prime Traces: legacy sample storage, the opt-out fallback, was retired on 2026-11-06. Traces are about 15 KB per rollout, so the leaderboard costs about $0.03 at $1/GiB. The user has not yet set a dashboard usage limit; remind them before any run over $1.
 
 **Claude Pro sprint (30 days):** be token-frugal. Do not re-fetch docs you already summarized below; read `--help` and source code first. Keep `NOTES.md` as a running decision log so context survives across sessions.
 
@@ -128,16 +130,24 @@ The v1 API is still changing. Verify names against the installed version instead
 |-- REPORT.md                   # written at the end
 |-- .env.example                # PRIME_API_KEY=  (never commit .env)
 |-- pipeline/                   # OFFLINE: runs on laptop, orchestrates remote work
-|   |-- prompts/                # generation prompts, versioned
-|   |-- 01_generate.py          # LLM -> candidates.jsonl (spec, reference, tests, mutants)
-|   |-- 02_validate.py          # drives vf-validate; keeps ids that pass gold+mutant check
+|   |-- prompts/                # seeds.jsonl (+ make_seeds.py), generate_v1.md (versioned prompt)
+|   |-- taskfiles.py            # shared: task folder -> dataset row, seeded-shuffle writer + sha256
+|   |-- 00_build_handwritten.py # tasks/handwritten -> data/handwritten.jsonl + package dataset.jsonl
+|   |-- 01_assemble_candidates.py # tasks/generated/<batch>/<task> -> data/candidates.jsonl
+|   |-- 01b_generate_api.py     # (planned) cheap Prime model generator; self-contained, removable
+|   |-- 02a_local_check.py      # free: reference passes + >=2/3 authored mutants killed (Codespace, root)
+|   |-- 02b_test_strength.py    # free: automatic AST mutation score, branch coverage, hard-code check
+|   |-- 02_validate.py          # (planned) drives vf-validate; keeps ids that pass gold+mutant check
 |   |-- 03_difficulty.py        # drives vf-run -r 8 w/ filter model; computes pass rates
 |   |-- 04_contamination.py     # exact n-gram overlap + LLM-judge rephrase check + (optional) perturbation test
 |   |-- 05_split_export.py      # stratified train/test split -> dataset.jsonl
 |   |-- 06_audit_sample.py      # random 40-task sample -> audit.csv for manual review
 |   `-- stats.py                # Wilson CIs, pass-rate histograms
 |-- data/                       # candidates.jsonl, validated.jsonl, dataset.jsonl, reports/
-|-- tests/                      # light pytest for pipeline utils (laptop-safe)
+|-- tasks/handwritten/NN_name/  # 10 hand-written tasks (meta.json, prompt.md, reference.py, tests.py, mutants.py)
+|-- tasks/generated/<batch>/    # generated candidates, same 5-file format (b01_claude = first Claude batch)
+|-- tests/                      # test_grader.py (19 cheats + 4 legit) + test_handwritten.py (Linux/Codespace)
+|-- .devcontainer/              # Codespace: base:bookworm + sshd, uv-managed Python 3.12
 `-- environments/pycode/        # the publishable verifiers v1 package
     |-- pyproject.toml
     |-- README.md               # shown on the Hub
@@ -169,6 +179,11 @@ The v1 API is still changing. Verify names against the installed version instead
 
 **Stage 2: validate (hard rule: every task must pass this to enter the dataset).**
 Implement the task's `validate()` so that it returns `True` only if the **reference passes 100% of pytest in a Prime sandbox AND >= 2 of 3 mutants fail** (log the mutation score; LLM mutants are sometimes equivalent code, so do not demand 3/3). Run `uv run vf-validate pycode-env --runtime.type prime ...` over the candidate set. `vf-validate` also runs the no-op check (an untouched task must score 0): any task scoring >= 1.0 with no agent action is invalid. Outputs: `results.jsonl`, `summary.json`.
+Order: `01_assemble` (format) -> `02a_local_check` (free: reference + authored mutants) -> `02b_test_strength` (free, author-independent):
+- automatic AST mutation score >= 0.80;
+- branch coverage of the reference >= 0.90;
+- a fake that returns only the doctest answers must fail.
+Then the paid `vf-validate pycode-env --taskset.split all --taskset.dataset_path data/candidates.jsonl -c 5` in the Codespace. Flagged tasks get stronger tests or are dropped (never silently).
 
 **Stage 3: difficulty filter.** Run the filter model with `-r 8` at temperature 1.0 on validated tasks. Keep tasks with pass rate in **[1/8, 7/8]**. For 0/8 tasks, first try **one rollout with a stronger model** (cheap triage: solvable means "hard", kept and flagged; still 0 means suspect), then inspect manually (usually broken tests or underspecified prompts); fix or drop. Save the histogram. The filter model may also appear on the leaderboard as a disclosed "calibration baseline" row.
 
@@ -309,7 +324,12 @@ Models and endpoint: Prime Inference (default when logged in). Configure model, 
 
 Decision order (resolve empirically; record in NOTES.md):
 1. **`vf-run`** (verifiers repo): works locally, saves traces. Use for pilots and, if it supports model/endpoint flags and is stable, for the leaderboard (loop over models in a Python script).
-2. **`prime eval run <owner>/pycode-env --hosted -m <model> -n <N> -r 4 --follow`**: requires the env to be pushed to the Hub. With Prime Inference the hosted sandbox runtime is not billed separately, but **confirm hosted evals accept v1 tasksets** with a tiny run (`-n 5 -r 1`); the hosted docs still mention `load_environment()`.
+2. **Hosted (the chosen path for the leaderboard; v1 confirmed working 2026-11-18):** `prime eval run itsroshanharry/pycode-env --hosted -m <model> -n <N> -r <R> -c <C> -a '{"taskset": {"split": "test"}}' -S '{"temperature": <T>, "reasoning_effort": "low", "max_tokens": 2048}' --timeout-minutes 120`.
+   - `-a` maps directly onto `vf.EnvConfig` (taskset/agent fields). Do **not** use TOML `taskset =` sections: the CLI wraps them in `config`, and the runner rejects that.
+   - Pass sampling via `-S` (TOML moves `reasoning_effort` into chat_template_kwargs). Temperature defaults to null, so always set it.
+   - Hosted runs always use `@latest`, so freeze pushes during the leaderboard.
+   - Per-rollout results: `prime traces list --run-id <eval id> --output json`. `prime eval samples` is empty for v1.
+   - On Windows set `PYTHONUTF8=1` (the CLI crashes printing a check mark after creating the eval; never re-run on that crash).
 3. **`uv run eval`** is documented in the **prime-rl** repo; it may not install on Windows. Do not fight the install; fall back to 1 or 2.
 
 Protocol:
@@ -337,7 +357,7 @@ Sandbox math: 1 vCPU/1 GiB/5 GiB ~ $0.034/hr (launch rates through Dec 22, 2026)
 
 ## 11. Publishing and contributing
 
-- From `environments/pycode/`: `prime env push` (use `--auto-bump` for version bumps; `--visibility PRIVATE` while testing; public at the end). Requires a username set on the Prime profile and `prime login`. Install by others: `prime env install <owner>/pycode-env`.
+- `prime env push --path environments/pycode --visibility PRIVATE --runtime v1 --plain` (use `--auto-bump` for version bumps; public at the end). The package **must use the flat layout** (`environments/pycode/pycode_env/`); `prime env push` does not detect `src/` layouts. Currently pushed: `itsroshanharry/pycode-env` 0.1.0, PRIVATE. Requires a username set on the Prime profile and `prime login`. Install by others: `prime env install <owner>/pycode-env`.
 - README on the Hub must state: what the tasks are, how they were generated (AI-generated, with the validation funnel numbers), verifier design, known limitations.
 - **PR target:** after publishing, look for a small useful contribution to `PrimeIntellect-ai/verifiers` or `prime-envs` (docs fix, bug, or a new env). Read their PR guidelines first. Open PRs only with the user's approval of the diff.
 

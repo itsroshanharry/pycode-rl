@@ -4,6 +4,39 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
+## CURRENT STATUS (read this first in a new session), updated 2026-11-18
+
+**Where we are:** Phase 1 done; plan step 3 done; plan step 4 (generation) in progress.
+- **Environment** `pycode-env` (single-function tasks, `null` harness default, shared scoring, isolated grader): built, cheat suite 26/26, 10 hand-written tasks valid in Prime sandboxes.
+- **Published:** PRIVATE as `itsroshanharry/pycode-env` 0.1.0 (ships the 10 hand-written tasks, split `train`). Hosted smoke run passed 2/2.
+- **Generation:**
+  - 102 seeds (`pipeline/prompts/seeds.jsonl`) and prompt `generate_v1.md`.
+  - **Batch b01:** 10 Claude-written candidates, all passing assembly, local check (30/30 authored mutants killed) and `vf-validate` (10/10).
+  - Test-strength check (`02b`: auto mutation score, branch coverage, hard-code check) written; results on b01 are recorded in the entry below once run.
+- **Wallet:** about $9.98 (about $0.02 spent). The user has not set a dashboard usage limit yet.
+
+**Agreed decisions (don't relitigate):**
+- function-level tasks (no repo pivot);
+- generator split: Claude writes the first ~50, then a cheap Prime model, in a separate removable `01b_generate_api.py`;
+- contamination = exact n-gram + LLM-judge rephrase check (no MinHash);
+- traces ON;
+- hosted evals for the leaderboard;
+- SWE-env reward-hack audit is out of scope (separate later project).
+
+**Next steps, in order:**
+1. Review the 02b results on b01; strengthen or drop any flagged task.
+2. Write batches b02-b05 (40 more Claude candidates, 10 per batch, 3 easy / 4 medium / 3 hard, new seeds each), each through assemble -> 02a -> 02b -> vf-validate.
+3. Write `01b_generate_api.py` (cheap model not on the leaderboard, same template) for about 450 more candidates; run the same gates. Report pass rates per generator.
+4. Pilot (20 tasks x 4 rollouts) to measure $/rollout and truncation.
+5. Difficulty filter (-r 8, temperature 1.0, keep 1/8..7/8; 0/8 -> one stronger-model try, then manual). Ask first (> $1).
+6. Contamination (`04_contamination.py`), split (`05`), audit 40 tasks (`06`), freeze the dataset hash, push, leaderboard, REPORT.md.
+
+**How to run things:** see CLAUDE.md section 3 (Codespace workflow), section 7 (gate order) and section 9 (hosted command).
+
+**User preferences:** plain language, technical terms explained in brackets, concise answers. Ask before spending more than $1 or doing anything outward-facing.
+
+---
+
 ## 2026-11-18: Generation pipeline + batch b01 (10 Claude-written candidates)
 
 - `pipeline/prompts/seeds.jsonl` (written by `make_seeds.py`): **102 seeds across 11 categories** of real-world rules. No classic benchmark puzzles.
