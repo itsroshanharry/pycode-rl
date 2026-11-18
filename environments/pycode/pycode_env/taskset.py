@@ -136,12 +136,19 @@ class PyCodeTask(vf.Task[PyCodeData, vf.State, PyCodeTaskConfig]):
 class PyCodeConfig(vf.TasksetConfig):
     split: str = "test"
     """Which rows to load: "train", "test", or "all"."""
+    dataset_path: str | None = None
+    """Load rows from this JSONL file on the evaluator instead of the bundled dataset
+    (used by the pipeline to validate and filter candidate tasks before release)."""
     task: PyCodeTaskConfig = PyCodeTaskConfig()
 
 
 class PyCodeTaskset(vf.Taskset[PyCodeTask, PyCodeConfig]):
     def load(self) -> Iterator[PyCodeTask]:
-        raw = files("pycode_env").joinpath("data/dataset.jsonl").read_text(encoding="utf-8")
+        if self.config.dataset_path:
+            with open(self.config.dataset_path, encoding="utf-8") as f:
+                raw = f.read()
+        else:
+            raw = files("pycode_env").joinpath("data/dataset.jsonl").read_text(encoding="utf-8")
         for line in raw.splitlines():
             if not line.strip():
                 continue
