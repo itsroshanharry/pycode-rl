@@ -4,6 +4,20 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
+## 2026-11-18: Generation pipeline + batch b01 (10 Claude-written candidates)
+
+- `pipeline/prompts/seeds.jsonl` (written by `make_seeds.py`): **102 seeds across 11 categories** of real-world rules. No classic benchmark puzzles.
+- `pipeline/prompts/generate_v1.md`: the versioned generation prompt, used verbatim by any generator.
+- `pipeline/taskfiles.py`: shared task-folder -> row logic. Refactoring `00_build_handwritten.py` onto it reproduced the identical hash `ecb878e9...`.
+- `01_assemble_candidates.py`: folders -> `data/candidates.jsonl`; format failures are rejected and reported, never fixed.
+- `02a_local_check.py`: free grader pre-check, run in the Codespace as root.
+- `taskset.dataset_path`: lets `vf-validate`/`vf-run` load a candidate file.
+- **Batch b01** (`tasks/generated/b01_claude/`, generator `claude-code (claude-opus-5-5)`, prompt `generate_v1`): 10 seeds, 10 categories, difficulty 3 easy / 4 medium / 3 hard. 15-36 hidden tests each; 9/10 include a differential test against an independent oracle (for CIDR, `ipaddress.collapse_addresses`).
+  - Funnel: assembled 10/10 (0 format rejects); local check 10/10 (reference passes, **30/30 mutants killed**); `vf-validate` in Prime sandboxes (gold+noop) **10/10 valid**, 0 stray sandboxes. Candidates sha256 `35b678cc0737...`.
+  - Authoring note (honest): one hand-computed expected value in c0006 was wrong (13 vs 12) and was caught by re-derivation before any check ran. This is the class of error the reference-vs-literal check exists to catch.
+
+---
+
 ## 2026-11-18: Published (PRIVATE) + hosted smoke test PASSED
 
 - **Flat layout required:** `prime env push` only detects `*.py` or `<subdir>/__init__.py` directly under the env dir (`commands/env.py:916-932`), so the `uv init --lib` **src/ layout fails** with "No environment Python file found". Moved to `environments/pycode/pycode_env/` (the prime-envs convention). Dataset hash unchanged (`ecb878e9...`). (Possible docs/CLI PR candidate.)
