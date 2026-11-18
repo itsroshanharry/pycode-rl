@@ -79,3 +79,17 @@ def test_no_tests_is_a_grader_error(tmp_path):
     ref = (FIXTURE / "legit" / "reference.py").read_text()
     proc, _ = grade(ref, tmp_path, tests_src="from solution import digit_sum\n")
     assert proc.returncode == 2
+
+
+def test_unicode_decode_error_matches_value_error(tmp_path):
+    # UnicodeDecodeError can't be rebuilt from a message alone; the grader must fall back
+    # to UnicodeError (still a ValueError) so a correct solution is not failed.
+    solution = "def decode(b):\n    return b.decode('utf-8')\n"
+    tests = (
+        "import pytest\nfrom solution import decode\n\n"
+        "def test_ok():\n    assert decode(b'hi') == 'hi'\n\n"
+        "def test_bad_utf8_is_a_value_error():\n    with pytest.raises(ValueError):\n        decode(b'\xff')\n"
+    )
+    proc, result = grade(solution, tmp_path, tests_src=tests)
+    assert proc.returncode == 0, proc.stderr[-2000:]
+    assert result["score"] == 1.0, result

@@ -242,10 +242,16 @@ def _rebuild(msg: dict) -> Exception:
     # Exception subclasses only: a candidate's SystemExit/KeyboardInterrupt must fail
     # the test, never abort the pytest session in this process.
     if isinstance(cls, type) and issubclass(cls, Exception):
-        try:
-            return cls(m)
-        except Exception:
-            pass
+        # Some builtins can't be built from a message alone (UnicodeDecodeError takes 5
+        # args); fall back to the nearest constructible builtin ancestor
+        # (UnicodeError, still a ValueError), so `pytest.raises(ValueError)` still matches.
+        for base in cls.__mro__:
+            if base is Exception or not issubclass(base, Exception):
+                break
+            try:
+                return base(m)
+            except Exception:
+                continue
     return CandidateError(f"{t}: {m}")
 
 
