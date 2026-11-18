@@ -82,10 +82,18 @@ in `meta.json` under "levers":
 - **efficiency** (hard tasks): state the input limits in the docstring (e.g.
   "len(nums) <= 200_000"), include at least one test at that size, and add a sixth
   file `slow.py`: a correct but naive solution (e.g. O(n^2) where O(n log n) is
-  intended). The reference must run the large test in well under 1 second, and
-  `slow.py` must take far longer than the grader's 5-second per-call limit (aim for a
-  40x margin or more, so the result does not depend on machine speed). The pipeline
-  checks that `slow.py` fails.
+  intended). Calibrate N for a **1-vCPU sandbox** with wide margins so CPU jitter
+  can't flip results:
+  - the reference must finish the large call in **under 0.3 s, including argument
+    transfer**;
+  - `slow.py` must need **at least 10x the grader's 5 s per-call limit** (50 s or more) at that N.
+
+  Arguments cross a process boundary as JSON (capped at 8 MB per message, and
+  encoding costs time), so keep one call's arguments under about 1 MB. In practice
+  that means about 20,000-50,000 scalars or small tuples. A quadratic-vs-n log n gap
+  is the right size there; a constant-factor gap is not. The pipeline checks that
+  `slow.py` fails *by timing out*, and `vf-validate` checks that the reference passes
+  inside a real 1-vCPU Prime sandbox.
 - **spec-trap:** rules that are easy to misread (tie-breaks, inclusive vs. exclusive
   bounds, ordering, empty input), each stated explicitly and each covered by a test.
 
