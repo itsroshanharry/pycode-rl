@@ -40,6 +40,26 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
+## 2026-11-18: Batch b03 (first generate_v2 batch) + grader v2 codec
+
+- **b03** (c0021-c0030; seeds s001, s016, s020, s082, s043, s051, s056, s012, s025, s094): 1 easy / 6 medium / 3 hard. Levers recorded per task; c0026 `assign_rooms` and c0027 `rate_limit` use **efficiency** with `slow.py`.
+  - Assembled 30/30; **local check 30/30**, including both `slow.py` files failing by timeout (2 timeouts each).
+  - Authoring errors caught by re-derivation before any run: c0021 (2 week labels), c0022 (2 orderings). That makes 5 hand-computed expected values wrong so far out of several hundred, all caught. This argues for always pairing literal cases with an independent oracle.
+- **Efficiency calibration finding:** the first measurement put c0026 at 3.18 s for its whole test file. The cost was mostly the grader codec: every int was a tagged pair `["i","123"]`, so 30k tuples were about 1.5 MB.
+  - **Grader v2 codec** (`GRADER_VERSION = "2"`): None/bool/int/str travel as native JSON. Tags stay for float/bytes/list/tuple/set/frozenset/dict. Raw JSON floats and any malformed shape are rejected; exact-type checks still reject subclasses.
+  - Round-trip test over all types passed; **cheat suite 27/27 as root**; local check 30/30.
+- **Per-call timings** (Codespace, 2 cores; single call including the process boundary and codec):
+
+  | Task | Reference | `slow.py` |
+  |---|---|---|
+  | c0026 (30k meetings) | **0.114 s** | **42.5 s** |
+  | c0027 (30k requests) | **0.078 s** | **38.9 s** |
+
+  The reference is under the 0.3 s target. `slow.py` is about 8x the 5 s limit on the faster machine, so more on the 1-vCPU sandbox. Note: the whole-file time (`reference_seconds`) includes the trusted test side's own input generation and checking, which doesn't count toward the candidate's call limit.
+- **Hub package is outdated** (old grader v1, no UnicodeDecodeError fix): re-push before the next hosted run.
+
+---
+
 ## 2026-11-18: Prompt generate_v2 (difficulty levers)
 
 - **Motivation (user):** company DSA interviews use questions that are hard to answer with AI or recall. Adopt their *principles*, not the questions: real interview questions get posted to LeetCode/GfG and are contaminated.
