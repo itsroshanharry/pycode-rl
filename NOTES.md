@@ -13,6 +13,9 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
   - 102 seeds (`pipeline/prompts/seeds.jsonl`) and prompt `generate_v1.md`.
   - **Batch b01:** 10 Claude-written candidates, all passing assembly, local check (30/30 authored mutants killed) and `vf-validate` (10/10).
   - Test-strength check (`02b`) on b01: mutation 0.949 mean, all 17 survivors equivalent, branch coverage 100%, hard-code fake fails on all 10, 0 flagged.
+  - **Batch b02** (c0011-c0020, prompt v1): all gates passed, `vf-validate` 20/20. The automatic mutants exposed 3 real test gaps (c0012, c0019), which are fixed.
+  - **Grader fixed** (UnicodeDecodeError false negative). The Hub package 0.1.0 is outdated, so re-push before the next hosted run.
+  - **Prompt `generate_v2.md`** (difficulty levers twist/combo/efficiency/spec-trap) is ready; **b03 onward use v2.**
 - **Wallet:** about $9.98 (about $0.02 spent). The user has not set a dashboard usage limit yet.
 
 **Agreed decisions (don't relitigate):**
@@ -25,7 +28,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 **Next steps, in order:**
 1. ~~Review the 02b results on b01~~ done: 0 flagged.
-2. Write batches b02-b05 (40 more Claude candidates, 10 per batch, 3 easy / 4 medium / 3 hard, new seeds each), each through assemble -> 02a -> 02b -> vf-validate.
+2. Write batches b03-b05 (30 more Claude candidates with **generate_v2**, 10 per batch, new seeds each; hard tasks get `slow.py`), each through assemble -> 02a -> 02b (inspect survivors) -> vf-validate. b01-b02 done.
 3. Write `01b_generate_api.py` (cheap model not on the leaderboard, same template) for about 450 more candidates; run the same gates. Report pass rates per generator.
 4. Pilot (20 tasks x 4 rollouts) to measure $/rollout and truncation.
 5. Difficulty filter (-r 8, temperature 1.0, keep 1/8..7/8; 0/8 -> one stronger-model try, then manual). Ask first (> $1).
@@ -57,7 +60,13 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
   - **The published Hub package (0.1.0) still has the old grader**, so re-push before the next hosted run.
 - **Batch b02** (`tasks/generated/b02_claude/`, c0011-c0020; seeds s005, s026, s033, s021, s088, s078, s092, s041, s035, s052): difficulty 3 easy / 5 medium / 2 hard (labels honest rather than forced to 3/4/3; the difficulty filter measures real difficulty).
   - Skipped seeds that are famous puzzles (Roman numerals = LeetCode 13, text justification = LeetCode 68, rectangle union area = LeetCode 850).
-  - Funnel: assembled 10/10; local check 10/10 (30/30 authored mutants killed); test-strength and vf-validate results below once run.
+  - Funnel: assembled 10/10; local check 10/10 (30/30 authored mutants killed). On all 20 candidates: `02b` mean mutation 0.950, 0 flagged (c0019 line coverage 0.977, branch 0.975; the uncovered line is the unreachable unknown-schema-type error); **`vf-validate` 20/20 valid**, 0 stray sandboxes.
+  - **The automatic mutants found 3 real test gaps that my 3 authored mutants missed**. The other 14 b02 survivors were inspected and are equivalent (e.g. checksum `data[i-1]` instead of `data[i+1]` sums the same set of low bytes; round-robin over-long slice only beyond index n-1).
+    1. c0012: deleting the "stray `$`" raise is undetected; `"$ab}"` would substitute `b`.
+    2. c0012: breaking the unclosed-`${` check is undetected; `"${ab"` loops forever (tests only had a 1-char name).
+    3. c0019: a list schema without `"items"` was untested; mutant `or 'items' in schema` crashes there.
+  - **Fix:** tests added (`"$ab}"`, `"x$ya}z"`, `"${ab"`, `"x ${abc"`, `"${a:-x"`; list schemas without items). 02a still 20/20; 02b rerun to confirm.
+  - **Process lesson for REPORT:** the authored mutants are a necessary gate, but the automatic ones are what make the "tests are strong" claim author-independent. Inspect surviving auto-mutants per task: survivors are either equivalent (fine) or a real gap (strengthen the tests).
 
 ---
 
