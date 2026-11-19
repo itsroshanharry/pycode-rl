@@ -1,0 +1,1 @@
+{"id": "pc-c-0067", "entry_point": "invoice_tax_diff", "topic": "rounding", "difficulty_hint": "easy", "seed_id": "s048", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["spec-trap"]}
