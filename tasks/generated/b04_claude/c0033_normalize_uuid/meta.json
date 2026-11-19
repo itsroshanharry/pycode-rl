@@ -1,0 +1,1 @@
+{"id": "pc-c-0033", "entry_point": "normalize_uuid", "topic": "identifier canonicalization", "difficulty_hint": "easy", "seed_id": "s015", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["spec-trap"]}

@@ -1,0 +1,1 @@
+{"id": "pc-c-0036", "entry_point": "parse_dotenv", "topic": "config file parsing with quoting", "difficulty_hint": "medium", "seed_id": "s024", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["spec-trap", "combo"]}
