@@ -1,0 +1,1 @@
+{"id": "pc-c-0047", "entry_point": "include_order", "topic": "graph ordering", "difficulty_hint": "medium", "seed_id": "s037", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["combo", "spec-trap"]}

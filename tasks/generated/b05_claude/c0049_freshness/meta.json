@@ -1,0 +1,1 @@
+{"id": "pc-c-0049", "entry_point": "freshness", "topic": "http caching", "difficulty_hint": "medium", "seed_id": "s083", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["spec-trap"]}

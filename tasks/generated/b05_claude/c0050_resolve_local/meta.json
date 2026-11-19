@@ -1,0 +1,1 @@
+{"id": "pc-c-0050", "entry_point": "resolve_local", "topic": "time zone offsets", "difficulty_hint": "hard", "seed_id": "s006", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["efficiency", "combo", "spec-trap"]}
