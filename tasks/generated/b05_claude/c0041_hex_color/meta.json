@@ -1,0 +1,1 @@
+{"id": "pc-c-0041", "entry_point": "hex_color", "topic": "format normalization", "difficulty_hint": "easy", "seed_id": "s098", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["spec-trap"]}

@@ -1,0 +1,1 @@
+{"id": "pc-c-0046", "entry_point": "run_jobs", "topic": "scheduling simulation", "difficulty_hint": "medium", "seed_id": "s054", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["combo", "spec-trap"]}

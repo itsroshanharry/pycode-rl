@@ -1,0 +1,1 @@
+{"id": "pc-c-0045", "entry_point": "league_table", "topic": "ranking with tie-breakers", "difficulty_hint": "hard", "seed_id": "s070", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["combo", "spec-trap"]}
