@@ -1,0 +1,1 @@
+{"id": "pc-c-0057", "entry_point": "point_in_polygon", "topic": "computational geometry", "difficulty_hint": "medium", "seed_id": "s074", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["spec-trap"]}
