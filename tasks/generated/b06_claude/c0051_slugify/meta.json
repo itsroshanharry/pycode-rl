@@ -1,0 +1,1 @@
+{"id": "pc-c-0051", "entry_point": "slugify", "topic": "text normalization", "difficulty_hint": "easy", "seed_id": "s018", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["spec-trap"]}
