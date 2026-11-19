@@ -16,8 +16,8 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
   - **Batch b02** (c0011-c0020, prompt v1): all gates passed, `vf-validate` 20/20. The automatic mutants exposed 3 real test gaps (c0012, c0019), which are fixed.
   - **Grader fixed** (UnicodeDecodeError false negative). The Hub package 0.1.0 is outdated, so re-push before the next hosted run.
   - **Prompt `generate_v2.md`** (difficulty levers twist/combo/efficiency/spec-trap) is ready; **b03 onward use v2.**
-  - **b03-b05** (c0021-c0050, v2): all gates passed. **50 candidates total, 50/50 `vf-validate` valid** (runs `b05-validate` + `b05-validate-retry47`, 2026-11-19).
-- **Wallet:** $9.954 (about $0.05 spent). The user has not set a dashboard usage limit yet.
+  - **b03-b06** (c0021-c0060, v2): all gates passed. **60 candidates total, 60/60 `vf-validate` valid** (run `b06-validate`, 2026-11-19).
+- **Wallet:** $9.948 (about $0.05 spent). The user has not set a dashboard usage limit yet.
 
 **Agreed decisions (don't relitigate):**
 - function-level tasks (no repo pivot);
@@ -30,7 +30,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 **Next steps, in order:**
 1. ~~Review the 02b results on b01~~ done: 0 flagged.
 2. ~~Re-push the Hub package~~ **done:** `itsroshanharry/pycode-env` **0.1.1** (PRIVATE, wheel sha256 `8ea95510...`). Hosted smoke run `tajnohon1b6p3cf6hhmksirk`: 2/2 reward 1.0, 0% error/truncation; the trace shows `grader: "2"`, `isolated: true`, `temperature: 0.0`. Wallet $9.98.
-3. **Keep writing Claude batches b04, b05, ...** (user decision 2026-11-19: as many as possible). Each batch: 10 tasks with **generate_v2**, new seeds; hard efficiency tasks get `slow.py`; commit after every few tasks; then assemble -> 02a -> 02b (inspect survivors) -> vf-validate. **b01-b05 done: 50 candidates, all valid.** Next batch b06 starts at c0051. Seeds used so far: s006, s009, s037, s050, s054, s070, s072, s083, s086, s098, s002, s004, s007, s008, s013, s014, s015, s022, s023, s024, s001, s003, s005, s011, s012, s016, s019, s020, s021, s025, s026, s031, s033, s035, s040, s041, s043, s051, s052, s055, s056, s066, s071, s078, s081, s082, s088, s092, s093, s094.
+3. **Keep writing Claude batches b04, b05, ...** (user decision 2026-11-19: as many as possible). Each batch: 10 tasks with **generate_v2**, new seeds; hard efficiency tasks get `slow.py`; commit after every few tasks; then assemble -> 02a -> 02b (inspect survivors) -> vf-validate. **b01-b06 done: 60 candidates, all valid.** Next batch b07 starts at c0061. Seeds used so far: s017, s018, s030, s032, s047, s063, s074, s079, s087, s090, s006, s009, s037, s050, s054, s070, s072, s083, s086, s098, s002, s004, s007, s008, s013, s014, s015, s022, s023, s024, s001, s003, s005, s011, s012, s016, s019, s020, s021, s025, s026, s031, s033, s035, s040, s041, s043, s051, s052, s055, s056, s066, s071, s078, s081, s082, s088, s092, s093, s094.
 4. Write `01b_generate_api.py` (cheap model not on the leaderboard, same template) for about 450 more candidates; run the same gates. Report pass rates per generator.
 5. Pilot (20 tasks x 4 rollouts) to measure $/rollout and truncation.
 6. Difficulty filter (-r 8, temperature 1.0, keep 1/8..7/8; 0/8 -> one stronger-model try, then manual). Ask first (> $1).
@@ -42,6 +42,20 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 **User preferences:** plain language, technical terms explained in brackets, concise answers. Ask before spending more than $1 or doing anything outward-facing.
 
 ---
+
+## 2026-11-19: Batch b06 (generate_v2)
+
+- **b06** (c0051-c0060; seeds s018, s030, s017, s032, s079, s087, s074, s047, s063, s090): 2 easy, 6 medium, 2 hard (overtime_pay, checkouts).
+  - Tasks: slugify (ASCII-only lowercasing; the Kelvin sign trap), format_number (locale grouping such as Indian [3, 2], banker's rounding, no "-0"), resolve_import (Python relative imports, `importlib._resolve_name` rule), deep_merge (None deletes, lists replaced, conflict policy + path message), convert_base (exact fractions, truncation), packbits (exact encoder rule; matches Apple TN1023 example), point_in_polygon (exact integer even-odd, boundary inside), overtime_pay (daily/weekly/seventh-day; max not stack), checkouts (darts; unordered earlier darts), to_e164 ("(0)" marker, 00 prefix, trunk prefix once).
+  - Gates: assembled 60/60; **02a 60/60**; **02b b06 mean 0.949, 0 flagged**; **vf-validate 60/60**.
+- **Expected values I computed by hand were wrong 6 times** (format_number grouping, a base-36 constant, a polygon point, 3 overtime totals). Each time the reference and an independent random-test oracle agreed, and the hand value was the outlier. For c0059 I computed counts by brute force (all ordered dart sequences, then deduplicated) instead of by hand. **Lesson for REPORT.md:** author-written expected values are a real error source, which is why every task also has an independent oracle or brute-force check.
+- **Auto-mutant survivors, b06:**
+  - **1 real gap**, fixed: c0055 accepted base 1 when the input was "0".
+  - **The rest are equivalent.** Examples:
+    - c0057 `(i - 1) % n` walks the same edges in reverse, and even-odd does not care about direction.
+    - c0059 rank shifts: the treble/double/single tie-break only ever decides treble vs. single.
+    - c0058 `+121` vs `+120` rounding on an always-even numerator.
+  - Running tally of real gaps: **10**.
 
 ## 2026-11-19: Decisions: harness comparison stretch + naming the generation method
 
