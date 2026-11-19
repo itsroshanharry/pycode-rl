@@ -68,6 +68,18 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
   2. Switch to **isolated scoring** (fresh sandbox, only `solution.py` copied as an artifact). With a shell, the agent could tamper with the grader script or pytest that `setup` installed in its own sandbox.
   3. Extend the cheat suite with shell-based attacks.
   4. Pilot the cost first (multi-turn = more tokens + sandbox minutes); ask before spending > $1.
+- **Why isolated scoring (Pattern 1) and not single-container grading (Pattern 2) for `bash`:**
+  - Today's single-turn setup is effectively a light Pattern 2: hidden tests are written only at scoring time, and the candidate runs as uid 65534. That is safe only because the `null` harness gives the model no shell.
+  - Under `bash`, `setup` has already installed the grader's pytest inside the agent's own sandbox, and the agent likely runs as root there. It could edit pytest or the uv cache, plant `sitecustomize.py` (Python runs it automatically at startup), or leave a background process that rewrites files during grading.
+  - A fresh grading sandbox that receives only the `solution.py` artifact (hidden tests staged via `stage_verifier`) removes all of that.
+- **Full checklist (more than a config flag; one Hub package, harness chosen per run):**
+  1. The solution comes from `/work/solution.py` under `bash` and from the last reply under `null`.
+  2. Isolated scoring with `solution.py` as the only artifact; hidden tests and the grader enter through `stage_verifier`.
+  3. New cheat tests for shell attacks (grader/pytest edits, sitecustomize, background processes, files outside /work).
+  4. Test with a real `vf-run` rollout: `vf-validate` does not call `stage_verifier` in isolated mode.
+  5. Push timing: hosted runs use `@latest`, so push the bash-capable version before the leaderboard starts or after it ends, never during.
+  6. Cost: multi-turn context grows every turn (likely 5-10x tokens per rollout); full sandbox rate is about $0.034-0.046/hr, not $0.02. Pilot first and ask before > $1.
+  7. Statistics: about 20 test tasks x 2 rollouts gives roughly ±15-20-point intervals. Use a paired design (same tasks, both harnesses) and claim only clear effects.
 - **Name of the generation method:** "seed-grounded synthesis" is our own label. Closest published methods:
   - **OSS-Instruct (Magicoder, Wei et al., 2023)** grounds each generated coding problem in a real-world open-source code snippet, so problems don't collapse into textbook clones. Ours grounds each task in a short real-world *rule* (a format, protocol or business rule; `meta.seed`) instead of a code snippet.
   - **Self-Instruct (Wang et al., 2022)** bootstraps from about 175 hand-written seed tasks ("seed-based synthesis").
