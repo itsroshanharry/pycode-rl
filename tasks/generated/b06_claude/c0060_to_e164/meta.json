@@ -1,0 +1,1 @@
+{"id": "pc-c-0060", "entry_point": "to_e164", "topic": "phone number normalization", "difficulty_hint": "medium", "seed_id": "s090", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["spec-trap"]}
