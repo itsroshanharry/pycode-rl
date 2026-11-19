@@ -29,7 +29,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 **Next steps, in order:**
 1. ~~Review the 02b results on b01~~ done: 0 flagged.
 2. ~~Re-push the Hub package~~ **done:** `itsroshanharry/pycode-env` **0.1.1** (PRIVATE, wheel sha256 `8ea95510...`). Hosted smoke run `tajnohon1b6p3cf6hhmksirk`: 2/2 reward 1.0, 0% error/truncation; the trace shows `grader: "2"`, `isolated: true`, `temperature: 0.0`. Wallet $9.98.
-3. Write batches b04-b05 (20 more Claude candidates with **generate_v2**, 10 per batch, new seeds each; hard tasks with efficiency get `slow.py`), each through assemble -> 02a -> 02b (inspect survivors) -> vf-validate. **b01-b03 done: 30 candidates, all valid.**
+3. **Keep writing Claude batches b04, b05, ...** (user decision 2026-11-19: as many as possible). Each batch: 10 tasks with **generate_v2**, new seeds; hard efficiency tasks get `slow.py`; commit after every few tasks; then assemble -> 02a -> 02b (inspect survivors) -> vf-validate. **b01-b03 done: 30 candidates, all valid.** Seeds used so far: s001, s003, s005, s011, s012, s016, s019, s020, s021, s025, s026, s031, s033, s035, s040, s041, s043, s051, s052, s055, s056, s066, s071, s078, s081, s082, s088, s092, s093, s094.
 4. Write `01b_generate_api.py` (cheap model not on the leaderboard, same template) for about 450 more candidates; run the same gates. Report pass rates per generator.
 5. Pilot (20 tasks x 4 rollouts) to measure $/rollout and truncation.
 6. Difficulty filter (-r 8, temperature 1.0, keep 1/8..7/8; 0/8 -> one stronger-model try, then manual). Ask first (> $1).
