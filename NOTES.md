@@ -35,12 +35,29 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 5. Pilot (20 tasks x 4 rollouts) to measure $/rollout and truncation.
 6. Difficulty filter (-r 8, temperature 1.0, keep 1/8..7/8; 0/8 -> one stronger-model try, then manual). Ask first (> $1).
 7. Contamination (`04_contamination.py`), split (`05`), audit 40 tasks (`06`), freeze the dataset hash, push, leaderboard, REPORT.md.
+8. **Stretch, after the leaderboard (decided 2026-11-19):** a single-turn (`null` harness) vs multi-turn (`bash` harness) comparison on the same test tasks and models. See the decision entry below for what has to change.
 
 **How to run things:** see CLAUDE.md section 3 (Codespace workflow), section 7 (gate order) and section 9 (hosted command).
 
 **User preferences:** plain language, technical terms explained in brackets, concise answers. Ask before spending more than $1 or doing anything outward-facing.
 
 ---
+
+## 2026-11-19: Decisions: harness comparison stretch + naming the generation method
+
+- **What pycode-env is today (say it accurately):** a **single-turn** executable coding environment.
+  - It uses the `null` harness: the model replies once with code, never runs it, and gets no feedback.
+  - Hidden tests then run in a Prime sandbox behind the isolated grader.
+  - It is not a multi-turn agent environment yet. An external answer claimed it used a bash tool loop; that claim was wrong and must not go in an interview pitch.
+- **Stretch goal (after the leaderboard):** the same test tasks and models under the `null` and the `bash` harness, reporting the pass-rate gain from an act -> observe -> debug loop. That is the "harness vs. model" question. Neither harness is simply better: single-turn is the clean, cheap baseline; multi-turn is more realistic but several times costlier and noisier. Changes needed for `bash`:
+  1. Grade `/work/solution.py` from the sandbox instead of the last reply.
+  2. Switch to **isolated scoring** (fresh sandbox, only `solution.py` copied as an artifact). With a shell, the agent could tamper with the grader script or pytest that `setup` installed in its own sandbox.
+  3. Extend the cheat suite with shell-based attacks.
+  4. Pilot the cost first (multi-turn = more tokens + sandbox minutes); ask before spending > $1.
+- **Name of the generation method:** "seed-grounded synthesis" is our own label. Closest published methods:
+  - **OSS-Instruct (Magicoder, Wei et al., 2023)** grounds each generated coding problem in a real-world open-source code snippet, so problems don't collapse into textbook clones. Ours grounds each task in a short real-world *rule* (a format, protocol or business rule; `meta.seed`) instead of a code snippet.
+  - **Self-Instruct (Wang et al., 2022)** bootstraps from about 175 hand-written seed tasks ("seed-based synthesis").
+  - Interview phrasing: "seed-grounded synthesis, in the spirit of OSS-Instruct."
 
 ## 2026-11-19: Batch b05 (generate_v2)
 
