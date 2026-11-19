@@ -1,0 +1,1 @@
+{"id": "pc-c-0061", "entry_point": "log_counts", "topic": "log aggregation", "difficulty_hint": "medium", "seed_id": "s027", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["spec-trap"]}
