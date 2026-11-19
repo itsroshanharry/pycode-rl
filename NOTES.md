@@ -4,7 +4,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
-## CURRENT STATUS (read this first in a new session), updated 2026-11-18
+## CURRENT STATUS (read this first in a new session), updated 2026-11-19
 
 **Where we are:** Phase 1 done; plan step 3 done; plan step 4 (generation) in progress.
 - **Environment** `pycode-env` (single-function tasks, `null` harness default, shared scoring, isolated grader): built, cheat suite 26/26, 10 hand-written tasks valid in Prime sandboxes.
@@ -16,7 +16,8 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
   - **Batch b02** (c0011-c0020, prompt v1): all gates passed, `vf-validate` 20/20. The automatic mutants exposed 3 real test gaps (c0012, c0019), which are fixed.
   - **Grader fixed** (UnicodeDecodeError false negative). The Hub package 0.1.0 is outdated, so re-push before the next hosted run.
   - **Prompt `generate_v2.md`** (difficulty levers twist/combo/efficiency/spec-trap) is ready; **b03 onward use v2.**
-- **Wallet:** about $9.98 (about $0.02 spent). The user has not set a dashboard usage limit yet.
+  - **b03 + b04** (c0021-c0040, v2): all gates passed. **40 candidates total, 40/40 `vf-validate` valid** (run `b04-validate`, 2026-11-19).
+- **Wallet:** $9.958 (about $0.04 spent). The user has not set a dashboard usage limit yet.
 
 **Agreed decisions (don't relitigate):**
 - function-level tasks (no repo pivot);
@@ -29,7 +30,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 **Next steps, in order:**
 1. ~~Review the 02b results on b01~~ done: 0 flagged.
 2. ~~Re-push the Hub package~~ **done:** `itsroshanharry/pycode-env` **0.1.1** (PRIVATE, wheel sha256 `8ea95510...`). Hosted smoke run `tajnohon1b6p3cf6hhmksirk`: 2/2 reward 1.0, 0% error/truncation; the trace shows `grader: "2"`, `isolated: true`, `temperature: 0.0`. Wallet $9.98.
-3. **Keep writing Claude batches b04, b05, ...** (user decision 2026-11-19: as many as possible). Each batch: 10 tasks with **generate_v2**, new seeds; hard efficiency tasks get `slow.py`; commit after every few tasks; then assemble -> 02a -> 02b (inspect survivors) -> vf-validate. **b01-b03 done: 30 candidates, all valid.** Seeds used so far: s001, s003, s005, s011, s012, s016, s019, s020, s021, s025, s026, s031, s033, s035, s040, s041, s043, s051, s052, s055, s056, s066, s071, s078, s081, s082, s088, s092, s093, s094.
+3. **Keep writing Claude batches b04, b05, ...** (user decision 2026-11-19: as many as possible). Each batch: 10 tasks with **generate_v2**, new seeds; hard efficiency tasks get `slow.py`; commit after every few tasks; then assemble -> 02a -> 02b (inspect survivors) -> vf-validate. **b01-b04 done: 40 candidates, all valid.** Next batch b05 starts at c0041. Seeds used so far: s002, s004, s007, s008, s013, s014, s015, s022, s023, s024, s001, s003, s005, s011, s012, s016, s019, s020, s021, s025, s026, s031, s033, s035, s040, s041, s043, s051, s052, s055, s056, s066, s071, s078, s081, s082, s088, s092, s093, s094.
 4. Write `01b_generate_api.py` (cheap model not on the leaderboard, same template) for about 450 more candidates; run the same gates. Report pass rates per generator.
 5. Pilot (20 tasks x 4 rollouts) to measure $/rollout and truncation.
 6. Difficulty filter (-r 8, temperature 1.0, keep 1/8..7/8; 0/8 -> one stronger-model try, then manual). Ask first (> $1).
@@ -40,6 +41,31 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 **User preferences:** plain language, technical terms explained in brackets, concise answers. Ask before spending more than $1 or doing anything outward-facing.
 
 ---
+
+## 2026-11-19: Batch b04 (generate_v2)
+
+- **b04** (c0031-c0040; seeds s007, s008, s015, s013, s014, s024, s023, s022, s004, s002): 3 easy / 5 medium / 2 hard.
+  - Tasks: format_duration, fiscal_label, normalize_uuid, check_iban, isbn_convert, parse_dotenv, toc_numbers, negotiate (HTTP Accept), cron_next, utc_order (RFC 3339).
+  - `pipeline/quick_selfcheck.py` (new) runs each task's tests against its own reference on Windows. It runs author code only, never model output, and catches authoring slips before the Codespace round trip.
+  - Assembled 40/40; **02a 40/40**; **02b b04 mean 0.975, 0 flagged**; **vf-validate 40/40** (gold + noop).
+- **cron_next efficiency design** (worth explaining in interviews):
+  - A naive minute-by-minute scan was faster than expected (8 years in 0.38 s), so a 100-year horizon would not separate it from good code.
+  - Fix: make the horizon the format's own limit, **9999-12-31T23:59**, so a match that never comes means scanning until then.
+    - The minute scan needs billions of steps, so `slow.py` times out on all 3 never-match tests.
+    - A day-by-day scan passes: 0.66 s from year 7000.
+    - The reference walks month by month (about 0.03 s).
+  - The never-match tests start at years 7000 or later, on purpose. From year 0001 a day scan takes 2.2 s, too close to the 5 s limit on a slower sandbox, which would make grading flaky (sometimes pass, sometimes fail).
+  - The random test never generates the impossible combination "31" with month "2", so no random call can turn into a scan to year 9999.
+- **Auto-mutant survivors, b04** (10 total):
+  - **9 equivalent** (the code behaves the same either way):
+    - zip truncating extra weights (c0035, two of them);
+    - a bad check character still raising the same ValueError (c0035);
+    - the specificity rank 2->3 and two default-0->-1 changes (c0038);
+    - step 0 already raising inside `range` (c0039);
+    - an over-long slice (c0040);
+    - an equality case that can never happen (c0031).
+  - **1 real gap:** c0039 `range(1, dim + 1)` -> `dim + 2` let the code return a nonexistent date, "2024-04-31". Fixed with 3 month-end weekday tests; the survivor is now killed (0.975).
+- Authoring slip: a bash heredoc broke on the quote characters in c0038's token regex, so the files were written with the Write tool instead. No data impact.
 
 ## 2026-11-18: Batch b03 (first generate_v2 batch) + grader v2 codec
 
