@@ -1,0 +1,1 @@
+{"id": "pc-c-0031", "entry_point": "format_duration", "topic": "duration formatting with rounding", "difficulty_hint": "easy", "seed_id": "s007", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["spec-trap"]}
