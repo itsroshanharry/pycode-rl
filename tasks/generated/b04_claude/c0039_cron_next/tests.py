@@ -39,6 +39,10 @@ from solution import cron_next
         ("0 12 31 12 *", "9999-12-31T12:00", None),
         ("* * * * *", "9999-12-31T23:59", None),
         ("59 23 31 12 *", "2024-12-31T23:58", "2024-12-31T23:59"),
+        # Month end with a weekday field: there is no April 31, the next Wednesday is May 1.
+        ("0 0 * * 3", "2024-04-30T00:00", "2024-05-01T00:00"),
+        ("0 0 15 * 3", "2024-04-30T00:00", "2024-05-01T00:00"),
+        ("0 0 * * 4", "2023-02-28T00:00", "2023-03-02T00:00"),
     ],
 )
 def test_examples(expr, after, expected):
