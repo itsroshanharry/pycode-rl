@@ -1,0 +1,1 @@
+{"id": "pc-c-0039", "entry_point": "cron_next", "topic": "schedule matching", "difficulty_hint": "hard", "seed_id": "s004", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["combo", "spec-trap", "efficiency"]}

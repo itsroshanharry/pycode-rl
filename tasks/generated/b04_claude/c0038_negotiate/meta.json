@@ -1,0 +1,1 @@
+{"id": "pc-c-0038", "entry_point": "negotiate", "topic": "http content negotiation", "difficulty_hint": "hard", "seed_id": "s022", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["combo", "spec-trap"]}
