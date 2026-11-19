@@ -16,8 +16,8 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
   - **Batch b02** (c0011-c0020, prompt v1): all gates passed, `vf-validate` 20/20. The automatic mutants exposed 3 real test gaps (c0012, c0019), which are fixed.
   - **Grader fixed** (UnicodeDecodeError false negative). The Hub package 0.1.0 is outdated, so re-push before the next hosted run.
   - **Prompt `generate_v2.md`** (difficulty levers twist/combo/efficiency/spec-trap) is ready; **b03 onward use v2.**
-  - **b03 + b04** (c0021-c0040, v2): all gates passed. **40 candidates total, 40/40 `vf-validate` valid** (run `b04-validate`, 2026-11-19).
-- **Wallet:** $9.958 (about $0.04 spent). The user has not set a dashboard usage limit yet.
+  - **b03-b05** (c0021-c0050, v2): all gates passed. **50 candidates total, 50/50 `vf-validate` valid** (runs `b05-validate` + `b05-validate-retry47`, 2026-11-19).
+- **Wallet:** $9.954 (about $0.05 spent). The user has not set a dashboard usage limit yet.
 
 **Agreed decisions (don't relitigate):**
 - function-level tasks (no repo pivot);
@@ -30,7 +30,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 **Next steps, in order:**
 1. ~~Review the 02b results on b01~~ done: 0 flagged.
 2. ~~Re-push the Hub package~~ **done:** `itsroshanharry/pycode-env` **0.1.1** (PRIVATE, wheel sha256 `8ea95510...`). Hosted smoke run `tajnohon1b6p3cf6hhmksirk`: 2/2 reward 1.0, 0% error/truncation; the trace shows `grader: "2"`, `isolated: true`, `temperature: 0.0`. Wallet $9.98.
-3. **Keep writing Claude batches b04, b05, ...** (user decision 2026-11-19: as many as possible). Each batch: 10 tasks with **generate_v2**, new seeds; hard efficiency tasks get `slow.py`; commit after every few tasks; then assemble -> 02a -> 02b (inspect survivors) -> vf-validate. **b01-b04 done: 40 candidates, all valid.** Next batch b05 starts at c0041. Seeds used so far: s002, s004, s007, s008, s013, s014, s015, s022, s023, s024, s001, s003, s005, s011, s012, s016, s019, s020, s021, s025, s026, s031, s033, s035, s040, s041, s043, s051, s052, s055, s056, s066, s071, s078, s081, s082, s088, s092, s093, s094.
+3. **Keep writing Claude batches b04, b05, ...** (user decision 2026-11-19: as many as possible). Each batch: 10 tasks with **generate_v2**, new seeds; hard efficiency tasks get `slow.py`; commit after every few tasks; then assemble -> 02a -> 02b (inspect survivors) -> vf-validate. **b01-b05 done: 50 candidates, all valid.** Next batch b06 starts at c0051. Seeds used so far: s006, s009, s037, s050, s054, s070, s072, s083, s086, s098, s002, s004, s007, s008, s013, s014, s015, s022, s023, s024, s001, s003, s005, s011, s012, s016, s019, s020, s021, s025, s026, s031, s033, s035, s040, s041, s043, s051, s052, s055, s056, s066, s071, s078, s081, s082, s088, s092, s093, s094.
 4. Write `01b_generate_api.py` (cheap model not on the leaderboard, same template) for about 450 more candidates; run the same gates. Report pass rates per generator.
 5. Pilot (20 tasks x 4 rollouts) to measure $/rollout and truncation.
 6. Difficulty filter (-r 8, temperature 1.0, keep 1/8..7/8; 0/8 -> one stronger-model try, then manual). Ask first (> $1).
@@ -41,6 +41,25 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 **User preferences:** plain language, technical terms explained in brackets, concise answers. Ask before spending more than $1 or doing anything outward-facing.
 
 ---
+
+## 2026-11-19: Batch b05 (generate_v2)
+
+- **b05** (c0041-c0050; seeds s098, s086, s009, s072, s070, s054, s037, s050, s083, s006): 2 easy (hex_color, age_parts), 6 medium, 2 hard (league_table, resolve_local).
+  - Tasks: hex_color, unpack_bits, age_parts, allocate_cents, league_table (head-to-head mini-table), run_jobs (priority aging), include_order (cycle chain message, 5000-deep chains), commissions (round the running total, not each sale), freshness (Cache-Control/Expires), resolve_local (UTC from local time across offset changes).
+  - Seeds skipped on purpose because their natural form is a known LeetCode problem (contamination risk): s099 text justification (LC 68), s073 rectangle union area (LC 850), s010 employee free time (LC 759).
+  - **resolve_local efficiency:** reference (bisect) 0.02 s vs `slow.py` (every period per query) about 50 s for 40k queries x 20k transitions (argument about 0.93 MB). 02a: slow times out (1 timeout).
+  - Gates: assembled 50/50; **02a 50/50**; **02b b05 mean 0.953, 0 flagged**; **vf-validate 50/50**.
+  - **vf-validate infra fault:** a sandbox provisioning HTTP 500 hit pc-c-0027's noop check; its gold check passed in the same run. It was recorded as `error`, not `invalid` (correct: an infra fault must never count as a task failure). Re-running idx 47 alone was valid. Worth a REPORT.md line on why errors and invalid results are kept separate.
+- **Authoring slips caught by `quick_selfcheck`** (my hand arithmetic in tests, not the references): c0048 had 2 wrong expected values (-1000 should be -1500; 299700100 should be 299899900).
+- **c0042 authored mutant survived 02a** (2/3): the duplicate-key test only had `a` before `a!`. Added the reverse order; now 3/3.
+- **Auto-mutant survivors, b05:**
+  - 15 equivalent, e.g. negative inputs that still raise the same ValueError by another route, equal shifts of every team's starting stats, and rounding hiding ±1 in a redundant guard.
+  - **3 real gaps, fixed:**
+    - c0044: a total of -1 never took the negative branch;
+    - c0045: head-to-head points must outrank head-to-head goal difference;
+    - c0045: head-to-head goals scored as the final key.
+    - Each now has a hand-built league test with totals equalized through an outside team.
+- Running tally of real test gaps found by auto-mutants: 9 (c0012, c0019 x2 counted as one, c0023, c0029, c0039, c0044, c0045 x2), all fixed.
 
 ## 2026-11-19: Batch b04 (generate_v2)
 
