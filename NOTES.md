@@ -16,8 +16,8 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
   - **Batch b02** (c0011-c0020, prompt v1): all gates passed, `vf-validate` 20/20. The automatic mutants exposed 3 real test gaps (c0012, c0019), which are fixed.
   - **Grader fixed** (UnicodeDecodeError false negative). The Hub package 0.1.0 is outdated, so re-push before the next hosted run.
   - **Prompt `generate_v2.md`** (difficulty levers twist/combo/efficiency/spec-trap) is ready; **b03 onward use v2.**
-  - **b03-b06** (c0021-c0060, v2): all gates passed. **60 candidates total, 60/60 `vf-validate` valid** (run `b06-validate`, 2026-11-19).
-- **Wallet:** $9.948 (about $0.05 spent). The user has not set a dashboard usage limit yet.
+  - **b03-b07** (c0021-c0070, v2): all gates passed. **70 candidates total, 70/70 `vf-validate` valid** (run `b07-validate`, 2026-11-19).
+- **Wallet:** $9.941 (about $0.06 spent). The user has not set a dashboard usage limit yet.
 
 **Agreed decisions (don't relitigate):**
 - function-level tasks (no repo pivot);
@@ -30,7 +30,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 **Next steps, in order:**
 1. ~~Review the 02b results on b01~~ done: 0 flagged.
 2. ~~Re-push the Hub package~~ **done:** `itsroshanharry/pycode-env` **0.1.1** (PRIVATE, wheel sha256 `8ea95510...`). Hosted smoke run `tajnohon1b6p3cf6hhmksirk`: 2/2 reward 1.0, 0% error/truncation; the trace shows `grader: "2"`, `isolated: true`, `temperature: 0.0`. Wallet $9.98.
-3. **Keep writing Claude batches b04, b05, ...** (user decision 2026-11-19: as many as possible). Each batch: 10 tasks with **generate_v2**, new seeds; hard efficiency tasks get `slow.py`; commit after every few tasks; then assemble -> 02a -> 02b (inspect survivors) -> vf-validate. **b01-b06 done: 60 candidates, all valid.** Next batch b07 starts at c0061. Seeds used so far: s017, s018, s030, s032, s047, s063, s074, s079, s087, s090, s006, s009, s037, s050, s054, s070, s072, s083, s086, s098, s002, s004, s007, s008, s013, s014, s015, s022, s023, s024, s001, s003, s005, s011, s012, s016, s019, s020, s021, s025, s026, s031, s033, s035, s040, s041, s043, s051, s052, s055, s056, s066, s071, s078, s081, s082, s088, s092, s093, s094.
+3. **Keep writing Claude batches b04, b05, ...** (user decision 2026-11-19: as many as possible). Each batch: 10 tasks with **generate_v2**, new seeds; hard efficiency tasks get `slow.py`; commit after every few tasks; then assemble -> 02a -> 02b (inspect survivors) -> vf-validate. **b01-b07 done: 70 candidates, all valid.** Next batch b08 starts at c0071. Seeds used so far: s027, s029, s036, s038, s039, s044, s048, s057, s084, s096, s017, s018, s030, s032, s047, s063, s074, s079, s087, s090, s006, s009, s037, s050, s054, s070, s072, s083, s086, s098, s002, s004, s007, s008, s013, s014, s015, s022, s023, s024, s001, s003, s005, s011, s012, s016, s019, s020, s021, s025, s026, s031, s033, s035, s040, s041, s043, s051, s052, s055, s056, s066, s071, s078, s081, s082, s088, s092, s093, s094.
 4. Write `01b_generate_api.py` (cheap model not on the leaderboard, same template) for about 450 more candidates; run the same gates. Report pass rates per generator.
 5. Pilot (20 tasks x 4 rollouts) to measure $/rollout and truncation.
 6. Difficulty filter (-r 8, temperature 1.0, keep 1/8..7/8; 0/8 -> one stronger-model try, then manual). Ask first (> $1).
@@ -42,6 +42,22 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 **User preferences:** plain language, technical terms explained in brackets, concise answers. Ask before spending more than $1 or doing anything outward-facing.
 
 ---
+
+## 2026-11-19: Batch b07 (generate_v2)
+
+- **b07** (c0061-c0070; seeds s027, s029, s036, s038, s039, s044, s048, s084, s096, s057): 2 easy, 7 medium, 1 hard.
+  - Tasks: log_counts, parse_fixed_width (1-based columns), env_overrides (check bool before int), rollout_bucket (FNV-1a over UTF-8 bytes), income_tax (taper, round the total once), apply_discounts (exclusive groups, compounding percents), invoice_tax_diff (halves away from zero), cookies_for (RFC 6265 path-match, Max-Age delete), reconcile (efficiency), elevator_scan (SCAN, not LOOK; checked against a floor-by-floor simulation).
+  - **reconcile efficiency:** reference (bisect per amount pool) 0.46 s vs `slow.py` (all pairs) about 80 s at 20k x 20k with a single amount (argument about 1.1 MB). At 15k the slow version was only about 7x the limit, so 20k was chosen.
+  - Gates: assembled 70/70; **02a 70/70**; **02b b07 mean 0.919 before fixes, 0 flagged**; **vf-validate 70/70**.
+  - My hand-written test values were wrong 3 more times (c0062 a 9-wide record for a 10-wide field, now built with `ljust`; c0063 `___` is a valid `_port` key; c0065 forgot the allowance floor at 0).
+- **Auto-mutant survivors, b07:** **5 real gaps, fixed:**
+  - c0061: CRLF line without a message;
+  - c0062: a short record of only `str` fields;
+  - c0065, two: both hidden by a 20% rate (fixed with rate-100 bands);
+  - c0068: `Max-Age=1` must not delete.
+  - The rest are equivalent (ordering constants, rounding on even numerators, already-removed start floor in c0070).
+  - Running tally of real gaps: **15**.
+- **Caveat for REPORT.md (shared errors):** the self-checks only catch errors where my sources DISAGREE. Reference, oracle and expected values all come from one author, so a misread rule can be wrong the same way in all three and pass every check. Coverage for that: the difficulty-filter triage (0/8 tasks are inspected; often a broken test or unclear spec) and the manual 40-task audit.
 
 ## 2026-11-19: Batch b06 (generate_v2)
 
