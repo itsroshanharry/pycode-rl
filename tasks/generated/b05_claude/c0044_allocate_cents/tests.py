@@ -29,6 +29,9 @@ from solution import allocate_cents
         (10 ** 20 + 1, [1, 1], [5 * 10 ** 19 + 1, 5 * 10 ** 19]),
         (4, [7], [4]),
         (-4, [7], [-4]),
+        (-1, [1, 1], [-1, 0]),
+        (-1, [1, 2, 3], [0, 0, -1]),
+        (1, [1, 2, 3], [0, 0, 1]),
     ],
 )
 def test_examples(total, weights, expected):

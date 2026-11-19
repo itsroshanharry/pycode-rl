@@ -20,6 +20,11 @@ from solution import league_table
         (["P 3-0 Q", "Q 1-0 R", "R 1-0 P", "Oak 5-0 P", "Oak 3-2 Q", "Oak 5-2 R"], ["Oak", "P", "R", "Q"]),
         # two-way tie settled by head-to-head goal difference, against name order
         (["Zed 3-1 Amy", "Amy 1-0 Zed", "Oak 3-0 Zed", "Oak 2-1 Amy"], ["Oak", "Zed", "Amy"]),
+        # head-to-head POINTS outrank head-to-head goal difference (Yak 6 pts / -1, Bat 3 pts / +1)
+        (["Yak 1-0 Bat", "Yak 1-0 Bat", "Bat 3-0 Yak", "Yak 5-0 Owl", "Owl 1-0 Yak", "Bat 2-1 Owl", "Bat 2-1 Owl"],
+         ["Yak", "Bat", "Owl"]),
+        # head-to-head goals scored is the last head-to-head key (P, Q scored 1; Ant 0)
+        (["P 1-1 Q", "Q 0-0 Ant", "Ant 0-0 P", "O 1-0 P", "O 1-0 Q", "O 2-1 Ant"], ["O", "P", "Q", "Ant"]),
         (["Ab 10-0 Cd", "Cd 0-0 Ef"], ["Ab", "Ef", "Cd"]),
         (["lions 1-0 Lions"], ["lions", "Lions"]),
         (["A 0-0 B", "C 0-0 D"], ["A", "B", "C", "D"]),
