@@ -1,0 +1,1 @@
+{"id": "pc-c-0069", "entry_point": "reconcile", "topic": "record matching", "difficulty_hint": "hard", "seed_id": "s096", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["efficiency", "spec-trap"]}

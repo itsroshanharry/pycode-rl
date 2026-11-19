@@ -1,0 +1,1 @@
+{"id": "pc-c-0070", "entry_point": "elevator_scan", "topic": "scheduling simulation", "difficulty_hint": "medium", "seed_id": "s057", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["twist"]}
