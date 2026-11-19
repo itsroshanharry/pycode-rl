@@ -59,7 +59,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
     - c0045: head-to-head points must outrank head-to-head goal difference;
     - c0045: head-to-head goals scored as the final key.
     - Each now has a hand-built league test with totals equalized through an outside team.
-- Running tally of real test gaps found by auto-mutants: 9 (c0012, c0019 x2 counted as one, c0023, c0029, c0039, c0044, c0045 x2), all fixed.
+- Running tally of real test gaps found by auto-mutants: 9 (b01-b03: 5 in c0012, c0019, c0023, c0029; b04: 1 in c0039; b05: 3 in c0044, c0045), all fixed.
 
 ## 2026-11-19: Batch b04 (generate_v2)
 
