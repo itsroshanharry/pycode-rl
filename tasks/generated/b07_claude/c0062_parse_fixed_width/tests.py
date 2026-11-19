@@ -38,6 +38,8 @@ def test_examples(record, layout, expected):
     "record, layout",
     [
         ("short", LAYOUT),
+        ("abc", [("s", 1, 5, "str")]),
+        ("abcd", [("s", 1, 2, "str"), ("t", 4, 2, "str")]),
         ("abc", [("a", 0, 2, "str")]),
         ("abc", [("a", 1, 0, "str")]),
         ("abc", [("a", 1, 2, "text")]),

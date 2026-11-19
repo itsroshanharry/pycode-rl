@@ -18,6 +18,7 @@ S = ["a=1; Path=/docs", "b=2", "c=3; Path=/docs/api", "d=4; path=/doc"]
         (["x=1", "x=; Max-Age=0"], "/", ""),
         (["x=1", "x=2; Max-Age=-1"], "/", ""),
         (["x=1", "x=2; Max-Age=60"], "/", "x=2"),
+        (["x=1", "x=2; Max-Age=1"], "/", "x=2"),
         (["x=1", "x=2; Max-Age=soon"], "/", "x=2"),
         (["x=1; Path=/a", "x=2; Max-Age=0"], "/a", "x=1"),
         (["x=1; Max-Age=0"], "/", ""),
