@@ -43,6 +43,26 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
+## 2026-11-20: Leaderboard plan finalized; split revised; REPORT.md draft started
+
+- **Leaderboard (user decision):** 5 models, **all 76 tasks, -r 4, max_tokens 16384**, temperature 1.0, reasoning low, about $2.5:
+  - DeepSeek V4.1 Flash;
+  - Gemma 4 31B;
+  - gpt-oss-120b;
+  - gpt-oss-20b (labelled filter/calibration row);
+  - **qwen/qwen3.5-9b** (small tier; probe: 1.8-4.8k tokens, 0 truncated, 0/4 passes with partial credit 9-19 of 20-22 tests).
+- **Qwen3.6 dropped** (cost and truncation); the finding is in REPORT.md F2.
+- **Why all 76 and not only test:** this project only evaluates. More tasks give tighter CIs (about ±11 vs ±16 points); test-only scores, which come free from the same runs, are the robustness check.
+- **Split revised:** only the 6 tasks changed after seeing model results are forced to train (c0004, c0035, c0036, c0037, c0061, c0078). Being run in a pilot is not tuning. Test now has 5 v3 tasks. New dataset sha256 2fecc250 (not frozen until after the audit).
+- **REPORT.md draft** started with the funnel table and findings F1-F7.
+- **Order from here:**
+  1. stage 6 audit (model-assisted plus a user spot-check);
+  2. fixes;
+  3. full vf-validate on the final dataset;
+  4. freeze the hash and push 0.2.0;
+  5. hosted leaderboard;
+  6. bash comparison.
+
 ## 2026-11-20: Stage 4 contamination + Stage 5 split -- 76 tasks, 38 train / 38 test
 
 - **Corpora** (`pipeline/04_contamination.py fetch`, run in the Codespace; `data/external/` is git-ignored, revisions in `data/reports/contamination/sources.json`):

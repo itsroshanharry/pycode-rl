@@ -115,8 +115,10 @@ The v1 API is still changing. Verify names against the installed version instead
 | Strong reference | `deepseek/deepseek-v4.1-flash-1017` | 0.0437 / 0.70 | ~3.5k tokens, 7-10% truncated, mean 0.90 |
 | Mid-tier comparison | `google/gemma-4-31b-it` | 0.20 / 0.335 | ~5k tokens, 14% truncated, mean 0.65 |
 | Larger sibling of the filter (disclose family overlap) | `openai/gpt-oss-120b` | 0.35 / 0.75 | ~1.2k tokens, 0% truncated (probe 4/4) |
-| Open all-rounder | `qwen/qwen3.6-35b-a3b` | 0.11 / 1.01 | **16k cap, 2 attempts**: ~12-16k tokens, still ~25% truncated; report it |
+| Small-model tier | `qwen/qwen3.5-9b` | 0.17 / 0.25 | probe: 1.8-4.8k tokens, 0% truncated at a 16k cap, ~$0.001/attempt |
 
+- **Run (decided 2026-11-20):** all 76 tasks (evaluation only; test-only scores reported as a robustness check), **-r 4**, temperature 1.0, reasoning_effort low, **max_tokens 16384 for every model** (6 hard tasks need more than 8k thinking tokens even for DeepSeek). Estimated about $2.5.
+- Dropped from the leaderboard: `qwen/qwen3.6-35b-a3b` (needs more than 16k tokens per answer: 79% truncated at 8k, ~25% at 16k, ~$0.015/attempt; recorded as a REPORT.md finding).
 - Dropped: `poolside/laguna-s-2.1` (catalog lists it, but the Gateway returns "no longer available on the API") and its substitute `qwen/qwen3-coder-next` ("No allowed providers"). **"Gateway" models can be listed but unserved; prefer "Hosted by Prime" and always probe.**
 - Ruled out as filter: `google/gemma-4-26b-a4b-it` (4/4 truncated at 8192), Qwen3.6 (79% truncated at 8192), DeepSeek (too strong: 17/20 tasks 4/4).
 
