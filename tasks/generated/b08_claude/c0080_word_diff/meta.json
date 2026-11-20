@@ -1,0 +1,1 @@
+{"id": "pc-c-0080", "entry_point": "word_diff", "topic": "sequence diff", "difficulty_hint": "hard", "seed_id": "s102", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["spec-trap", "combo"]}
