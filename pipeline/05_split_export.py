@@ -8,11 +8,14 @@
 Rules (decided 2026-11-20):
 - About 50/50 train/test. This project only evaluates, and the leaderboard needs enough test
   tasks for usable confidence intervals; the train half keeps the dataset usable for RL.
-- SEEN tasks go to train: tasks whose leaderboard-model results were inspected during the
-  pilots / v3 check, or whose spec was changed after seeing model results. The test split
-  then holds only tasks nobody tuned anything on.
-- Unseen tasks are split stratified by difficulty band (filter pass-rate bucket or triage
-  tier) and prompt version, with a fixed seed, so both halves get a similar mix.
+- Tasks CHANGED after seeing model results go to train (spec fixes made because of pilot or
+  triage results, and the manual keep). Revised 2026-11-20: merely having been run in a pilot
+  is not tuning (no task was edited because of those results, and the leaderboard uses fresh
+  attempts), so pilot-run tasks are split like the rest; this also lets v3 tasks into test.
+- The remaining tasks are split stratified by difficulty band (filter pass-rate bucket or
+  triage tier) and prompt version, with a fixed seed, so both halves get a similar mix.
+- The leaderboard runs on ALL tasks (evaluation only); the split is kept for RL users, and
+  test-only scores are reported as a robustness check.
 """
 import collections
 import json
@@ -25,8 +28,10 @@ sys.path.insert(0, str(ROOT / "pipeline"))
 from taskfiles import write_rows  # noqa: E402
 
 SEED = 2026
-PILOT_REPORTS = ["pilot-20x4-8k.json", "v3check-deepseek.json"]  # per_task keys = inspected tasks
-CHANGED_AFTER_RESULTS = ["pc-c-0004", "pc-c-0036"]  # c0004 spec fixed after triage; c0036 kept by manual decision
+PILOT_REPORTS: list[str] = []  # (2026-11-20 rule) pilot-run tasks are no longer forced to train
+# Spec changed because of model results: c0035/c0037/c0061/c0078 (Gemma pilot), c0004 (triage);
+# c0036 kept by a manual decision after seeing results.
+CHANGED_AFTER_RESULTS = ["pc-c-0004", "pc-c-0035", "pc-c-0036", "pc-c-0037", "pc-c-0061", "pc-c-0078"]
 OUT = [ROOT / "data" / "dataset.jsonl", ROOT / "environments" / "pycode" / "pycode_env" / "data" / "dataset.jsonl"]
 
 
