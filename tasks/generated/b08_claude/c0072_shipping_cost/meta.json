@@ -1,0 +1,1 @@
+{"id": "pc-c-0072", "entry_point": "shipping_cost", "topic": "rate tables", "difficulty_hint": "medium", "seed_id": "s042", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["combo", "spec-trap"]}

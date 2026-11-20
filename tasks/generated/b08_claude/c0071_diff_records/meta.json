@@ -1,0 +1,1 @@
+{"id": "pc-c-0071", "entry_point": "diff_records", "topic": "record comparison", "difficulty_hint": "easy", "seed_id": "s034", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["spec-trap"]}

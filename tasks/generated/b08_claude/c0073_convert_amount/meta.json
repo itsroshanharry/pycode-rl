@@ -1,0 +1,1 @@
+{"id": "pc-c-0073", "entry_point": "convert_amount", "topic": "graph search with exact arithmetic", "difficulty_hint": "hard", "seed_id": "s045", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["combo", "spec-trap"]}
