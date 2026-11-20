@@ -43,6 +43,20 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
+## 2026-11-20: Stage 3 difficulty filter done -- 81 tasks kept
+
+- **Filter:** gpt-oss-20b, 100 tasks (10 hand-written + 90 candidates) x 8, temperature 1.0, reasoning low, 8192 cap; 800/800 ok, **0% truncated**, about $0.37. Histogram of pass counts 0..8: 25, 9, 7, 6, 7, 7, 12, 8, 19.
+- **Triage of the 25 tasks at 0/8** (stronger model, `deepseek/deepseek-v4.1-flash-1017`, 1 attempt each):
+  - 17 solved;
+  - 6 truncated at 8192, then all 6 solved at 16384 (5.5k-13.6k tokens): genuinely long-thinking tasks;
+  - 2 failed:
+    - **c0004:** a spec presentation defect. Its docstring example contained a triple double quote, so any solution that copies the docstring fails to parse (DeepSeek 0/31; gpt-oss 6/8 load errors). Fixed the example and added a lint rule. (The same thing then broke the Python string used to write this note.) Re-filtered: gpt-oss 2/8, now in the keep band.
+    - **c0036:** every model fails only the stated "export + SPACE (not tab)" rule. Spec checked: it is explicit, so it is kept as `hard_manual` and flagged for the audit.
+- **Result (`data/filtered.jsonl`, `data/reports/difficulty_final.json`):** 57 filter band + 23 hard_triage + 1 hard_manual = **81 kept**; 19 dropped as too easy. Keep rate by version before triage: v1 14/20, v2 32/60, v3 5/10, hand-written 5/10.
+- Traces kept gzipped in `data/reports/difficulty/` (1.9 MB instead of 23 MB).
+- **Leaderboard implication:** 6 kept tasks need more than 8k thinking tokens even for DeepSeek, so use a **16k cap for every leaderboard model** (fair, small extra cost) instead of 8192.
+- Spend so far about $1.90; wallet $8.10.
+
 ## 2026-11-20: Leaderboard line-up decided (Middle plan) + difficulty filter started
 
 - **Budget plan "Middle"** (user decision): 5-model single-turn leaderboard + bash comparison on 2 models x 20 tasks x 2 attempts. Projected project total about $4.5-5, keeping about $5 for other projects.
