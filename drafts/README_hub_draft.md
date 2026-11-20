@@ -39,11 +39,16 @@ input validation. `gpt-oss-20b` solved it 0 of 8 times; `deepseek-v4.1-flash` so
 
 ## Leaderboard
 
-<!-- DRAFT: filled in from data/reports/leaderboard/summary.json after the 0.2.0 runs finish -->
+<!-- DRAFT: filled in from data/reports/leaderboard/summary.json after waves 2-3 finish -->
 
 All 75 tasks, 4 attempts per task, temperature 1.0, reasoning effort `low`, `max_tokens` 16384,
 `null` harness (no tools). pass@1 is shown with a task-level bootstrap 95% CI. pass^4 means
 the task was solved on all 4 attempts (reliability).
+
+All scores reflect grader v3 and dataset `119ed403`. During the runs we found and fixed a
+grader bug: valid code that uses a `@dataclass` with string type annotations failed to load.
+Grader v3 fixes it and adds a regression test. The bug affected 1 of the 600 attempts graded
+before the fix. That attempt was re-graded with v3 and still fails, so no score changed.
 
 | Model | pass@1 (95% CI) | pass@4 | pass^4 | truncated | $ per task |
 |---|---|---|---|---|---|
