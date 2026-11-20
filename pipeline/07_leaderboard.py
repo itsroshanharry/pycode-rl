@@ -39,6 +39,7 @@ OUT = ROOT / "data" / "reports" / "leaderboard"
 RAW = ROOT / "outputs" / "leaderboard" / "raw"
 SEED, BOOT = 2026, 10000
 K = 4
+SANDBOX_USD_PER_HR = 0.02 + 0.0125 * 1 + 0.0002 * 5  # 1 vCPU, 1 GiB, 5 GiB disk (launch rates, through 2026-12-22)
 
 
 def _prime(*args: str) -> str:
@@ -72,6 +73,12 @@ def _reply(doc: dict) -> str:
     return ""
 
 
+def _sandbox_secs(timing: dict) -> float | None:
+    ends = [v["end"] for v in timing.values() if isinstance(v, dict) and v.get("end")]
+    start = (timing.get("boot") or {}).get("start") or timing.get("start")
+    return round(max(ends) - start, 1) if ends and start else None
+
+
 def _compact(doc: dict, model: str, eval_id: str, meta: dict) -> dict:
     call = (doc.get("calls") or [{}])[-1]
     usage = call.get("usage") or {}
@@ -90,6 +97,8 @@ def _compact(doc: dict, model: str, eval_id: str, meta: dict) -> dict:
         "has_code_block": bool(_FENCE.search(_reply(doc))), "reply_chars": len(_reply(doc)),
         "prompt_tokens": usage.get("prompt_tokens"), "completion_tokens": usage.get("completion_tokens"),
         "reasoning_tokens": usage.get("reasoning_tokens"), "cost": usage.get("cost"),
+        # wall time of this attempt's own sandbox (boot -> end of grading), for the sandbox-cost estimate
+        "sandbox_secs": _sandbox_secs(doc.get("timing") or {}),
         "ok": doc.get("ok"), "is_timeout": doc.get("is_timeout"),
         "errors": [str(e)[:300] for e in (doc.get("errors") or [])],
         "grade": {k: (str(grade[k])[:400] if k in ("first_failure", "load_error") and grade.get(k) else grade.get(k))
@@ -226,6 +235,9 @@ def _model_stats(rows: list[dict], task_ids: list[str], rng: random.Random) -> d
         "mean_completion_tokens": round(sum(r["completion_tokens"] or 0 for r in scored) / max(1, len(scored))),
         "mean_reasoning_tokens": round(sum(r["reasoning_tokens"] or 0 for r in scored) / max(1, len(scored))),
         "model_cost_usd": round(sum(costs), 4),
+        # attempt sandboxes only; the hosted runner sandbox (~$0.29/hr per run) comes from billing rows (runs.json)
+        "attempt_sandbox_cost_est_usd": round(sum(r.get("sandbox_secs") or 0 for t in task_ids for r in by_task[t])
+                                              / 3600 * SANDBOX_USD_PER_HR, 4),
         "model_cost_per_task_usd": round(sum(costs) / max(1, sum(bool(by_task[t]) for t in task_ids)), 5),
         "_task_means": task_means,
     }

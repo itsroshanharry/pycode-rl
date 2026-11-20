@@ -24,12 +24,21 @@
   "google/gemma-4-31b-it": {
    "eval_id": "u8ibo4fn19zn1n6901ehgwrb",
    "wave": 2,
-   "package": "0.2.1 (grader v3)"
+   "package": "0.2.1 (grader v3)",
+   "runner_sandbox": {
+    "id_prefix": "vxb24s20",
+    "note": "still running at 1438 s / $0.1143; fill in when done"
+   }
   },
   "openai/gpt-oss-120b": {
    "eval_id": "skz9xmsfrtskb92xtlje97n4",
    "wave": 2,
-   "package": "0.2.1 (grader v3)"
+   "package": "0.2.1 (grader v3)",
+   "runner_sandbox": {
+    "id_prefix": "nx53nyhp",
+    "seconds": 1023,
+    "usd": 0.0813
+   }
   }
  },
  "smoke_test": {
@@ -45,5 +54,11 @@
   "before_wave1": 7.5228,
   "after_wave1": 6.1574,
   "before_wave2": 6.1335
+ },
+ "cost_notes": {
+  "model_fees": "exact: sum of usage.cost of each attempt's model call (traces)",
+  "attempt_sandboxes": "estimate: each attempt's sandbox wall time (trace timing) x $0.0335/hr; billing rows confirm ~$0.033/hr per attempt sandbox",
+  "runner_sandbox": "one hosted-runner sandbox per eval run at ~$0.286/hr for the whole run (billing rows); not in traces",
+  "inference_billing_lags": "inference charges post as running rows updated in batches, so the wallet lags during a run"
  }
 }
