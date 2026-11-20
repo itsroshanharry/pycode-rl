@@ -1,0 +1,62 @@
+{
+ "seed": 8,
+ "tasks": [
+  {
+   "id": "pc-c-0008",
+   "split": "train",
+   "folder": "tasks/generated/b01_claude/c0008_token_bucket",
+   "band": "filter",
+   "pass_rate": 0.875
+  },
+  {
+   "id": "pc-c-0014",
+   "split": "test",
+   "folder": "tasks/generated/b02_claude/c0014_parse_query",
+   "band": "filter",
+   "pass_rate": 0.125
+  },
+  {
+   "id": "pc-c-0022",
+   "split": "train",
+   "folder": "tasks/generated/b03_claude/c0022_natural_sort",
+   "band": "filter",
+   "pass_rate": 0.75
+  },
+  {
+   "id": "pc-c-0023",
+   "split": "test",
+   "folder": "tasks/generated/b03_claude/c0023_parse_ini",
+   "band": "filter",
+   "pass_rate": 0.75
+  },
+  {
+   "id": "pc-c-0032",
+   "split": "train",
+   "folder": "tasks/generated/b04_claude/c0032_fiscal_label",
+   "band": "hard_triage",
+   "pass_rate": 0.0
+  },
+  {
+   "id": "pc-c-0037",
+   "split": "train",
+   "folder": "tasks/generated/b04_claude/c0037_toc_numbers",
+   "band": "filter",
+   "pass_rate": 0.125
+  },
+  {
+   "id": "pc-c-0058",
+   "split": "train",
+   "folder": "tasks/generated/b06_claude/c0058_overtime_pay",
+   "band": "filter",
+   "pass_rate": 0.5
+  },
+  {
+   "id": "pc-c-0060",
+   "split": "test",
+   "folder": "tasks/generated/b06_claude/c0060_to_e164",
+   "band": "hard_triage",
+   "pass_rate": 0.0
+  }
+ ],
+ "verdicts": {}
+}
