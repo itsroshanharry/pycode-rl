@@ -1,0 +1,1 @@
+{"id": "pc-c-0084", "entry_point": "build_waves", "topic": "dependency scheduling", "difficulty_hint": "medium", "seed_id": "s060", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v3", "levers": ["combo", "layered-rules", "spec-trap"]}
