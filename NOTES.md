@@ -11,12 +11,14 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
   - Funnel: 100 written -> 100 validated -> 81 after the difficulty filter -> 75 after contamination -> 75 after the audit.
   - Audit: all 75 reviewed (DeepSeek 31 + gpt-oss-120b 44) plus a user spot-check of 8. See the Stage 6 entry below.
 - **Frozen-dataset full `vf-validate`: 75/75 valid** (gold 75/75, noop 75/75, 0 errors or timeouts). Results are in `data/reports/validate/final-validate.*`, recorded with `02c_pending.py record --dataset`. **The dataset is frozen.**
-- **Package:** version bumped to 0.2.0 and README rewritten (not pushed yet). The Hub still has 0.1.1 (10 hand-written tasks).
+- **Published:** `itsroshanharry/pycode-env` **0.2.0** (PRIVATE, wheel sha256 `0ba5264e...`; the wheel holds the 75-row dataset `119ed403...` and the grader).
+  - Hosted smoke test `nmzewnbjsxv66ytoe5xz43df` (gpt-oss-20b, 2 tasks): ran on @0.2.0; c0015 scored 1.0, c0041 scored 0.0 (89% of tests passed); no errors, no truncation.
+  - Hosted `--timeout-minutes` must be >= 60 (or negative).
 - **Wallet:** about $7.53 (spend about $2.47).
 
 **Next steps, in order:**
 1. ~~Full vf-validate~~ done.
-2. `prime env push` 0.2.0, then run a 2-task hosted smoke test.
+2. ~~Push 0.2.0 + smoke test~~ done.
 3. Leaderboard (CLAUDE.md section 5; plan in the 2026-11-20 entries):
    - all 75 tasks, -r 4, temperature 1.0, reasoning_effort low, max_tokens 16384, -c 8;
    - three waves: (1) DeepSeek + gpt-oss-20b, (2) Gemma 31B + gpt-oss-120b, (3) qwen3.5-9b;
