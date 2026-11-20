@@ -189,7 +189,11 @@ Order: `01_assemble` (format) -> `02a_local_check` (free: reference + authored m
 - automatic AST mutation score >= 0.80;
 - branch coverage of the reference >= 0.90;
 - a fake that returns only the doctest answers must fail.
-Then the paid `vf-validate pycode-env --taskset.split all --taskset.dataset_path data/candidates.jsonl -c 5` in the Codespace. Flagged tasks get stronger tests or are dropped (never silently).
+Then the paid `vf-validate` in the Codespace, **only on new or changed candidates**:
+1. `pipeline/02c_pending.py write` creates `data/candidates_pending.jsonl` (rows whose content hash is not in `data/reports/validated_hashes.json`).
+2. Run `vf-validate pycode-env --taskset.split all --taskset.dataset_path data/candidates_pending.jsonl -c 5 -o outputs --run.name <batch>-validate`.
+3. Copy `results.jsonl` to `data/reports/validate/`, then `02c_pending.py record <file>`.
+A full vf-validate on the frozen final dataset runs once before publishing. Flagged tasks get stronger tests or are dropped (never silently).
 
 **Stage 3: difficulty filter.** Run the filter model with `-r 8` at temperature 1.0 on validated tasks. Keep tasks with pass rate in **[1/8, 7/8]**. For 0/8 tasks, first try **one rollout with a stronger model** (cheap triage: solvable means "hard", kept and flagged; still 0 means suspect), then inspect manually (usually broken tests or underspecified prompts); fix or drop. Save the histogram. The filter model may also appear on the leaderboard as a disclosed "calibration baseline" row.
 
