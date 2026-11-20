@@ -1,0 +1,1 @@
+{"id": "pc-c-0088", "entry_point": "histogram", "topic": "binning", "difficulty_hint": "medium", "seed_id": "s077", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v3", "levers": ["exactness", "spec-trap"]}
