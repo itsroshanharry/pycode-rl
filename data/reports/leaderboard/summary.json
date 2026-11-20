@@ -15,6 +15,7 @@
   "all": {
    "ranking": [
     "deepseek/deepseek-v4.1-flash-1017",
+    "google/gemma-4-31b-it",
     "openai/gpt-oss-120b",
     "openai/gpt-oss-20b"
    ],
@@ -59,6 +60,46 @@
      "model_cost_usd": 0.8929,
      "attempt_sandbox_cost_est_usd": 0.1293,
      "model_cost_per_task_usd": 0.01191
+    },
+    "google/gemma-4-31b-it": {
+     "tasks": 75,
+     "attempts": 300,
+     "scored_attempts": 300,
+     "tasks_with_all_attempts": 75,
+     "mean_reward": 0.74,
+     "ci95_wilson_attempts": [
+      0.688,
+      0.786
+     ],
+     "tasks_scored": 75,
+     "ci95_bootstrap_tasks": [
+      0.65,
+      0.823
+     ],
+     "pass@1": 0.74,
+     "pass@2": 0.802,
+     "pass@4": 0.827,
+     "pass^2": 0.678,
+     "pass^4": 0.613,
+     "mean_frac_tests_passed": 0.977,
+     "truncated_rate": 0.0,
+     "infra_error_rate": 0.0,
+     "failure_modes": {
+      "pass": 222,
+      "wrong_answer": 78
+     },
+     "pass_count_histogram": {
+      "0": 13,
+      "1": 1,
+      "2": 8,
+      "3": 7,
+      "4": 46
+     },
+     "mean_completion_tokens": 5437,
+     "mean_reasoning_tokens": 4477,
+     "model_cost_usd": 0.5644,
+     "attempt_sandbox_cost_est_usd": 0.5005,
+     "model_cost_per_task_usd": 0.00753
     },
     "openai/gpt-oss-120b": {
      "tasks": 75,
@@ -146,6 +187,17 @@
     }
    },
    "paired": {
+    "deepseek/deepseek-v4.1-flash-1017 vs google/gemma-4-31b-it": {
+     "tasks": 75,
+     "mean_diff": 0.2,
+     "ci95_bootstrap_tasks": [
+      0.127,
+      0.28
+     ],
+     "a_better_tasks": 27,
+     "b_better_tasks": 2,
+     "ties": 46
+    },
     "deepseek/deepseek-v4.1-flash-1017 vs openai/gpt-oss-120b": {
      "tasks": 75,
      "mean_diff": 0.417,
@@ -161,19 +213,41 @@
      "tasks": 75,
      "mean_diff": 0.56,
      "ci95_bootstrap_tasks": [
-      0.483,
-      0.637
+      0.48,
+      0.64
      ],
      "a_better_tasks": 66,
      "b_better_tasks": 1,
      "ties": 8
     },
+    "google/gemma-4-31b-it vs openai/gpt-oss-120b": {
+     "tasks": 75,
+     "mean_diff": 0.217,
+     "ci95_bootstrap_tasks": [
+      0.14,
+      0.297
+     ],
+     "a_better_tasks": 38,
+     "b_better_tasks": 6,
+     "ties": 31
+    },
+    "google/gemma-4-31b-it vs openai/gpt-oss-20b": {
+     "tasks": 75,
+     "mean_diff": 0.36,
+     "ci95_bootstrap_tasks": [
+      0.28,
+      0.443
+     ],
+     "a_better_tasks": 52,
+     "b_better_tasks": 5,
+     "ties": 18
+    },
     "openai/gpt-oss-120b vs openai/gpt-oss-20b": {
      "tasks": 75,
      "mean_diff": 0.143,
      "ci95_bootstrap_tasks": [
-      0.077,
-      0.217
+      0.073,
+      0.213
      ],
      "a_better_tasks": 33,
      "b_better_tasks": 10,
@@ -184,6 +258,7 @@
   "test": {
    "ranking": [
     "deepseek/deepseek-v4.1-flash-1017",
+    "google/gemma-4-31b-it",
     "openai/gpt-oss-120b",
     "openai/gpt-oss-20b"
    ],
@@ -228,6 +303,45 @@
      "attempt_sandbox_cost_est_usd": 0.0599,
      "model_cost_per_task_usd": 0.01081
     },
+    "google/gemma-4-31b-it": {
+     "tasks": 37,
+     "attempts": 148,
+     "scored_attempts": 148,
+     "tasks_with_all_attempts": 37,
+     "mean_reward": 0.764,
+     "ci95_wilson_attempts": [
+      0.689,
+      0.825
+     ],
+     "tasks_scored": 37,
+     "ci95_bootstrap_tasks": [
+      0.649,
+      0.872
+     ],
+     "pass@1": 0.764,
+     "pass@2": 0.838,
+     "pass@4": 0.865,
+     "pass^2": 0.689,
+     "pass^4": 0.622,
+     "mean_frac_tests_passed": 0.974,
+     "truncated_rate": 0.0,
+     "infra_error_rate": 0.0,
+     "failure_modes": {
+      "pass": 113,
+      "wrong_answer": 35
+     },
+     "pass_count_histogram": {
+      "0": 5,
+      "2": 6,
+      "3": 3,
+      "4": 23
+     },
+     "mean_completion_tokens": 5162,
+     "mean_reasoning_tokens": 4230,
+     "model_cost_usd": 0.2646,
+     "attempt_sandbox_cost_est_usd": 0.2399,
+     "model_cost_per_task_usd": 0.00715
+    },
     "openai/gpt-oss-120b": {
      "tasks": 37,
      "attempts": 148,
@@ -241,7 +355,7 @@
      "tasks_scored": 37,
      "ci95_bootstrap_tasks": [
       0.412,
-      0.669
+      0.662
      ],
      "pass@1": 0.541,
      "pass@2": 0.667,
@@ -312,6 +426,17 @@
     }
    },
    "paired": {
+    "deepseek/deepseek-v4.1-flash-1017 vs google/gemma-4-31b-it": {
+     "tasks": 37,
+     "mean_diff": 0.182,
+     "ci95_bootstrap_tasks": [
+      0.081,
+      0.291
+     ],
+     "a_better_tasks": 13,
+     "b_better_tasks": 1,
+     "ties": 23
+    },
     "deepseek/deepseek-v4.1-flash-1017 vs openai/gpt-oss-120b": {
      "tasks": 37,
      "mean_diff": 0.405,
@@ -334,11 +459,33 @@
      "b_better_tasks": 1,
      "ties": 4
     },
+    "google/gemma-4-31b-it vs openai/gpt-oss-120b": {
+     "tasks": 37,
+     "mean_diff": 0.223,
+     "ci95_bootstrap_tasks": [
+      0.115,
+      0.338
+     ],
+     "a_better_tasks": 19,
+     "b_better_tasks": 3,
+     "ties": 15
+    },
+    "google/gemma-4-31b-it vs openai/gpt-oss-20b": {
+     "tasks": 37,
+     "mean_diff": 0.372,
+     "ci95_bootstrap_tasks": [
+      0.25,
+      0.493
+     ],
+     "a_better_tasks": 27,
+     "b_better_tasks": 3,
+     "ties": 7
+    },
     "openai/gpt-oss-120b vs openai/gpt-oss-20b": {
      "tasks": 37,
      "mean_diff": 0.149,
      "ci95_bootstrap_tasks": [
-      0.041,
+      0.047,
       0.257
      ],
      "a_better_tasks": 17,
@@ -350,6 +497,7 @@
   "train": {
    "ranking": [
     "deepseek/deepseek-v4.1-flash-1017",
+    "google/gemma-4-31b-it",
     "openai/gpt-oss-120b",
     "openai/gpt-oss-20b"
    ],
@@ -394,6 +542,46 @@
      "attempt_sandbox_cost_est_usd": 0.0694,
      "model_cost_per_task_usd": 0.01297
     },
+    "google/gemma-4-31b-it": {
+     "tasks": 38,
+     "attempts": 152,
+     "scored_attempts": 152,
+     "tasks_with_all_attempts": 38,
+     "mean_reward": 0.717,
+     "ci95_wilson_attempts": [
+      0.641,
+      0.783
+     ],
+     "tasks_scored": 38,
+     "ci95_bootstrap_tasks": [
+      0.579,
+      0.842
+     ],
+     "pass@1": 0.717,
+     "pass@2": 0.768,
+     "pass@4": 0.789,
+     "pass^2": 0.667,
+     "pass^4": 0.605,
+     "mean_frac_tests_passed": 0.979,
+     "truncated_rate": 0.0,
+     "infra_error_rate": 0.0,
+     "failure_modes": {
+      "pass": 109,
+      "wrong_answer": 43
+     },
+     "pass_count_histogram": {
+      "0": 8,
+      "1": 1,
+      "2": 2,
+      "3": 4,
+      "4": 23
+     },
+     "mean_completion_tokens": 5704,
+     "mean_reasoning_tokens": 4717,
+     "model_cost_usd": 0.2999,
+     "attempt_sandbox_cost_est_usd": 0.2606,
+     "model_cost_per_task_usd": 0.00789
+    },
     "openai/gpt-oss-120b": {
      "tasks": 38,
      "attempts": 152,
@@ -406,8 +594,8 @@
      ],
      "tasks_scored": 38,
      "ci95_bootstrap_tasks": [
-      0.375,
-      0.638
+      0.382,
+      0.632
      ],
      "pass@1": 0.507,
      "pass@2": 0.623,
@@ -479,12 +667,23 @@
     }
    },
    "paired": {
+    "deepseek/deepseek-v4.1-flash-1017 vs google/gemma-4-31b-it": {
+     "tasks": 38,
+     "mean_diff": 0.217,
+     "ci95_bootstrap_tasks": [
+      0.112,
+      0.336
+     ],
+     "a_better_tasks": 14,
+     "b_better_tasks": 1,
+     "ties": 23
+    },
     "deepseek/deepseek-v4.1-flash-1017 vs openai/gpt-oss-120b": {
      "tasks": 38,
      "mean_diff": 0.428,
      "ci95_bootstrap_tasks": [
       0.316,
-      0.539
+      0.546
      ],
      "a_better_tasks": 26,
      "b_better_tasks": 0,
@@ -501,11 +700,33 @@
      "b_better_tasks": 0,
      "ties": 4
     },
+    "google/gemma-4-31b-it vs openai/gpt-oss-120b": {
+     "tasks": 38,
+     "mean_diff": 0.211,
+     "ci95_bootstrap_tasks": [
+      0.112,
+      0.316
+     ],
+     "a_better_tasks": 19,
+     "b_better_tasks": 3,
+     "ties": 16
+    },
+    "google/gemma-4-31b-it vs openai/gpt-oss-20b": {
+     "tasks": 38,
+     "mean_diff": 0.349,
+     "ci95_bootstrap_tasks": [
+      0.237,
+      0.461
+     ],
+     "a_better_tasks": 25,
+     "b_better_tasks": 2,
+     "ties": 11
+    },
     "openai/gpt-oss-120b vs openai/gpt-oss-20b": {
      "tasks": 38,
      "mean_diff": 0.138,
      "ci95_bootstrap_tasks": [
-      0.053,
+      0.046,
       0.23
      ],
      "a_better_tasks": 16,
@@ -517,6 +738,7 @@
   "band_filter": {
    "ranking": [
     "deepseek/deepseek-v4.1-flash-1017",
+    "google/gemma-4-31b-it",
     "openai/gpt-oss-120b",
     "openai/gpt-oss-20b"
    ],
@@ -560,6 +782,45 @@
      "attempt_sandbox_cost_est_usd": 0.0736,
      "model_cost_per_task_usd": 0.00852
     },
+    "google/gemma-4-31b-it": {
+     "tasks": 52,
+     "attempts": 208,
+     "scored_attempts": 208,
+     "tasks_with_all_attempts": 52,
+     "mean_reward": 0.909,
+     "ci95_wilson_attempts": [
+      0.862,
+      0.941
+     ],
+     "tasks_scored": 52,
+     "ci95_bootstrap_tasks": [
+      0.841,
+      0.962
+     ],
+     "pass@1": 0.909,
+     "pass@2": 0.955,
+     "pass@4": 0.962,
+     "pass^2": 0.862,
+     "pass^4": 0.788,
+     "mean_frac_tests_passed": 0.993,
+     "truncated_rate": 0.0,
+     "infra_error_rate": 0.0,
+     "failure_modes": {
+      "pass": 189,
+      "wrong_answer": 19
+     },
+     "pass_count_histogram": {
+      "0": 2,
+      "2": 2,
+      "3": 7,
+      "4": 41
+     },
+     "mean_completion_tokens": 4735,
+     "mean_reasoning_tokens": 3880,
+     "model_cost_usd": 0.3418,
+     "attempt_sandbox_cost_est_usd": 0.3131,
+     "model_cost_per_task_usd": 0.00657
+    },
     "openai/gpt-oss-120b": {
      "tasks": 52,
      "attempts": 208,
@@ -572,8 +833,8 @@
      ],
      "tasks_scored": 52,
      "ci95_bootstrap_tasks": [
-      0.62,
-      0.788
+      0.625,
+      0.793
      ],
      "pass@1": 0.707,
      "pass@2": 0.853,
@@ -613,7 +874,7 @@
      ],
      "tasks_scored": 52,
      "ci95_bootstrap_tasks": [
-      0.442,
+      0.438,
       0.611
      ],
      "pass@1": 0.524,
@@ -645,6 +906,17 @@
     }
    },
    "paired": {
+    "deepseek/deepseek-v4.1-flash-1017 vs google/gemma-4-31b-it": {
+     "tasks": 52,
+     "mean_diff": 0.058,
+     "ci95_bootstrap_tasks": [
+      0.005,
+      0.12
+     ],
+     "a_better_tasks": 9,
+     "b_better_tasks": 2,
+     "ties": 41
+    },
     "deepseek/deepseek-v4.1-flash-1017 vs openai/gpt-oss-120b": {
      "tasks": 52,
      "mean_diff": 0.26,
@@ -661,18 +933,40 @@
      "mean_diff": 0.442,
      "ci95_bootstrap_tasks": [
       0.351,
-      0.529
+      0.534
      ],
      "a_better_tasks": 43,
      "b_better_tasks": 1,
      "ties": 8
     },
+    "google/gemma-4-31b-it vs openai/gpt-oss-120b": {
+     "tasks": 52,
+     "mean_diff": 0.202,
+     "ci95_bootstrap_tasks": [
+      0.12,
+      0.288
+     ],
+     "a_better_tasks": 26,
+     "b_better_tasks": 4,
+     "ties": 22
+    },
+    "google/gemma-4-31b-it vs openai/gpt-oss-20b": {
+     "tasks": 52,
+     "mean_diff": 0.385,
+     "ci95_bootstrap_tasks": [
+      0.293,
+      0.476
+     ],
+     "a_better_tasks": 40,
+     "b_better_tasks": 2,
+     "ties": 10
+    },
     "openai/gpt-oss-120b vs openai/gpt-oss-20b": {
      "tasks": 52,
      "mean_diff": 0.183,
      "ci95_bootstrap_tasks": [
-      0.091,
-      0.279
+      0.087,
+      0.274
      ],
      "a_better_tasks": 28,
      "b_better_tasks": 8,
@@ -683,6 +977,7 @@
   "band_hard": {
    "ranking": [
     "deepseek/deepseek-v4.1-flash-1017",
+    "google/gemma-4-31b-it",
     "openai/gpt-oss-120b",
     "openai/gpt-oss-20b"
    ],
@@ -727,6 +1022,45 @@
      "attempt_sandbox_cost_est_usd": 0.0557,
      "model_cost_per_task_usd": 0.01957
     },
+    "google/gemma-4-31b-it": {
+     "tasks": 23,
+     "attempts": 92,
+     "scored_attempts": 92,
+     "tasks_with_all_attempts": 23,
+     "mean_reward": 0.359,
+     "ci95_wilson_attempts": [
+      0.268,
+      0.461
+     ],
+     "tasks_scored": 23,
+     "ci95_bootstrap_tasks": [
+      0.196,
+      0.522
+     ],
+     "pass@1": 0.359,
+     "pass@2": 0.457,
+     "pass@4": 0.522,
+     "pass^2": 0.261,
+     "pass^4": 0.217,
+     "mean_frac_tests_passed": 0.939,
+     "truncated_rate": 0.0,
+     "infra_error_rate": 0.0,
+     "failure_modes": {
+      "wrong_answer": 59,
+      "pass": 33
+     },
+     "pass_count_histogram": {
+      "0": 11,
+      "1": 1,
+      "2": 6,
+      "4": 5
+     },
+     "mean_completion_tokens": 7022,
+     "mean_reasoning_tokens": 5827,
+     "model_cost_usd": 0.2227,
+     "attempt_sandbox_cost_est_usd": 0.1874,
+     "model_cost_per_task_usd": 0.00968
+    },
     "openai/gpt-oss-120b": {
      "tasks": 23,
      "attempts": 92,
@@ -739,7 +1073,7 @@
      ],
      "tasks_scored": 23,
      "ci95_bootstrap_tasks": [
-      0.033,
+      0.022,
       0.207
      ],
      "pass@1": 0.109,
@@ -808,6 +1142,17 @@
     }
    },
    "paired": {
+    "deepseek/deepseek-v4.1-flash-1017 vs google/gemma-4-31b-it": {
+     "tasks": 23,
+     "mean_diff": 0.522,
+     "ci95_bootstrap_tasks": [
+      0.38,
+      0.663
+     ],
+     "a_better_tasks": 18,
+     "b_better_tasks": 0,
+     "ties": 5
+    },
     "deepseek/deepseek-v4.1-flash-1017 vs openai/gpt-oss-120b": {
      "tasks": 23,
      "mean_diff": 0.772,
@@ -823,18 +1168,40 @@
      "tasks": 23,
      "mean_diff": 0.826,
      "ci95_bootstrap_tasks": [
-      0.739,
-      0.913
+      0.728,
+      0.902
      ],
      "a_better_tasks": 23,
      "b_better_tasks": 0,
      "ties": 0
     },
+    "google/gemma-4-31b-it vs openai/gpt-oss-120b": {
+     "tasks": 23,
+     "mean_diff": 0.25,
+     "ci95_bootstrap_tasks": [
+      0.098,
+      0.413
+     ],
+     "a_better_tasks": 12,
+     "b_better_tasks": 2,
+     "ties": 9
+    },
+    "google/gemma-4-31b-it vs openai/gpt-oss-20b": {
+     "tasks": 23,
+     "mean_diff": 0.304,
+     "ci95_bootstrap_tasks": [
+      0.141,
+      0.467
+     ],
+     "a_better_tasks": 12,
+     "b_better_tasks": 3,
+     "ties": 8
+    },
     "openai/gpt-oss-120b vs openai/gpt-oss-20b": {
      "tasks": 23,
      "mean_diff": 0.054,
      "ci95_bootstrap_tasks": [
-      -0.011,
+      -0.022,
       0.13
      ],
      "a_better_tasks": 5,
@@ -853,376 +1220,451 @@
  "per_task": {
   "pc-c-0001": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.75,
    "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0002": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 1.0
   },
   "pc-c-0004": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.75,
    "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0005": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.5,
    "gpt-oss-120b": 0.25,
    "gpt-oss-20b": 1.0
   },
   "pc-c-0007": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0008": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 1.0
   },
   "pc-c-0010": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0011": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0012": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0013": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0014": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.75,
    "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0015": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0016": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0018": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0019": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.75,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 1.0
   },
   "pc-c-0021": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0022": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 1.0
   },
   "pc-c-0023": {
    "deepseek-v4.1-flash-1017": 0.0,
+   "gemma-4-31b-it": 0.5,
    "gpt-oss-120b": 0.25,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0024": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0025": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 1.0
   },
   "pc-c-0027": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0028": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.25,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0029": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0031": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0032": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.5,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0033": {
    "deepseek-v4.1-flash-1017": 0.75,
+   "gemma-4-31b-it": 0.75,
    "gpt-oss-120b": 0.25,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0034": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0035": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0036": {
    "deepseek-v4.1-flash-1017": 0.25,
+   "gemma-4-31b-it": 0.0,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0037": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.25,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0038": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.5,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0039": {
    "deepseek-v4.1-flash-1017": 0.5,
+   "gemma-4-31b-it": 0.0,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0040": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.5,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0041": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0042": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0043": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0045": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.0,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0046": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0047": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0048": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0049": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.5,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0050": {
    "deepseek-v4.1-flash-1017": 0.75,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0051": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0052": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.0,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0053": {
    "deepseek-v4.1-flash-1017": 0.5,
+   "gemma-4-31b-it": 0.0,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0054": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0055": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.25,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0058": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0060": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.0,
    "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0061": {
    "deepseek-v4.1-flash-1017": 0.75,
+   "gemma-4-31b-it": 0.5,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0062": {
    "deepseek-v4.1-flash-1017": 0.75,
+   "gemma-4-31b-it": 0.0,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0063": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.5,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0064": {
    "deepseek-v4.1-flash-1017": 0.75,
+   "gemma-4-31b-it": 0.0,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0065": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.75,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0066": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0067": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0068": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0069": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.75,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0070": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0072": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0073": {
    "deepseek-v4.1-flash-1017": 0.75,
+   "gemma-4-31b-it": 0.0,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0075": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0078": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.0,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0079": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0081": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0082": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.25,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0083": {
    "deepseek-v4.1-flash-1017": 0.75,
+   "gemma-4-31b-it": 0.0,
    "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0084": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 1.0
   },
   "pc-c-0085": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.25,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0087": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0088": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.0,
    "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0089": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0090": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 1.0
   },
   "pc-hw-002": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 1.0,
    "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.75
   },
   "pc-hw-005": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gemma-4-31b-it": 0.0,
    "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.0
   }
