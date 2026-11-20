@@ -16,8 +16,8 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
   - **Batch b02** (c0011-c0020, prompt v1): all gates passed, `vf-validate` 20/20. The automatic mutants exposed 3 real test gaps (c0012, c0019), which are fixed.
   - **Grader fixed** (UnicodeDecodeError false negative). The Hub package 0.1.0 is outdated, so re-push before the next hosted run.
   - **Prompt `generate_v2.md`** (difficulty levers twist/combo/efficiency/spec-trap) is ready; **b03 onward use v2.**
-  - **b03-b07** (c0021-c0070, v2): all gates passed. **70 candidates total, 70/70 `vf-validate` valid** (run `b07-validate`, 2026-11-19).
-- **Wallet:** $9.941 (about $0.06 spent). The user has not set a dashboard usage limit yet.
+  - **b03-b08** (c0021-c0080, v2): all gates passed. **80 candidates total, 80/80 validated** (`data/reports/validated_hashes.json`, 2026-11-20).
+- **Wallet:** $9.932 (about $0.07 spent). The user has not set a dashboard usage limit yet.
 
 **Agreed decisions (don't relitigate):**
 - function-level tasks (no repo pivot);
@@ -30,7 +30,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 **Next steps, in order:**
 1. ~~Review the 02b results on b01~~ done: 0 flagged.
 2. ~~Re-push the Hub package~~ **done:** `itsroshanharry/pycode-env` **0.1.1** (PRIVATE, wheel sha256 `8ea95510...`). Hosted smoke run `tajnohon1b6p3cf6hhmksirk`: 2/2 reward 1.0, 0% error/truncation; the trace shows `grader: "2"`, `isolated: true`, `temperature: 0.0`. Wallet $9.98.
-3. **Keep writing Claude batches b04, b05, ...** (user decision 2026-11-19: as many as possible). Each batch: 10 tasks with **generate_v2**, new seeds; hard efficiency tasks get `slow.py`; commit after every few tasks; then assemble -> 02a -> 02b (inspect survivors) -> vf-validate. **b01-b07 done: 70 candidates, all valid.** Next batch b08 starts at c0071. Seeds used so far: s027, s029, s036, s038, s039, s044, s048, s057, s084, s096, s017, s018, s030, s032, s047, s063, s074, s079, s087, s090, s006, s009, s037, s050, s054, s070, s072, s083, s086, s098, s002, s004, s007, s008, s013, s014, s015, s022, s023, s024, s001, s003, s005, s011, s012, s016, s019, s020, s021, s025, s026, s031, s033, s035, s040, s041, s043, s051, s052, s055, s056, s066, s071, s078, s081, s082, s088, s092, s093, s094.
+3. **Keep writing Claude batches b04, b05, ...** (user decision 2026-11-19: as many as possible). Each batch: 10 tasks with **generate_v2**, new seeds; hard efficiency tasks get `slow.py`; commit after every few tasks; then assemble -> 02a -> 02b (inspect survivors) -> vf-validate. **b01-b08 done: 80 candidates, all valid.** Next batch b09 starts at c0081. vf-validate now runs only on pending rows (`pipeline/02c_pending.py`, CLAUDE.md section 7). Seeds used so far: s034, s042, s045, s046, s049, s059, s067, s076, s091, s102, s027, s029, s036, s038, s039, s044, s048, s057, s084, s096, s017, s018, s030, s032, s047, s063, s074, s079, s087, s090, s006, s009, s037, s050, s054, s070, s072, s083, s086, s098, s002, s004, s007, s008, s013, s014, s015, s022, s023, s024, s001, s003, s005, s011, s012, s016, s019, s020, s021, s025, s026, s031, s033, s035, s040, s041, s043, s051, s052, s055, s056, s066, s071, s078, s081, s082, s088, s092, s093, s094.
 4. Write `01b_generate_api.py` (cheap model not on the leaderboard, same template) for about 450 more candidates; run the same gates. Report pass rates per generator.
 5. Pilot (20 tasks x 4 rollouts) to measure $/rollout and truncation.
 6. Difficulty filter (-r 8, temperature 1.0, keep 1/8..7/8; 0/8 -> one stronger-model try, then manual). Ask first (> $1).
@@ -42,6 +42,20 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 **User preferences:** plain language, technical terms explained in brackets, concise answers. Ask before spending more than $1 or doing anything outward-facing.
 
 ---
+
+## 2026-11-20: Incremental validation + batch b08
+
+- **`pipeline/02c_pending.py`** (new): vf-validate only rows whose content hash is not yet in `data/reports/validated_hashes.json`.
+  - Why: re-validating every candidate after each batch repeated finished work, and run time grew with every batch (b07 exceeded 10 min). Money was negligible (about $0.005-0.008 per run).
+  - Row positions cannot be used (`--select.include.idx`), because the candidates file is a seeded shuffle that changes as rows are added. So it writes a separate `data/candidates_pending.jsonl`.
+  - Seeded from `b07-validate` (70/70). Results files are copied into `data/reports/validate/` as evidence.
+  - It caught the edited c0072 automatically, which was then re-validated alone (34 s).
+  - A full vf-validate on the frozen final dataset is still required before publishing.
+- **b08** (c0071-c0080; seeds s034, s042, s045, s046, s049, s059, s067, s076, s091, s102): 2 easy, 6 medium, 2 hard (convert_amount, word_diff).
+  - Tasks: diff_records (type-strict equality, 1 != 1.0 != True), shipping_cost (dimensional weight, 500 g steps), convert_amount (fewest hops, lexicographic tie, exact rates, banker's rounding), allocate_orders (priority, output in input order), proration_credit, retry_delays (cap before jitter), crossword_check, percentile (numpy-style conventions, exact), group_aggregate (None sorts first, count all rows), word_diff (LCS walk, deletions win ties).
+  - Gates: **02a 80/80**; **02b b08 mean 0.949, 0 flagged**; **vf-validate 10/10 + c0072 re-run**.
+  - Hand-value slip: 1 (c0072, 816 g bills as 1000 g).
+- **Auto-mutant survivors, b08:** **1 real gap** (c0072): with rate tables whose limits are all multiples of 500 g, the "round up to 500 g" step was invisible; even deleting it survived. Added a table with 999/1499 g limits. The rest are equivalent (e.g. c0080 base value c shifts every LCS entry by c; c0079 checks a None-ness that always coincides). Running tally of real gaps: **16**.
 
 ## 2026-11-19: Batch b07 (generate_v2)
 
