@@ -58,5 +58,15 @@
    "pass_rate": 0.0
   }
  ],
- "verdicts": {}
+ "verdicts": {
+  "pc-c-0008": "ok (no issues reported)",
+  "pc-c-0014": "ok (no issues reported)",
+  "pc-c-0022": "ok (no issues reported)",
+  "pc-c-0023": "ok (no issues reported)",
+  "pc-c-0032": "ok (no issues reported)",
+  "pc-c-0037": "ok (no issues reported)",
+  "pc-c-0058": "ok (no issues reported)",
+  "pc-c-0060": "ok (no issues reported)"
+ },
+ "reviewer": "user (human), 2026-11-20"
 }
