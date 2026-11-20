@@ -1,0 +1,726 @@
+{
+ "traces": "C:\\Users\\nikhi\\AppData\\Local\\Temp/difficulty-r8.jsonl",
+ "rollouts_per_task": 8,
+ "tasks": 100,
+ "histogram_pass_count": {
+  "0": 25,
+  "1": 9,
+  "2": 7,
+  "3": 6,
+  "4": 7,
+  "5": 7,
+  "6": 12,
+  "7": 8,
+  "8": 19
+ },
+ "keep_1_to_7": [
+  "pc-c-0001",
+  "pc-c-0002",
+  "pc-c-0005",
+  "pc-c-0007",
+  "pc-c-0008",
+  "pc-c-0010",
+  "pc-c-0011",
+  "pc-c-0012",
+  "pc-c-0013",
+  "pc-c-0014",
+  "pc-c-0015",
+  "pc-c-0016",
+  "pc-c-0018",
+  "pc-c-0019",
+  "pc-c-0021",
+  "pc-c-0022",
+  "pc-c-0023",
+  "pc-c-0025",
+  "pc-c-0026",
+  "pc-c-0027",
+  "pc-c-0031",
+  "pc-c-0033",
+  "pc-c-0034",
+  "pc-c-0035",
+  "pc-c-0037",
+  "pc-c-0041",
+  "pc-c-0042",
+  "pc-c-0046",
+  "pc-c-0047",
+  "pc-c-0048",
+  "pc-c-0050",
+  "pc-c-0051",
+  "pc-c-0054",
+  "pc-c-0055",
+  "pc-c-0057",
+  "pc-c-0058",
+  "pc-c-0064",
+  "pc-c-0065",
+  "pc-c-0066",
+  "pc-c-0067",
+  "pc-c-0068",
+  "pc-c-0069",
+  "pc-c-0070",
+  "pc-c-0072",
+  "pc-c-0075",
+  "pc-c-0079",
+  "pc-c-0084",
+  "pc-c-0085",
+  "pc-c-0087",
+  "pc-c-0089",
+  "pc-c-0090",
+  "pc-hw-002",
+  "pc-hw-004",
+  "pc-hw-005",
+  "pc-hw-006",
+  "pc-hw-008"
+ ],
+ "drop_too_easy_8_of_8": [
+  "pc-c-0003",
+  "pc-c-0006",
+  "pc-c-0009",
+  "pc-c-0017",
+  "pc-c-0020",
+  "pc-c-0030",
+  "pc-c-0044",
+  "pc-c-0056",
+  "pc-c-0071",
+  "pc-c-0074",
+  "pc-c-0076",
+  "pc-c-0077",
+  "pc-c-0080",
+  "pc-c-0086",
+  "pc-hw-001",
+  "pc-hw-003",
+  "pc-hw-007",
+  "pc-hw-009",
+  "pc-hw-010"
+ ],
+ "triage_0_of_8": [
+  "pc-c-0004",
+  "pc-c-0024",
+  "pc-c-0028",
+  "pc-c-0029",
+  "pc-c-0032",
+  "pc-c-0036",
+  "pc-c-0038",
+  "pc-c-0039",
+  "pc-c-0040",
+  "pc-c-0043",
+  "pc-c-0045",
+  "pc-c-0049",
+  "pc-c-0052",
+  "pc-c-0053",
+  "pc-c-0059",
+  "pc-c-0060",
+  "pc-c-0061",
+  "pc-c-0062",
+  "pc-c-0063",
+  "pc-c-0073",
+  "pc-c-0078",
+  "pc-c-0081",
+  "pc-c-0082",
+  "pc-c-0083",
+  "pc-c-0088"
+ ],
+ "rerun_incomplete": [],
+ "flag_mostly_truncated": [],
+ "per_task": {
+  "pc-c-0001": {
+   "pass": 3,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0002": {
+   "pass": 7,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0003": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0004": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0005": {
+   "pass": 7,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0006": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0007": {
+   "pass": 1,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0008": {
+   "pass": 7,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0009": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0010": {
+   "pass": 1,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0011": {
+   "pass": 4,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0012": {
+   "pass": 5,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0013": {
+   "pass": 2,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0014": {
+   "pass": 1,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0015": {
+   "pass": 7,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0016": {
+   "pass": 6,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0017": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0018": {
+   "pass": 5,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0019": {
+   "pass": 4,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0020": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0021": {
+   "pass": 1,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0022": {
+   "pass": 6,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0023": {
+   "pass": 6,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0024": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0025": {
+   "pass": 7,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0026": {
+   "pass": 5,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0027": {
+   "pass": 4,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0028": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0029": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0030": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0031": {
+   "pass": 3,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0032": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0033": {
+   "pass": 2,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0034": {
+   "pass": 6,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0035": {
+   "pass": 3,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0036": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0037": {
+   "pass": 1,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0038": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0039": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0040": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0041": {
+   "pass": 3,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0042": {
+   "pass": 4,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0043": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0044": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0045": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0046": {
+   "pass": 5,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0047": {
+   "pass": 1,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0048": {
+   "pass": 6,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0049": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0050": {
+   "pass": 2,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0051": {
+   "pass": 5,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0052": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0053": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0054": {
+   "pass": 3,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0055": {
+   "pass": 1,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0056": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0057": {
+   "pass": 6,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0058": {
+   "pass": 4,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0059": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0060": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0061": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0062": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0063": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0064": {
+   "pass": 1,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0065": {
+   "pass": 6,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0066": {
+   "pass": 2,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0067": {
+   "pass": 6,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0068": {
+   "pass": 2,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0069": {
+   "pass": 3,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0070": {
+   "pass": 4,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0071": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0072": {
+   "pass": 6,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0073": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0074": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0075": {
+   "pass": 2,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0076": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0077": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0078": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0079": {
+   "pass": 6,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0080": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0081": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0082": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0083": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0084": {
+   "pass": 7,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0085": {
+   "pass": 1,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0086": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0087": {
+   "pass": 6,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0088": {
+   "pass": 0,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0089": {
+   "pass": 4,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-c-0090": {
+   "pass": 7,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-hw-001": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-hw-002": {
+   "pass": 5,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-hw-003": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-hw-004": {
+   "pass": 7,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-hw-005": {
+   "pass": 2,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-hw-006": {
+   "pass": 5,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-hw-007": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-hw-008": {
+   "pass": 6,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-hw-009": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  },
+  "pc-hw-010": {
+   "pass": 8,
+   "n": 8,
+   "truncated": 0,
+   "errors": 0
+  }
+ }
+}
