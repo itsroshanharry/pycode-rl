@@ -53,17 +53,22 @@ def _open(url: str):
 
 
 def cmd_fetch() -> None:
-    import pyarrow.parquet as pq  # only needed here
+    import gzip
 
     CORPUS.parent.mkdir(parents=True, exist_ok=True)
     n = 0
     with CORPUS.open("w", encoding="utf-8") as out:
-        for source, (repo, rev, paths) in SOURCES.items():
+        for source, (base, repo, rev, paths) in SOURCES.items():
             for path in paths:
-                url = HF.format(repo=repo, rev=rev, path=path)
-                if path.endswith(".parquet"):
-                    table = pq.read_table(io.BytesIO(_open(url).read())).to_pylist()
-                    for row in table:
+                url = base.format(repo=repo, rev=rev, path=path)
+                if source in ("humaneval", "mbpp"):  # small JSONL (HumanEval gzipped)
+                    data = _open(url).read()
+                    if path.endswith(".gz"):
+                        data = gzip.decompress(data)
+                    for line in data.decode("utf-8").splitlines():
+                        if not line.strip():
+                            continue
+                        row = json.loads(line)
                         if source == "humaneval":
                             rec = {"id": row["task_id"], "text": row["prompt"], "code": row["canonical_solution"]}
                         else:
@@ -80,7 +85,7 @@ def cmd_fetch() -> None:
                             n += 1
                 print(f"{source}: {path} done ({n} records so far)", flush=True)
     REPORTS.mkdir(parents=True, exist_ok=True)
-    (REPORTS / "sources.json").write_text(json.dumps({k: {"repo": v[0], "revision": v[1], "files": v[2]} for k, v in SOURCES.items()}, indent=1) + "\n")
+    (REPORTS / "sources.json").write_text(json.dumps({k: {"url": v[0], "repo": v[1], "revision": v[2], "files": v[3]} for k, v in SOURCES.items()}, indent=1) + "\n")
     print(f"{n} benchmark records -> {CORPUS.relative_to(ROOT)}")
 
 
