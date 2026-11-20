@@ -17,7 +17,6 @@ Design (see NOTES.md for the reasoning):
 from __future__ import annotations
 
 import json
-import logging
 import re
 import uuid
 from collections.abc import Iterator
@@ -25,7 +24,6 @@ from importlib.resources import files
 
 import verifiers.v1 as vf
 
-_log = logging.getLogger("verifiers.pycode_env")  # under verifiers' configured logger
 GRADER = files("pycode_env").joinpath("grader/run_pytest.py").read_bytes()
 WORKDIR = "/work"
 GRADE_DIR = "/tmp/pycode-grade"
@@ -124,10 +122,6 @@ class PyCodeTask(vf.Task[PyCodeData, vf.State, PyCodeTaskConfig]):
         """Gold check for `vf-validate`: reference passes every test, and enough
         mutants fail. (`vf-validate` has already run `setup` on this runtime.)"""
         ref = await self._grade(runtime, self.data.reference)
-        # one log line per gold check, so a failure can be diagnosed from validate.log
-        _log.info("gold %s: passed %s/%s load_error=%s timeouts=%s first_failure=%.300r", self.data.id,
-                  ref.get("passed"), ref.get("total"), ref.get("load_error"), ref.get("timeouts"),
-                  ref.get("first_failure"))
         if ref["score"] != 1.0:
             return False
         mutants = self.data.mutants
