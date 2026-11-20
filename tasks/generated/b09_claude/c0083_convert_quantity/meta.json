@@ -1,0 +1,1 @@
+{"id": "pc-c-0083", "entry_point": "convert_quantity", "topic": "unit parsing and conversion", "difficulty_hint": "hard", "seed_id": "s080", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v3", "levers": ["composition", "exactness", "layered-rules", "spec-trap"], "no_efficiency_reason": "input is one short expression; no scalable input"}
