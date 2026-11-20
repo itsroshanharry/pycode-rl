@@ -18,3 +18,6 @@ outputs/
 .pytest_cache/
 .ruff_cache/
 *.egg-info/
+
+# public benchmark corpora downloaded by pipeline/04_contamination.py (not redistributed)
+data/external/
