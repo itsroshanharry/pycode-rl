@@ -15,6 +15,7 @@
   "all": {
    "ranking": [
     "deepseek/deepseek-v4.1-flash-1017",
+    "openai/gpt-oss-120b",
     "openai/gpt-oss-20b"
    ],
    "models": {
@@ -58,6 +59,46 @@
      "model_cost_usd": 0.8929,
      "model_cost_per_task_usd": 0.01191
     },
+    "openai/gpt-oss-120b": {
+     "tasks": 75,
+     "attempts": 300,
+     "scored_attempts": 300,
+     "tasks_with_all_attempts": 75,
+     "mean_reward": 0.523,
+     "ci95_wilson_attempts": [
+      0.467,
+      0.579
+     ],
+     "tasks_scored": 75,
+     "ci95_bootstrap_tasks": [
+      0.433,
+      0.61
+     ],
+     "pass@1": 0.523,
+     "pass@2": 0.644,
+     "pass@4": 0.72,
+     "pass^2": 0.402,
+     "pass^4": 0.293,
+     "mean_frac_tests_passed": 0.937,
+     "truncated_rate": 0.0,
+     "infra_error_rate": 0.0,
+     "failure_modes": {
+      "pass": 157,
+      "wrong_answer": 142,
+      "load_error": 1
+     },
+     "pass_count_histogram": {
+      "0": 21,
+      "1": 7,
+      "2": 13,
+      "3": 12,
+      "4": 22
+     },
+     "mean_completion_tokens": 1170,
+     "mean_reasoning_tokens": 311,
+     "model_cost_usd": 0.3068,
+     "model_cost_per_task_usd": 0.00409
+    },
     "openai/gpt-oss-20b": {
      "tasks": 75,
      "attempts": 300,
@@ -71,7 +112,7 @@
      "tasks_scored": 75,
      "ci95_bootstrap_tasks": [
       0.303,
-      0.457
+      0.46
      ],
      "pass@1": 0.38,
      "pass@2": 0.536,
@@ -102,22 +143,45 @@
     }
    },
    "paired": {
+    "deepseek/deepseek-v4.1-flash-1017 vs openai/gpt-oss-120b": {
+     "tasks": 75,
+     "mean_diff": 0.417,
+     "ci95_bootstrap_tasks": [
+      0.33,
+      0.5
+     ],
+     "a_better_tasks": 51,
+     "b_better_tasks": 1,
+     "ties": 23
+    },
     "deepseek/deepseek-v4.1-flash-1017 vs openai/gpt-oss-20b": {
      "tasks": 75,
      "mean_diff": 0.56,
      "ci95_bootstrap_tasks": [
-      0.48,
-      0.64
+      0.483,
+      0.637
      ],
      "a_better_tasks": 66,
      "b_better_tasks": 1,
      "ties": 8
+    },
+    "openai/gpt-oss-120b vs openai/gpt-oss-20b": {
+     "tasks": 75,
+     "mean_diff": 0.143,
+     "ci95_bootstrap_tasks": [
+      0.077,
+      0.217
+     ],
+     "a_better_tasks": 33,
+     "b_better_tasks": 10,
+     "ties": 32
     }
    }
   },
   "test": {
    "ranking": [
     "deepseek/deepseek-v4.1-flash-1017",
+    "openai/gpt-oss-120b",
     "openai/gpt-oss-20b"
    ],
    "models": {
@@ -159,6 +223,45 @@
      "mean_reasoning_tokens": 3276,
      "model_cost_usd": 0.4001,
      "model_cost_per_task_usd": 0.01081
+    },
+    "openai/gpt-oss-120b": {
+     "tasks": 37,
+     "attempts": 148,
+     "scored_attempts": 148,
+     "tasks_with_all_attempts": 37,
+     "mean_reward": 0.541,
+     "ci95_wilson_attempts": [
+      0.46,
+      0.619
+     ],
+     "tasks_scored": 37,
+     "ci95_bootstrap_tasks": [
+      0.412,
+      0.669
+     ],
+     "pass@1": 0.541,
+     "pass@2": 0.667,
+     "pass@4": 0.73,
+     "pass^2": 0.414,
+     "pass^4": 0.297,
+     "mean_frac_tests_passed": 0.955,
+     "truncated_rate": 0.0,
+     "infra_error_rate": 0.0,
+     "failure_modes": {
+      "pass": 80,
+      "wrong_answer": 68
+     },
+     "pass_count_histogram": {
+      "0": 10,
+      "1": 2,
+      "2": 8,
+      "3": 6,
+      "4": 11
+     },
+     "mean_completion_tokens": 1092,
+     "mean_reasoning_tokens": 270,
+     "model_cost_usd": 0.1424,
+     "model_cost_per_task_usd": 0.00385
     },
     "openai/gpt-oss-20b": {
      "tasks": 37,
@@ -203,6 +306,17 @@
     }
    },
    "paired": {
+    "deepseek/deepseek-v4.1-flash-1017 vs openai/gpt-oss-120b": {
+     "tasks": 37,
+     "mean_diff": 0.405,
+     "ci95_bootstrap_tasks": [
+      0.284,
+      0.527
+     ],
+     "a_better_tasks": 25,
+     "b_better_tasks": 1,
+     "ties": 11
+    },
     "deepseek/deepseek-v4.1-flash-1017 vs openai/gpt-oss-20b": {
      "tasks": 37,
      "mean_diff": 0.554,
@@ -213,12 +327,24 @@
      "a_better_tasks": 32,
      "b_better_tasks": 1,
      "ties": 4
+    },
+    "openai/gpt-oss-120b vs openai/gpt-oss-20b": {
+     "tasks": 37,
+     "mean_diff": 0.149,
+     "ci95_bootstrap_tasks": [
+      0.041,
+      0.257
+     ],
+     "a_better_tasks": 17,
+     "b_better_tasks": 5,
+     "ties": 15
     }
    }
   },
   "train": {
    "ranking": [
     "deepseek/deepseek-v4.1-flash-1017",
+    "openai/gpt-oss-120b",
     "openai/gpt-oss-20b"
    ],
    "models": {
@@ -260,6 +386,46 @@
      "mean_reasoning_tokens": 4038,
      "model_cost_usd": 0.4928,
      "model_cost_per_task_usd": 0.01297
+    },
+    "openai/gpt-oss-120b": {
+     "tasks": 38,
+     "attempts": 152,
+     "scored_attempts": 152,
+     "tasks_with_all_attempts": 38,
+     "mean_reward": 0.507,
+     "ci95_wilson_attempts": [
+      0.428,
+      0.585
+     ],
+     "tasks_scored": 38,
+     "ci95_bootstrap_tasks": [
+      0.375,
+      0.638
+     ],
+     "pass@1": 0.507,
+     "pass@2": 0.623,
+     "pass@4": 0.711,
+     "pass^2": 0.39,
+     "pass^4": 0.289,
+     "mean_frac_tests_passed": 0.919,
+     "truncated_rate": 0.0,
+     "infra_error_rate": 0.0,
+     "failure_modes": {
+      "pass": 77,
+      "wrong_answer": 74,
+      "load_error": 1
+     },
+     "pass_count_histogram": {
+      "0": 11,
+      "1": 5,
+      "2": 5,
+      "3": 6,
+      "4": 11
+     },
+     "mean_completion_tokens": 1245,
+     "mean_reasoning_tokens": 351,
+     "model_cost_usd": 0.1644,
+     "model_cost_per_task_usd": 0.00433
     },
     "openai/gpt-oss-20b": {
      "tasks": 38,
@@ -304,6 +470,17 @@
     }
    },
    "paired": {
+    "deepseek/deepseek-v4.1-flash-1017 vs openai/gpt-oss-120b": {
+     "tasks": 38,
+     "mean_diff": 0.428,
+     "ci95_bootstrap_tasks": [
+      0.316,
+      0.539
+     ],
+     "a_better_tasks": 26,
+     "b_better_tasks": 0,
+     "ties": 12
+    },
     "deepseek/deepseek-v4.1-flash-1017 vs openai/gpt-oss-20b": {
      "tasks": 38,
      "mean_diff": 0.566,
@@ -314,12 +491,24 @@
      "a_better_tasks": 34,
      "b_better_tasks": 0,
      "ties": 4
+    },
+    "openai/gpt-oss-120b vs openai/gpt-oss-20b": {
+     "tasks": 38,
+     "mean_diff": 0.138,
+     "ci95_bootstrap_tasks": [
+      0.053,
+      0.23
+     ],
+     "a_better_tasks": 16,
+     "b_better_tasks": 5,
+     "ties": 17
     }
    }
   },
   "band_filter": {
    "ranking": [
     "deepseek/deepseek-v4.1-flash-1017",
+    "openai/gpt-oss-120b",
     "openai/gpt-oss-20b"
    ],
    "models": {
@@ -361,6 +550,46 @@
      "model_cost_usd": 0.4428,
      "model_cost_per_task_usd": 0.00852
     },
+    "openai/gpt-oss-120b": {
+     "tasks": 52,
+     "attempts": 208,
+     "scored_attempts": 208,
+     "tasks_with_all_attempts": 52,
+     "mean_reward": 0.707,
+     "ci95_wilson_attempts": [
+      0.642,
+      0.764
+     ],
+     "tasks_scored": 52,
+     "ci95_bootstrap_tasks": [
+      0.62,
+      0.788
+     ],
+     "pass@1": 0.707,
+     "pass@2": 0.853,
+     "pass@4": 0.942,
+     "pass^2": 0.561,
+     "pass^4": 0.423,
+     "mean_frac_tests_passed": 0.944,
+     "truncated_rate": 0.0,
+     "infra_error_rate": 0.0,
+     "failure_modes": {
+      "pass": 147,
+      "wrong_answer": 60,
+      "load_error": 1
+     },
+     "pass_count_histogram": {
+      "0": 3,
+      "1": 6,
+      "2": 10,
+      "3": 11,
+      "4": 22
+     },
+     "mean_completion_tokens": 1050,
+     "mean_reasoning_tokens": 299,
+     "model_cost_usd": 0.1922,
+     "model_cost_per_task_usd": 0.0037
+    },
     "openai/gpt-oss-20b": {
      "tasks": 52,
      "attempts": 208,
@@ -373,7 +602,7 @@
      ],
      "tasks_scored": 52,
      "ci95_bootstrap_tasks": [
-      0.438,
+      0.442,
       0.611
      ],
      "pass@1": 0.524,
@@ -404,6 +633,17 @@
     }
    },
    "paired": {
+    "deepseek/deepseek-v4.1-flash-1017 vs openai/gpt-oss-120b": {
+     "tasks": 52,
+     "mean_diff": 0.26,
+     "ci95_bootstrap_tasks": [
+      0.178,
+      0.341
+     ],
+     "a_better_tasks": 28,
+     "b_better_tasks": 1,
+     "ties": 23
+    },
     "deepseek/deepseek-v4.1-flash-1017 vs openai/gpt-oss-20b": {
      "tasks": 52,
      "mean_diff": 0.442,
@@ -414,12 +654,24 @@
      "a_better_tasks": 43,
      "b_better_tasks": 1,
      "ties": 8
+    },
+    "openai/gpt-oss-120b vs openai/gpt-oss-20b": {
+     "tasks": 52,
+     "mean_diff": 0.183,
+     "ci95_bootstrap_tasks": [
+      0.091,
+      0.279
+     ],
+     "a_better_tasks": 28,
+     "b_better_tasks": 8,
+     "ties": 16
     }
    }
   },
   "band_hard": {
    "ranking": [
     "deepseek/deepseek-v4.1-flash-1017",
+    "openai/gpt-oss-120b",
     "openai/gpt-oss-20b"
    ],
    "models": {
@@ -462,6 +714,44 @@
      "model_cost_usd": 0.4501,
      "model_cost_per_task_usd": 0.01957
     },
+    "openai/gpt-oss-120b": {
+     "tasks": 23,
+     "attempts": 92,
+     "scored_attempts": 92,
+     "tasks_with_all_attempts": 23,
+     "mean_reward": 0.109,
+     "ci95_wilson_attempts": [
+      0.06,
+      0.189
+     ],
+     "tasks_scored": 23,
+     "ci95_bootstrap_tasks": [
+      0.033,
+      0.207
+     ],
+     "pass@1": 0.109,
+     "pass@2": 0.174,
+     "pass@4": 0.217,
+     "pass^2": 0.043,
+     "pass^4": 0.0,
+     "mean_frac_tests_passed": 0.921,
+     "truncated_rate": 0.0,
+     "infra_error_rate": 0.0,
+     "failure_modes": {
+      "wrong_answer": 82,
+      "pass": 10
+     },
+     "pass_count_histogram": {
+      "0": 18,
+      "1": 1,
+      "2": 3,
+      "3": 1
+     },
+     "mean_completion_tokens": 1439,
+     "mean_reasoning_tokens": 340,
+     "model_cost_usd": 0.1146,
+     "model_cost_per_task_usd": 0.00498
+    },
     "openai/gpt-oss-20b": {
      "tasks": 23,
      "attempts": 92,
@@ -503,16 +793,38 @@
     }
    },
    "paired": {
-    "deepseek/deepseek-v4.1-flash-1017 vs openai/gpt-oss-20b": {
+    "deepseek/deepseek-v4.1-flash-1017 vs openai/gpt-oss-120b": {
      "tasks": 23,
-     "mean_diff": 0.826,
+     "mean_diff": 0.772,
      "ci95_bootstrap_tasks": [
-      0.728,
-      0.902
+      0.663,
+      0.87
      ],
      "a_better_tasks": 23,
      "b_better_tasks": 0,
      "ties": 0
+    },
+    "deepseek/deepseek-v4.1-flash-1017 vs openai/gpt-oss-20b": {
+     "tasks": 23,
+     "mean_diff": 0.826,
+     "ci95_bootstrap_tasks": [
+      0.739,
+      0.913
+     ],
+     "a_better_tasks": 23,
+     "b_better_tasks": 0,
+     "ties": 0
+    },
+    "openai/gpt-oss-120b vs openai/gpt-oss-20b": {
+     "tasks": 23,
+     "mean_diff": 0.054,
+     "ci95_bootstrap_tasks": [
+      -0.011,
+      0.13
+     ],
+     "a_better_tasks": 5,
+     "b_better_tasks": 2,
+     "ties": 16
     }
    }
   }
@@ -526,302 +838,377 @@
  "per_task": {
   "pc-c-0001": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0002": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 1.0
   },
   "pc-c-0004": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0005": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.25,
    "gpt-oss-20b": 1.0
   },
   "pc-c-0007": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0008": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 1.0
   },
   "pc-c-0010": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0011": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0012": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0013": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0014": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0015": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0016": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0018": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0019": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 1.0
   },
   "pc-c-0021": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0022": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 1.0
   },
   "pc-c-0023": {
    "deepseek-v4.1-flash-1017": 0.0,
+   "gpt-oss-120b": 0.25,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0024": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0025": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 1.0
   },
   "pc-c-0027": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0028": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.25,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0029": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0031": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0032": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0033": {
    "deepseek-v4.1-flash-1017": 0.75,
+   "gpt-oss-120b": 0.25,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0034": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0035": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0036": {
    "deepseek-v4.1-flash-1017": 0.25,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0037": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.25,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0038": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0039": {
    "deepseek-v4.1-flash-1017": 0.5,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0040": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0041": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0042": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0043": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0045": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0046": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0047": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0048": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0049": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0050": {
    "deepseek-v4.1-flash-1017": 0.75,
+   "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0051": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0052": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0053": {
    "deepseek-v4.1-flash-1017": 0.5,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0054": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0055": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.25,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0058": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0060": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0061": {
    "deepseek-v4.1-flash-1017": 0.75,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0062": {
    "deepseek-v4.1-flash-1017": 0.75,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0063": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0064": {
    "deepseek-v4.1-flash-1017": 0.75,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0065": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0066": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0067": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0068": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0069": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0070": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0072": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0073": {
    "deepseek-v4.1-flash-1017": 0.75,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0075": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0078": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0079": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0081": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 0.25
   },
   "pc-c-0082": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0083": {
    "deepseek-v4.1-flash-1017": 0.75,
+   "gpt-oss-120b": 0.0,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0084": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.75,
    "gpt-oss-20b": 1.0
   },
   "pc-c-0085": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.25,
    "gpt-oss-20b": 0.75
   },
   "pc-c-0087": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0088": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.0
   },
   "pc-c-0089": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.5
   },
   "pc-c-0090": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 1.0
   },
   "pc-hw-002": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 1.0,
    "gpt-oss-20b": 0.75
   },
   "pc-hw-005": {
    "deepseek-v4.1-flash-1017": 1.0,
+   "gpt-oss-120b": 0.5,
    "gpt-oss-20b": 0.0
   }
  }
