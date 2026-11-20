@@ -19,8 +19,9 @@ Status: draft, built up as the project runs. Every number here must be backed by
 | Generated + hand-written | - | 100 | 90 Claude-written (9 batches) + 10 hand-written | `tasks/` |
 | Validation (02a/02b/vf-validate) | 100 | 100 | 20 real test gaps found by auto-mutants and fixed | `data/reports/validated_hashes.json` |
 | Difficulty filter (gpt-oss-20b x 8) | 100 | 81 | 19 too easy (8/8); 25 at 0/8 triaged with DeepSeek, all kept (1 after a spec fix, 1 manual) | `data/reports/difficulty_final.json` |
-| Contamination (lexical + LLM judge) | 81 | 76 | lexical clean; 5 dropped as well-known problems, 1 judge flag overruled | `data/reports/contamination/decisions.json` |
-| Split | 76 | 38 train / 38 test | 6 tasks changed after seeing model results forced to train | `data/reports/split.json` |
+| Contamination (lexical + 2 LLM judges + author web check) | 81 | 75 | lexical clean; 6 dropped as well-known problems, 1 judge flag overruled | `data/reports/contamination/decisions.json` |
+| Audit (DeepSeek 32 tasks + user spot-check 8) | 75 | 75 | 1 major + 2 minor defects fixed, 1 dismissed | `data/reports/review/decisions.json` |
+| Split | 75 | 38 train / 37 test | 6 tasks changed after seeing model results forced to train | `data/reports/split.json` |
 
 ## Findings to include (collected as they happen)
 

@@ -43,6 +43,31 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
+## 2026-11-20: Stage 6 audit -- 75 tasks (38 train / 37 test)
+
+- **DeepSeek review** (`pipeline/06_review.py`; spec + tests + reference -> well-known? ambiguity? unstated checks? reference?):
+  - **$0.48**, but **44 of 76 ran out of the 12k token budget while still thinking** (finish=length, reasoning_tokens=12000, no answer).
+  - My mistake: no one-call probe of this new kind of call, and results were written only at the end, so stopping early would have wasted everything.
+  - Lessons, now rules:
+    1. probe every new kind of call, not only new models;
+    2. scripts save each result as it finishes;
+    3. never place a spend guard that destroys partial results.
+- **32 completed reviews:** 28 ok, 3 minor, 1 major.
+  - **Fixed:**
+    - c0028 (major: tests accept leading/trailing whitespace and runs of spaces that the spec did not allow; the spec now says whitespace is free-form);
+    - c0029 (B == 0 past the end silently appended; now ValueError, spec + 2 tests);
+    - c0085 (reference accepted non-str rows; type check).
+  - Dismissed: c0079 (a non-int value is outside the stated input contract).
+  - The 3 fixed tasks pass 02a, 02b (1.0 / 0.975 / 0.975) and vf-validate 3/3.
+- **Well-known question for all 76:** instead of paying for another model pass, the **author (Claude Code) reviewed all 76 with web verification**. This is labelled as NOT independent in the report.
+  - 10 resemblances examined. **Dropped pc-hw-008** (same input/output shape as LeetCode 1943 "Describe the Painting"; also flagged by DeepSeek).
+  - Kept with notes: c0010, c0082 (LC 721), c0073 (LC 399), c0046 (LC 1834), c0085 (LC 36), c0084 (LC 1494), c0031, c0045, c0016.
+  - Rule: drop if an independent judge flags the task and the flag is not a clear judge error, or if a memorized solution to the known problem would pass most tests.
+  - All in `data/reports/review/decisions.json`.
+- Pipeline re-run downstream (assemble -> filter input -> finalize -> decide -> split): **75 tasks, 38 train / 37 test**, dataset sha256 119ed403 (not frozen until the spot-check is done).
+- **User spot-check (independent human sample):** 8 tasks picked with seed 8 in `data/reports/review/spot_check.json`: c0008, c0014, c0022, c0023, c0032, c0037, c0058, c0060. Together with the 32 independent DeepSeek audits, that makes 40.
+- Spend about $2.42 total; wallet $7.58.
+
 ## 2026-11-20: Leaderboard plan finalized; split revised; REPORT.md draft started
 
 - **Leaderboard (user decision):** 5 models, **all 76 tasks, -r 4, max_tokens 16384**, temperature 1.0, reasoning low, about $2.5:
