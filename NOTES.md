@@ -43,6 +43,27 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
+## 2026-11-20: Pilot (20 tasks x 4, filter model) -- token cap finding + "too easy" finding
+
+Settings: `deepseek/deepseek-v4.1-flash-1017` (live price $0.04368 in / $0.70 out per M, verified with `prime inference models`), temperature 1.0, reasoning_effort low, `-c 8`, `-s --select.seed 2026 -n 20` over `data/candidates.jsonl`. Summaries: `data/reports/pilot/*.json` (script `pipeline/pilot_summary.py`).
+
+| | max_tokens 2048 | max_tokens 8192 |
+|---|---|---|
+| mean reward | 0.438 | **0.900** |
+| truncated (finish_reason=length) | **56%** (45/80) | 7.5% (6/80) |
+| real wrong answers | **0** | 2 |
+| tasks 4/4 | 6/20 | **17/20** |
+| mean output / reasoning tokens | 1705 / 1514 | 3570 / 3109 |
+| wallet cost | $0.098 ($0.0012/rollout) | $0.232 ($0.0029/rollout) |
+
+- **Finding 1 (harness, not model or task):** at 2048 tokens every failure was truncation. 38 replies were cut off during reasoning (no code); 7 were cut off mid-code (SyntaxError, because the reply had no closing fence). Using 2048 for the difficulty filter would have discarded good tasks as "unsolvable". **Decision: max_tokens 8192 for filter/leaderboard runs**, not CLAUDE.md's starting 2048. Pass rates must always be read together with the truncation rate.
+- **Finding 2 (difficulty):** with enough tokens the filter model solves 17/20 tasks 4/4, so the [1/8, 7/8] keep rule would drop about 85% of candidates as too easy. Open decision: calibrate to a weaker target-policy model, make tasks harder, or both.
+- Failures at 8k:
+  - c0031 format_duration: 3 of 4 rollouts truncated even at 8192 (long reasoning);
+  - c0036 parse_dotenv: 3 truncated plus 1 wrong ("export	A=1": the spec says "export" followed by at least one SPACE, and the model accepted a tab; a fair but subtle trap, so flag it for the audit);
+  - c0052 format_number: 1 genuinely wrong answer (a "-" on a positive number).
+- Spend so far: about $0.40 total; wallet $9.603.
+
 ## 2026-11-20: Incremental validation + batch b08
 
 - **`pipeline/02c_pending.py`** (new): vf-validate only rows whose content hash is not yet in `data/reports/validated_hashes.json`.
