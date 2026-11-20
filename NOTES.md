@@ -43,6 +43,31 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
+## 2026-11-20: 3-model pilot comparison + 4 spec defects found
+
+Same 20 tasks x 4 (seed 2026), max_tokens 8192, temperature 1.0, reasoning_effort low. Summaries: `data/reports/pilot/`.
+
+| | DeepSeek V4.1 Flash | Gemma 4 31B | Qwen3.6 35B A3B (stopped at 33/80) |
+|---|---|---|---|
+| mean reward | 0.900 | 0.650 | 0.152 |
+| truncated | 7.5% | 14% | **79%** |
+| mean output tokens | 3570 | 5025 | 7574 |
+| token cost / rollout | ~$0.0025 | ~$0.0017 | ~$0.0077 |
+| pass-count histogram (of 4) | 0:1, 1:1, 3:1, 4:17 | 0:6, 2:2, 4:12 | n/a |
+
+- **Qwen stopped early:** the step was heading for about $1.3-1.5 (over the $1 ask-first rule) because I estimated its cost from DeepSeek's token use; it actually uses 2.5x more. Its 0.15 score is again truncation, not difficulty, so it is not viable as a filter on this budget, and the leaderboard will need a higher cap for it (cost implication). **New standing rule in CLAUDE.md: probe every new model (1-2 tasks x 2) before multi-rollout runs.** Qwen spend about $0.25-0.30.
+- **Gemma is bimodal** (each task either 4/4 or 0/4) and most of its failures **miss a single test**. Inspecting them:
+  - **4 spec defects (mine):** the tests rejected inputs that the spec did not exclude:
+    - c0035: "digits" (full-width 0 rejected);
+    - c0037: "an int" (True rejected, yet bool is an int in Python);
+    - c0061: "letters" (Turkish İ rejected);
+    - c0078: p "0-100" (full-width digits rejected).
+    - All four specs now say ASCII, or that bool is excluded; tests unchanged.
+  - New `pipeline/lint_spec_traps.py` flags tests that use non-ASCII or bool inputs while the spec never says ASCII or bool; the remaining 3 hits were reviewed as false alarms.
+  - **This is the shared-error class the self-checks cannot catch; a second model found it.** REPORT.md point: spec-trap vs spec ambiguity. A trap is fair only if the spec states it.
+  - Genuine Gemma failures: c0052 (a 35-digit number: precision lost, likely float/Decimal context), c0036 (escape handling; tab after export), c0069 (truncated), c0028 (2/4).
+- Total pilot spend: about $0.97 across the 4 runs; wallet $8.968. No sandboxes left running.
+
 ## 2026-11-20: Pilot (20 tasks x 4, filter model) -- token cap finding + "too easy" finding
 
 Settings: `deepseek/deepseek-v4.1-flash-1017` (live price $0.04368 in / $0.70 out per M, verified with `prime inference models`), temperature 1.0, reasoning_effort low, `-c 8`, `-s --select.seed 2026 -n 20` over `data/candidates.jsonl`. Summaries: `data/reports/pilot/*.json` (script `pipeline/pilot_summary.py`).
