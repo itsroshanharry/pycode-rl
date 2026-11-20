@@ -1,0 +1,34 @@
+{
+  "checks": {
+    "gold": {
+      "error": 0,
+      "invalid": 0,
+      "missing": 0,
+      "timeout": 0,
+      "unchecked": 0,
+      "valid": 75
+    },
+    "noop": {
+      "error": 0,
+      "invalid": 0,
+      "missing": 0,
+      "timeout": 0,
+      "unchecked": 0,
+      "valid": 75
+    }
+  },
+  "mode": "all",
+  "outcomes": {
+    "error": 0,
+    "invalid": 0,
+    "missing": 0,
+    "timeout": 0,
+    "unchecked": 0,
+    "valid": 75
+  },
+  "owed": 0,
+  "recorded": 75,
+  "terminal": 75,
+  "total": 75,
+  "valid_rate": 1.0
+}

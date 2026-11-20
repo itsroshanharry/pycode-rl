@@ -4,44 +4,36 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
-## CURRENT STATUS (read this first in a new session), updated 2026-11-19
+## CURRENT STATUS (read this first in a new session), updated 2026-11-20
 
-**Where we are:** Phase 1 done; plan step 3 done; plan step 4 (generation) in progress.
-- **Environment** `pycode-env` (single-function tasks, `null` harness default, shared scoring, isolated grader): built, cheat suite 26/26, 10 hand-written tasks valid in Prime sandboxes.
-- **Published:** PRIVATE as `itsroshanharry/pycode-env` 0.1.0 (ships the 10 hand-written tasks, split `train`). Hosted smoke run passed 2/2.
-- **Generation:**
-  - 102 seeds (`pipeline/prompts/seeds.jsonl`) and prompt `generate_v1.md`.
-  - **Batch b01:** 10 Claude-written candidates, all passing assembly, local check (30/30 authored mutants killed) and `vf-validate` (10/10).
-  - Test-strength check (`02b`) on b01: mutation 0.949 mean, all 17 survivors equivalent, branch coverage 100%, hard-code fake fails on all 10, 0 flagged.
-  - **Batch b02** (c0011-c0020, prompt v1): all gates passed, `vf-validate` 20/20. The automatic mutants exposed 3 real test gaps (c0012, c0019), which are fixed.
-  - **Grader fixed** (UnicodeDecodeError false negative). The Hub package 0.1.0 is outdated, so re-push before the next hosted run.
-  - **Prompt `generate_v2.md`** (difficulty levers twist/combo/efficiency/spec-trap) is ready; **b03 onward use v2.**
-  - **b03-b08** (c0021-c0080, v2) and **b09** (c0081-c0090, first v3 batch): all gates passed. **90 candidates total, 90/90 validated** (`data/reports/validated_hashes.json`, 2026-11-20).
-- **Wallet:** $8.780 (about $1.22 spent: pilots and probes about $1.15). The user has not set a dashboard usage limit yet.
+**Where we are:** dataset built and audited; now freezing, publishing 0.2.0, then the leaderboard.
+- **Dataset:** 75 tasks (38 train / 37 test), sha256 `119ed403e4977450209a44a3c2d99e7661fd0c17611c9525b7e8f1d182fc2680`.
+  - Funnel: 100 written -> 100 validated -> 81 after the difficulty filter -> 75 after contamination -> 75 after the audit.
+  - Audit: all 75 reviewed (DeepSeek 31 + gpt-oss-120b 44) plus a user spot-check of 8. See the Stage 6 entry below.
+- **Frozen-dataset full `vf-validate`: 75/75 valid** (gold 75/75, noop 75/75, 0 errors or timeouts). Results are in `data/reports/validate/final-validate.*`, recorded with `02c_pending.py record --dataset`. **The dataset is frozen.**
+- **Package:** version bumped to 0.2.0 and README rewritten (not pushed yet). The Hub still has 0.1.1 (10 hand-written tasks).
+- **Wallet:** about $7.53 (spend about $2.47).
+
+**Next steps, in order:**
+1. ~~Full vf-validate~~ done.
+2. `prime env push` 0.2.0, then run a 2-task hosted smoke test.
+3. Leaderboard (CLAUDE.md section 5; plan in the 2026-11-20 entries):
+   - all 75 tasks, -r 4, temperature 1.0, reasoning_effort low, max_tokens 16384, -c 8;
+   - three waves: (1) DeepSeek + gpt-oss-20b, (2) Gemma 31B + gpt-oss-120b, (3) qwen3.5-9b;
+   - check spend and truncation between waves;
+   - **no pushes during the waves** (hosted runs use @latest).
+4. Analysis (Wilson CIs, pass@k, pass^k, failure modes, cost; all 75 plus the test-only 37), then REPORT.md.
+5. Stretch: null vs bash harness comparison. Optional PR.
 
 **Agreed decisions (don't relitigate):**
 - function-level tasks (no repo pivot);
-- generator split: Claude writes the first ~50, then a cheap Prime model, in a separate removable `01b_generate_api.py`;
 - contamination = exact n-gram + LLM-judge rephrase check (no MinHash);
 - traces ON;
 - hosted evals for the leaderboard;
-- SWE-env reward-hack audit is out of scope (separate later project).
-
-**Next steps, in order:**
-1. ~~Review the 02b results on b01~~ done: 0 flagged.
-2. ~~Re-push the Hub package~~ **done:** `itsroshanharry/pycode-env` **0.1.1** (PRIVATE, wheel sha256 `8ea95510...`). Hosted smoke run `tajnohon1b6p3cf6hhmksirk`: 2/2 reward 1.0, 0% error/truncation; the trace shows `grader: "2"`, `isolated: true`, `temperature: 0.0`. Wallet $9.98.
-3. **Keep writing Claude batches b04, b05, ...** (user decision 2026-11-19: as many as possible). Each batch: 10 tasks with **generate_v2**, new seeds; hard efficiency tasks get `slow.py`; commit after every few tasks; then assemble -> 02a -> 02b (inspect survivors) -> vf-validate. **b01-b09 done: 90 candidates, all valid.** Next batch b10 starts at c0091. vf-validate now runs only on pending rows (`pipeline/02c_pending.py`, CLAUDE.md section 7). Seeds used so far: s034, s042, s045, s046, s049, s059, s067, s076, s091, s102, s027, s029, s036, s038, s039, s044, s048, s057, s084, s096, s017, s018, s030, s032, s047, s063, s074, s079, s087, s090, s006, s009, s037, s050, s054, s070, s072, s083, s086, s098, s002, s004, s007, s008, s013, s014, s015, s022, s023, s024, s001, s003, s005, s011, s012, s016, s019, s020, s021, s025, s026, s031, s033, s035, s040, s041, s043, s051, s052, s055, s056, s066, s071, s078, s081, s082, s088, s092, s093, s094.
-4. Write `01b_generate_api.py` (cheap model not on the leaderboard, same template) for about 450 more candidates; run the same gates. Report pass rates per generator.
-5. Pilot (20 tasks x 4 rollouts) to measure $/rollout and truncation.
-6. Difficulty filter (-r 8, temperature 1.0, keep 1/8..7/8; 0/8 -> one stronger-model try, then manual). Ask first (> $1).
-7. Contamination (`04_contamination.py`), split (`05`), audit 40 tasks (`06`), freeze the dataset hash, push, leaderboard, REPORT.md.
-8. **Stretch, after the leaderboard (decided 2026-11-19):** a single-turn (`null` harness) vs multi-turn (`bash` harness) comparison on the same test tasks and models. See the decision entry below for what has to change.
+- Claude Code generated every task (no API generator was needed);
+- the SWE-env reward-hack audit is out of scope.
 
 **How to run things:** see CLAUDE.md section 3 (Codespace workflow), section 7 (gate order) and section 9 (hosted command).
-
-**User preferences:** plain language, technical terms explained in brackets, concise answers. Ask before spending more than $1 or doing anything outward-facing.
-
----
 
 ## 2026-11-20: Stage 6 audit -- 75 tasks (38 train / 37 test)
 
