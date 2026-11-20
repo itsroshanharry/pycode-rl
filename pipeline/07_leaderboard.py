@@ -148,6 +148,49 @@ def cmd_fetch(eval_id: str, model: str, workers: int) -> None:
     print(f"wrote {len(rows)} rows -> {_rows_file(model).relative_to(ROOT)}")
 
 
+def cmd_missing(model: str) -> None:
+    """Tasks with fewer than K scored attempts (e.g. a hosted run that hit its timeout), grouped by
+    how many attempts are missing, with the vf-run command that fills each group."""
+    meta = _meta()
+    counts = {t: 0 for t in meta}
+    for f in OUT.glob(f"rollouts_{_short(model)}*.jsonl.gz"):
+        with gzip.open(f, "rt", encoding="utf-8") as fh:
+            for line in fh:
+                r = json.loads(line)
+                if failure_mode(r) != "infra_error":
+                    counts[r["task_id"]] += 1
+    groups: dict[int, list[str]] = {}
+    for t, c in sorted(counts.items()):
+        if c < K:
+            groups.setdefault(K - c, []).append(t)
+    if not groups:
+        print("complete: every task has", K, "scored attempts")
+    for need, ids in sorted(groups.items()):
+        print(f"# {len(ids)} task(s) missing {need} attempt(s)")
+        print(f".venv/bin/vf-run pycode-env -m {model} -r {need} -c 8 --env.taskset.split all "
+              f"--select.include.ids {' '.join(ids)} --sampling.temperature 1.0 --sampling.reasoning_effort low "
+              f"--sampling.max_tokens 16384 -o outputs --run.name fill-{_short(model)}-r{need}")
+
+
+def cmd_ingest(traces: str, model: str, name: str) -> None:
+    """Add attempts from a local vf-run traces.jsonl (same env code, model and sampling as the
+    hosted run) as a separate rollouts file, so a later `fetch` of the hosted run cannot erase them."""
+    meta = _meta()
+    opener = gzip.open if traces.endswith(".gz") else open
+    rows = []
+    with opener(traces, "rt", encoding="utf-8") as fh:
+        for line in fh:
+            if line.strip():
+                rec = json.loads(line)
+                for doc in rec.get("traces") or [rec]:
+                    rows.append(_compact(doc, model, f"vf-run:{name}", meta))
+    out = OUT / f"rollouts_{_short(model)}.fill-{name}.jsonl.gz"
+    with gzip.open(out, "wt", encoding="utf-8") as f:
+        for r in sorted(rows, key=lambda r: (r["task_id"], r["trace_id"])):
+            f.write(json.dumps(r) + "\n")
+    print(f"wrote {len(rows)} rows -> {out.relative_to(ROOT)}")
+
+
 # ---------------------------------------------------------------- statistics
 
 def wilson(successes: float, n: int, z: float = 1.96) -> tuple[float, float]:
@@ -264,7 +307,7 @@ def cmd_analyze() -> None:
     for f in sorted(OUT.glob("rollouts_*.jsonl.gz")):
         with gzip.open(f, "rt", encoding="utf-8") as fh:
             rows = [json.loads(l) for l in fh if l.strip()]
-        models[rows[0]["model"]] = rows
+        models.setdefault(rows[0]["model"], []).extend(rows)  # hosted run + any vf-run fill files
     # attempts re-graded with grader v3 (pipeline/07b_regrade.py) override the hosted v2 reward
     regrade_file = OUT / "regrade.json"
     regraded = json.loads(regrade_file.read_text(encoding="utf-8"))["attempts"] if regrade_file.exists() else {}
@@ -331,15 +374,20 @@ def _markdown(s: dict) -> str:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["fetch", "analyze"])
+    ap.add_argument("cmd", choices=["fetch", "analyze", "missing", "ingest"])
     ap.add_argument("eval_id", nargs="?")
     ap.add_argument("--model")
     ap.add_argument("--workers", type=int, default=8)
+    ap.add_argument("--name", help="ingest: label of the vf-run fill run")
     args = ap.parse_args()
     if args.cmd == "fetch":
         if not (args.eval_id and args.model):
             ap.error("fetch needs <eval_id> and --model")
         cmd_fetch(args.eval_id, args.model, args.workers)
+    elif args.cmd == "missing":
+        cmd_missing(args.model)
+    elif args.cmd == "ingest":  # eval_id positional holds the traces.jsonl path here
+        cmd_ingest(args.eval_id, args.model, args.name)
     else:
         cmd_analyze()
 
