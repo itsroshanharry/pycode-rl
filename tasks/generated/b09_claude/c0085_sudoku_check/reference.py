@@ -14,7 +14,7 @@ def _units(r: int, c: int):
 
 
 def sudoku_check(grid: list[str]) -> tuple[int, int, list[str]] | None:
-    if len(grid) != 9 or any(len(row) != 9 or not set(row) <= _ALLOWED for row in grid):
+    if len(grid) != 9 or any(type(row) is not str or len(row) != 9 or not set(row) <= _ALLOWED for row in grid):
         raise ValueError("grid must be 9 rows of 9 characters from 1-9 and '.'")
     for r in range(9):
         for c in range(9):

@@ -8,7 +8,8 @@ def apply_hunk(lines: list[str], hunk: list[str]) -> list[str]:
     line) or "+" (added line), and the rest of the entry is the line's text.
     The old part (context and removed lines, in order) must equal the file's lines
     starting at line A (1-based); if B == 0 the hunk removes nothing and its added
-    lines go right after line A (A == 0 means at the very start). Replace that old
+    lines go right after line A (A == 0 means at the very start; A greater than the
+    number of lines is a ValueError). Replace that old
     part with the new part (context and added lines, in order) and return the result.
     Raise ValueError if the header is malformed, an entry has another prefix, the
     number of old lines differs from B or of new lines from D, or the old part does

@@ -3,8 +3,10 @@ def matching_versions(versions: list[str], spec: str) -> list[str]:
     """Return the versions (in input order) that satisfy a range expression.
 
     A version is "MAJOR.MINOR.PATCH": non-negative integers without leading zeros.
-    A range is one or more alternatives separated by "||" (with optional spaces
-    around it); a version matches the range if it matches at least one alternative.
+    A range is one or more alternatives separated by "||"; a version matches the
+    range if it matches at least one alternative. Whitespace is free-form: any run
+    of whitespace separates comparators, and whitespace at the start or end of the
+    range or around "||" is ignored.
     An alternative is either "*" (matches everything) or one or more comparators
     separated by spaces, all of which must hold. A comparator is an operator
     (">=", "<=", ">", "<", "=") or no operator (meaning "="), immediately followed by

@@ -215,7 +215,8 @@ def cmd_judge() -> None:
 
 
 # ----------------------------------------------------------------------------- decide
-def cmd_decide(overrule: list[str]) -> None:
+def cmd_decide(overrule: list[str], extra_drop: list[str]) -> None:
+    extra = dict(item.split('=', 1) for item in extra_drop)  # id=reason (author review with web verification)
     lex = {r["id"]: r for r in json.loads((REPORTS / "lexical.json").read_text())["tasks"]}
     judge = {r["id"]: r for r in json.loads((REPORTS / "judge.json").read_text())["tasks"]}
     tasks = [json.loads(l) for l in TASKS.read_text(encoding="utf-8").splitlines() if l.strip()]
@@ -230,6 +231,8 @@ def cmd_decide(overrule: list[str]) -> None:
         judge_flag = bool(J.get("same_as") or J.get("well_known"))
         if judge_flag and row["id"] not in overrule:
             reasons.append(f"judge: same_as={J.get('same_as')} well_known={J.get('well_known')}")
+        if row["id"] in extra:
+            reasons.append(f"review: {extra[row['id']]}")
         decisions[row["id"]] = {"drop": bool(reasons), "reasons": reasons, "judge_flag": judge_flag,
                                 "judge_overruled": judge_flag and row["id"] in overrule,
                                 "max_jaccard": max(L["max_jaccard_prompt"], L["max_jaccard_code"])}
@@ -252,8 +255,9 @@ def main() -> None:
         sub.add_parser(name)
     d = sub.add_parser("decide")
     d.add_argument("--overrule", nargs="*", default=[], help="judge-flagged ids rejected after manual review")
+    d.add_argument("--extra-drop", nargs="*", default=[], help="id=reason drops from the second review (DeepSeek + author web check)")
     args = ap.parse_args()
-    {"fetch": cmd_fetch, "lexical": cmd_lexical, "judge": cmd_judge}.get(args.cmd, lambda: cmd_decide(args.overrule))()
+    {"fetch": cmd_fetch, "lexical": cmd_lexical, "judge": cmd_judge}.get(args.cmd, lambda: cmd_decide(args.overrule, args.extra_drop))()
 
 
 if __name__ == "__main__":

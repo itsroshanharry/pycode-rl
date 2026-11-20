@@ -27,6 +27,8 @@ def apply_hunk(lines: list[str], hunk: list[str]) -> list[str]:
     if len(old) != b or len(new) != d:
         raise ValueError("line counts do not match the header")
     start = a - 1 if b > 0 else a  # B == 0: insert after line A
+    if start > len(lines):  # there is no line A to insert after (audit fix, 2026-11-20)
+        raise ValueError("hunk position is past the end of the file")
     if start < 0 or lines[start : start + b] != old:
         raise ValueError("hunk does not apply at the stated position")
     return lines[:start] + new + lines[start + b :]

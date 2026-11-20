@@ -2,11 +2,13 @@
  "overruled": [
   "pc-c-0040"
  ],
- "kept": 76,
+ "kept": 75,
  "decisions": {
   "pc-hw-008": {
-   "drop": false,
-   "reasons": [],
+   "drop": true,
+   "reasons": [
+    "review: same input/output shape as LeetCode 1943 Describe the Painting (DeepSeek review flag; verified against the statement)"
+   ],
    "judge_flag": false,
    "judge_overruled": false,
    "max_jaccard": 0.0028

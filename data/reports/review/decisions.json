@@ -1,0 +1,26 @@
+{
+ "reviewer": "deepseek/deepseek-v4.1-flash-1017 (32 of 76 completed; 44 ran out of the 12k token budget while thinking) + author review with web verification for the well-known question on all 76",
+ "fixed": {
+  "pc-c-0028": "MAJOR (DeepSeek): spec allowed spaces only around '||' but tests accept leading/trailing whitespace and runs of spaces -> spec now says whitespace is free-form",
+  "pc-c-0029": "minor (DeepSeek): B == 0 with A past the end silently appended -> now ValueError; spec + 2 tests added",
+  "pc-c-0085": "minor (DeepSeek): reference accepted non-str rows although the spec says 9 strings -> type check added (no test change)"
+ },
+ "dismissed": {
+  "pc-c-0079": "minor (DeepSeek): non-int value 'x' is outside the stated input contract (ints or None)"
+ },
+ "dropped": {
+  "pc-hw-008": "well-known (DeepSeek): same input/output shape as LeetCode 1943 Describe the Painting; verified against the statement"
+ },
+ "author_review_kept_with_note": {
+  "pc-c-0010": "LeetCode 399 / 3528 relatives; exact fractions, two-way chains and validation change the answers",
+  "pc-c-0082": "LeetCode 721 Accounts Merge core; phone + normalization + field rules change the outputs",
+  "pc-c-0073": "LeetCode 399 relative; fewest hops + lexicographic tie + exact banker's rounding",
+  "pc-c-0046": "LeetCode 1834 Single-Threaded CPU relative; priority + aging selection rule differs",
+  "pc-c-0085": "LeetCode 36 Valid Sudoku relative; diagonals + first-conflict report (a memorized bool answer fails)",
+  "pc-c-0084": "LeetCode 1494 Parallel Courses II relative; greedy by priority, not optimal",
+  "pc-c-0031": "Codewars 'human readable duration' relative; different format and rounding/carry rule",
+  "pc-c-0045": "UVa 10194 standings relative; head-to-head mini-table rule differs",
+  "pc-c-0016": "mixed-number katas relative; stated extra rules"
+ },
+ "rule": "drop if an independent judge flags the task as well-known and the flag is not a clear judge error, or if a memorized solution to the known problem would pass most tests"
+}
