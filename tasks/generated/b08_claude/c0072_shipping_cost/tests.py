@@ -46,6 +46,13 @@ def test_invalid(weight, dims, zone):
         shipping_cost(weight, dims, zone, 0, R, FREE)
 
 
+@pytest.mark.parametrize("weight, expected", [(600, 2), (999, 2), (1000, 2), (400, 1), (500, 1), (1001, 3)])
+def test_brackets_not_on_500g_steps(weight, expected):
+    # billable weight is rounded up to 500 g BEFORE the bracket lookup: 600 g bills as 1000 g > 999
+    rates = {"X": [(999, 1), (1499, 2), (1500, 3)]}
+    assert shipping_cost(weight, (1, 1, 1), "X", 0, rates, {}) == expected
+
+
 def test_too_heavy_even_when_free():
     with pytest.raises(ValueError):
         shipping_cost(6000, (1, 1, 1), "EU", 10 ** 6, R, FREE)
