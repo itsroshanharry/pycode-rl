@@ -19,6 +19,7 @@ flagged instead of judged: truncation measures the token cap, not the task.
 """
 import argparse
 import collections
+import gzip
 import json
 from pathlib import Path
 
@@ -86,6 +87,64 @@ def cmd_summarize(traces: str, rollouts: int) -> None:
     print(json.dumps({k: (len(v) if isinstance(v, list) else v) for k, v in report.items() if k != "per_task"}, indent=1))
 
 
+def _per_task(paths: list[str]) -> dict[str, dict]:
+    """Pass counts per task. A later file REPLACES an earlier one for the tasks it contains
+    (used when a task was fixed and re-filtered)."""
+    out: dict[str, dict] = {}
+    for path in paths:
+        seen: dict[str, dict] = {}
+        opener = gzip.open if path.endswith(".gz") else open
+        with opener(path, "rt", encoding="utf-8") as fh:
+            lines = fh.read().splitlines()
+        for line in lines:
+            if not line.strip():
+                continue
+            r = json.loads(line)
+            t = r["traces"][0]
+            s = seen.setdefault(t["task"]["data"]["id"], {"pass": 0, "n": 0, "truncated": 0, "source": path})
+            s["n"] += 1
+            call = t["calls"][-1] if t["calls"] else {}
+            s["truncated"] += call.get("finish_reason") == "length"
+            s["pass"] += sum(v["score"] * v["weight"] for v in t["rewards"].values()) == 1.0
+        out.update(seen)
+    return out
+
+
+def cmd_finalize(filter_traces: list[str], triage_traces: list[str], manual_keep: list[str], model: str, triage_model: str) -> None:
+    filt = _per_task(filter_traces)
+    solved_by_triage = {tid for tid, s in _per_task(triage_traces).items() if s["pass"] > 0}
+    rows = [json.loads(line) for line in INPUT.read_text(encoding="utf-8").splitlines() if line.strip()]
+    kept, decisions = [], {}
+    for r in rows:
+        s = filt[r["id"]]
+        if s["pass"] == s["n"]:
+            band = "drop_too_easy"
+        elif s["pass"] > 0:
+            band = "filter"
+        elif r["id"] in solved_by_triage:
+            band = "hard_triage"  # filter model 0/n, stronger model solved it
+        elif r["id"] in manual_keep:
+            band = "hard_manual"  # inspected by hand: spec is clear, kept and flagged for the audit
+        else:
+            band = "drop_unsolved"
+        decisions[r["id"]] = {"band": band, "pass": s["pass"], "n": s["n"]}
+        if not band.startswith("drop"):
+            meta = dict(r.get("meta", {}))
+            meta.update({"pass_rate": round(s["pass"] / s["n"], 4), "filter_model": model,
+                         "difficulty_band": band, **({"triage_model": triage_model} if band == "hard_triage" else {})})
+            kept.append({**r, "meta": meta})
+    out = ROOT / "data" / "filtered.jsonl"
+    with out.open("w", encoding="utf-8", newline="\n") as f:
+        for r in kept:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    counts = collections.Counter(d["band"] for d in decisions.values())
+    summary = {"filter_model": model, "triage_model": triage_model, "filter_traces": filter_traces,
+               "triage_traces": triage_traces, "manual_keep": manual_keep, "counts": dict(counts),
+               "kept": len(kept), "decisions": decisions}
+    (ROOT / "data" / "reports" / "difficulty_final.json").write_text(json.dumps(summary, indent=1) + "\n", encoding="utf-8")
+    print(json.dumps({"counts": dict(counts), "kept": len(kept)}, indent=1), f"-> {out.relative_to(ROOT)}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -93,11 +152,19 @@ def main() -> None:
     s = sub.add_parser("summarize")
     s.add_argument("traces")
     s.add_argument("--rollouts", type=int, default=8)
+    f = sub.add_parser("finalize", help="combine filter + triage traces -> data/filtered.jsonl")
+    f.add_argument("--filter", nargs="+", required=True, help="filter-model traces; later files override earlier ones per task")
+    f.add_argument("--triage", nargs="*", default=[], help="stronger-model traces for the 0/n tasks")
+    f.add_argument("--manual-keep", nargs="*", default=[], help="0/n task ids kept after manual inspection")
+    f.add_argument("--model", default="openai/gpt-oss-20b")
+    f.add_argument("--triage-model", default="deepseek/deepseek-v4.1-flash-1017")
     args = ap.parse_args()
     if args.cmd == "prepare":
         cmd_prepare()
-    else:
+    elif args.cmd == "summarize":
         cmd_summarize(args.traces, args.rollouts)
+    else:
+        cmd_finalize(args.filter, args.triage, args.manual_keep, args.model, args.triage_model)
 
 
 if __name__ == "__main__":
