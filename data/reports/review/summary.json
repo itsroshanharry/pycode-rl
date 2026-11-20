@@ -1,74 +1,29 @@
 {
- "tasks": 76,
- "verdicts": {
-  "error": 44,
-  "ok": 28,
-  "major": 1,
-  "minor": 3
+ "dataset_tasks": 75,
+ "reviewed": 75,
+ "missing": [],
+ "by_model": {
+  "deepseek/deepseek-v4.1-flash-1017": 31,
+  "openai/gpt-oss-120b": 44
  },
- "well_known_agreement_with_gpt_oss_20b": {
-  "agree": 74,
-  "both_flag": 0,
-  "only_gpt_oss": 1,
-  "only_deepseek": 1
+ "verdicts": {
+  "ok": 69,
+  "minor": 4,
+  "major": 2
  },
  "flagged": {
-  "error": [
-   "pc-c-0001",
-   "pc-c-0002",
-   "pc-c-0004",
-   "pc-c-0005",
-   "pc-c-0007",
-   "pc-c-0010",
-   "pc-c-0012",
-   "pc-c-0013",
-   "pc-c-0014",
-   "pc-c-0022",
-   "pc-c-0023",
-   "pc-c-0031",
-   "pc-c-0034",
-   "pc-c-0035",
-   "pc-c-0036",
-   "pc-c-0038",
-   "pc-c-0039",
-   "pc-c-0040",
-   "pc-c-0042",
-   "pc-c-0045",
-   "pc-c-0049",
-   "pc-c-0051",
-   "pc-c-0052",
-   "pc-c-0053",
-   "pc-c-0054",
-   "pc-c-0055",
-   "pc-c-0058",
-   "pc-c-0060",
-   "pc-c-0061",
-   "pc-c-0062",
-   "pc-c-0063",
-   "pc-c-0064",
-   "pc-c-0065",
-   "pc-c-0066",
-   "pc-c-0068",
-   "pc-c-0073",
-   "pc-c-0078",
-   "pc-c-0082",
-   "pc-c-0083",
-   "pc-c-0087",
-   "pc-c-0088",
-   "pc-c-0090",
-   "pc-hw-002",
-   "pc-hw-005"
-  ],
-  "major": [
-   "pc-c-0028"
-  ],
   "minor": [
+   "pc-c-0005",
    "pc-c-0029",
    "pc-c-0079",
    "pc-c-0085"
+  ],
+  "major": [
+   "pc-c-0028",
+   "pc-c-0073"
   ]
  },
- "deepseek_well_known": {
-  "pc-hw-008": "LeetCode 1943 Describe the Painting"
+ "well_known": {
+  "pc-c-0022": "natural sort (classic programming kata)"
  }
 }
