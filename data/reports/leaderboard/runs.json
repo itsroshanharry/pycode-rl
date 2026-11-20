@@ -1,0 +1,10 @@
+{
+ "dataset_sha256": "119ed403e4977450209a44a3c2d99e7661fd0c17611c9525b7e8f1d182fc2680",
+ "package": "itsroshanharry/pycode-env@0.2.0",
+ "settings": {"tasks": "all 75 (split all)", "rollouts": 4, "temperature": 1.0, "reasoning_effort": "low", "max_tokens": 16384, "concurrency": 8, "harness": "null"},
+ "runs": {
+  "deepseek/deepseek-v4.1-flash-1017": {"eval_id": "sejc1ih370l7bvm63dlm8wrh", "wave": 1},
+  "openai/gpt-oss-20b": {"eval_id": "d8jyud550zvxewm0bwmvv8ae", "wave": 1}
+ },
+ "smoke_test": {"eval_id": "nmzewnbjsxv66ytoe5xz43df", "model": "openai/gpt-oss-20b", "tasks": 2}
+}
