@@ -1,0 +1,585 @@
+{
+ "overruled": [
+  "pc-c-0040"
+ ],
+ "kept": 76,
+ "decisions": {
+  "pc-hw-008": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0028
+  },
+  "pc-hw-002": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.011
+  },
+  "pc-hw-006": {
+   "drop": true,
+   "reasons": [
+    "judge: same_as=None well_known=Minimum Insertions to Balance Brackets (LeetCode 1541)"
+   ],
+   "judge_flag": true,
+   "judge_overruled": false,
+   "max_jaccard": 0.0377
+  },
+  "pc-hw-004": {
+   "drop": true,
+   "reasons": [
+    "judge: same_as=None well_known=LRU Cache (LeetCode)"
+   ],
+   "judge_flag": true,
+   "judge_overruled": false,
+   "max_jaccard": 0.012
+  },
+  "pc-hw-005": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0064
+  },
+  "pc-c-0008": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0105
+  },
+  "pc-c-0045": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0012": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.007
+  },
+  "pc-c-0027": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0071
+  },
+  "pc-c-0042": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0058": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0049": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0025
+  },
+  "pc-c-0051": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0053
+  },
+  "pc-c-0085": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0055
+  },
+  "pc-c-0002": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0066
+  },
+  "pc-c-0035": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.005
+  },
+  "pc-c-0023": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0007": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0044
+  },
+  "pc-c-0038": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0099
+  },
+  "pc-c-0024": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0073
+  },
+  "pc-c-0048": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0053
+  },
+  "pc-c-0025": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0052
+  },
+  "pc-c-0073": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0103
+  },
+  "pc-c-0084": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0089": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0051
+  },
+  "pc-c-0053": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0011": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0088
+  },
+  "pc-c-0055": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0068": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0083": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0056
+  },
+  "pc-c-0015": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0727
+  },
+  "pc-c-0078": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0005": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0052
+  },
+  "pc-c-0082": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0056
+  },
+  "pc-c-0016": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0067
+  },
+  "pc-c-0022": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0417
+  },
+  "pc-c-0032": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0078
+  },
+  "pc-c-0090": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0024
+  },
+  "pc-c-0060": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0067": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0018
+  },
+  "pc-c-0064": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0026": {
+   "drop": true,
+   "reasons": [
+    "judge: same_as=None well_known=Meeting Rooms II (LeetCode)"
+   ],
+   "judge_flag": true,
+   "judge_overruled": false,
+   "max_jaccard": 0.0023
+  },
+  "pc-c-0047": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0088": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.019
+  },
+  "pc-c-0001": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0056
+  },
+  "pc-c-0057": {
+   "drop": true,
+   "reasons": [
+    "judge: same_as=None well_known=Point in Polygon test (ray casting algorithm)"
+   ],
+   "judge_flag": true,
+   "judge_overruled": false,
+   "max_jaccard": 0.0072
+  },
+  "pc-c-0004": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0022
+  },
+  "pc-c-0087": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0058
+  },
+  "pc-c-0029": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0159
+  },
+  "pc-c-0031": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0036": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0051
+  },
+  "pc-c-0014": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0055
+  },
+  "pc-c-0059": {
+   "drop": true,
+   "reasons": [
+    "judge: same_as=None well_known=Project Euler 170 - Darts"
+   ],
+   "judge_flag": true,
+   "judge_overruled": false,
+   "max_jaccard": 0.0096
+  },
+  "pc-c-0041": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0070": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0021": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0065
+  },
+  "pc-c-0079": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0081": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.001
+  },
+  "pc-c-0072": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0061": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0051
+  },
+  "pc-c-0043": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.007
+  },
+  "pc-c-0010": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0118
+  },
+  "pc-c-0040": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": true,
+   "judge_overruled": true,
+   "max_jaccard": 0.0037
+  },
+  "pc-c-0019": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0069": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0053
+  },
+  "pc-c-0033": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0013": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0025
+  },
+  "pc-c-0037": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0021
+  },
+  "pc-c-0018": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0065": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0028": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0087
+  },
+  "pc-c-0075": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0046": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0131
+  },
+  "pc-c-0062": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0037
+  },
+  "pc-c-0039": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0065
+  },
+  "pc-c-0052": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0109
+  },
+  "pc-c-0063": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0066": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0034": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0035
+  },
+  "pc-c-0054": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.0
+  },
+  "pc-c-0050": {
+   "drop": false,
+   "reasons": [],
+   "judge_flag": false,
+   "judge_overruled": false,
+   "max_jaccard": 0.005
+  }
+ }
+}

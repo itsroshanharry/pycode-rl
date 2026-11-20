@@ -1,0 +1,2111 @@
+{
+ "corpus_size": 2193,
+ "tasks": [
+  {
+   "id": "pc-hw-008",
+   "max_jaccard_prompt": 0.0028,
+   "max_jaccard_prompt_with": "leetcode/3411",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc335_b",
+     "source": "livecodebench",
+     "j3": 0.0187
+    },
+    {
+     "id": "leetcode/3616",
+     "source": "livecodebench",
+     "j3": 0.0155
+    },
+    {
+     "id": "HumanEval/120",
+     "source": "humaneval",
+     "j3": 0.0152
+    }
+   ]
+  },
+  {
+   "id": "pc-hw-002",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.011,
+   "max_jaccard_code_with": "mbpp/913",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "mbpp/434",
+     "source": "mbpp",
+     "j3": 0.0071
+    },
+    {
+     "id": "mbpp/523",
+     "source": "mbpp",
+     "j3": 0.0068
+    },
+    {
+     "id": "leetcode/3018",
+     "source": "livecodebench",
+     "j3": 0.0058
+    }
+   ]
+  },
+  {
+   "id": "pc-hw-006",
+   "max_jaccard_prompt": 0.0066,
+   "max_jaccard_prompt_with": "leetcode/3631",
+   "max_jaccard_code": 0.0377,
+   "max_jaccard_code_with": "mbpp/207",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3379",
+     "source": "livecodebench",
+     "j3": 0.0162
+    },
+    {
+     "id": "leetcode/3753",
+     "source": "livecodebench",
+     "j3": 0.014
+    },
+    {
+     "id": "leetcode/3631",
+     "source": "livecodebench",
+     "j3": 0.0137
+    }
+   ]
+  },
+  {
+   "id": "pc-hw-004",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.012,
+   "max_jaccard_code_with": "mbpp/674",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/1",
+     "source": "humaneval",
+     "j3": 0.0152
+    },
+    {
+     "id": "mbpp/290",
+     "source": "mbpp",
+     "j3": 0.0069
+    },
+    {
+     "id": "mbpp/528",
+     "source": "mbpp",
+     "j3": 0.0069
+    }
+   ]
+  },
+  {
+   "id": "pc-hw-005",
+   "max_jaccard_prompt": 0.0064,
+   "max_jaccard_prompt_with": "mbpp/434",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "mbpp/434",
+     "source": "mbpp",
+     "j3": 0.0199
+    },
+    {
+     "id": "HumanEval/65",
+     "source": "humaneval",
+     "j3": 0.0114
+    },
+    {
+     "id": "HumanEval/152",
+     "source": "humaneval",
+     "j3": 0.0109
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0008",
+   "max_jaccard_prompt": 0.0105,
+   "max_jaccard_prompt_with": "atcoder/abc306_b",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc306_b",
+     "source": "livecodebench",
+     "j3": 0.0118
+    },
+    {
+     "id": "leetcode/3616",
+     "source": "livecodebench",
+     "j3": 0.0105
+    },
+    {
+     "id": "leetcode/3388",
+     "source": "livecodebench",
+     "j3": 0.0101
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0045",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc394_e",
+     "source": "livecodebench",
+     "j3": 0.0092
+    },
+    {
+     "id": "atcoder/abc318_b",
+     "source": "livecodebench",
+     "j3": 0.0067
+    },
+    {
+     "id": "atcoder/abc389_b",
+     "source": "livecodebench",
+     "j3": 0.0066
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0012",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.007,
+   "max_jaccard_code_with": "mbpp/860",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/111",
+     "source": "humaneval",
+     "j3": 0.0179
+    },
+    {
+     "id": "atcoder/abc369_a",
+     "source": "livecodebench",
+     "j3": 0.008
+    },
+    {
+     "id": "atcoder/abc359_d",
+     "source": "livecodebench",
+     "j3": 0.007
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0027",
+   "max_jaccard_prompt": 0.0061,
+   "max_jaccard_prompt_with": "leetcode/3422",
+   "max_jaccard_code": 0.0071,
+   "max_jaccard_code_with": "mbpp/771",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3422",
+     "source": "livecodebench",
+     "j3": 0.0127
+    },
+    {
+     "id": "atcoder/arc195_b",
+     "source": "livecodebench",
+     "j3": 0.0122
+    },
+    {
+     "id": "atcoder/abc384_g",
+     "source": "livecodebench",
+     "j3": 0.0117
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0042",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/68",
+     "source": "humaneval",
+     "j3": 0.0066
+    },
+    {
+     "id": "mbpp/566",
+     "source": "mbpp",
+     "j3": 0.006
+    },
+    {
+     "id": "mbpp/262",
+     "source": "mbpp",
+     "j3": 0.0056
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0058",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/159",
+     "source": "humaneval",
+     "j3": 0.0124
+    },
+    {
+     "id": "HumanEval/64",
+     "source": "humaneval",
+     "j3": 0.0076
+    },
+    {
+     "id": "leetcode/3279",
+     "source": "livecodebench",
+     "j3": 0.0076
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0049",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0025,
+   "max_jaccard_code_with": "mbpp/913",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3607",
+     "source": "livecodebench",
+     "j3": 0.0065
+    },
+    {
+     "id": "mbpp/210",
+     "source": "mbpp",
+     "j3": 0.0059
+    },
+    {
+     "id": "leetcode/3621",
+     "source": "livecodebench",
+     "j3": 0.0058
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0051",
+   "max_jaccard_prompt": 0.0053,
+   "max_jaccard_prompt_with": "mbpp/210",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "mbpp/210",
+     "source": "mbpp",
+     "j3": 0.016
+    },
+    {
+     "id": "mbpp/772",
+     "source": "mbpp",
+     "j3": 0.0057
+    },
+    {
+     "id": "HumanEval/39",
+     "source": "humaneval",
+     "j3": 0.005
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0085",
+   "max_jaccard_prompt": 0.0016,
+   "max_jaccard_prompt_with": "atcoder/abc305_e",
+   "max_jaccard_code": 0.0055,
+   "max_jaccard_code_with": "HumanEval/100",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc327_c",
+     "source": "livecodebench",
+     "j3": 0.0105
+    },
+    {
+     "id": "HumanEval/34",
+     "source": "humaneval",
+     "j3": 0.0101
+    },
+    {
+     "id": "leetcode/3714",
+     "source": "livecodebench",
+     "j3": 0.0082
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0002",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0066,
+   "max_jaccard_code_with": "mbpp/913",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3621",
+     "source": "livecodebench",
+     "j3": 0.0081
+    },
+    {
+     "id": "leetcode/3778",
+     "source": "livecodebench",
+     "j3": 0.0069
+    },
+    {
+     "id": "leetcode/3396",
+     "source": "livecodebench",
+     "j3": 0.0067
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0035",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.005,
+   "max_jaccard_code_with": "mbpp/202",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "mbpp/793",
+     "source": "mbpp",
+     "j3": 0.0095
+    },
+    {
+     "id": "HumanEval/65",
+     "source": "humaneval",
+     "j3": 0.0084
+    },
+    {
+     "id": "leetcode/3436",
+     "source": "livecodebench",
+     "j3": 0.0081
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0023",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3492",
+     "source": "livecodebench",
+     "j3": 0.007
+    },
+    {
+     "id": "HumanEval/160",
+     "source": "humaneval",
+     "j3": 0.0067
+    },
+    {
+     "id": "leetcode/3697",
+     "source": "livecodebench",
+     "j3": 0.0056
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0007",
+   "max_jaccard_prompt": 0.003,
+   "max_jaccard_prompt_with": "atcoder/abc305_b",
+   "max_jaccard_code": 0.0044,
+   "max_jaccard_code_with": "mbpp/749",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/14",
+     "source": "humaneval",
+     "j3": 0.0116
+    },
+    {
+     "id": "leetcode/3568",
+     "source": "livecodebench",
+     "j3": 0.0098
+    },
+    {
+     "id": "HumanEval/21",
+     "source": "humaneval",
+     "j3": 0.0098
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0038",
+   "max_jaccard_prompt": 0.0033,
+   "max_jaccard_prompt_with": "mbpp/719",
+   "max_jaccard_code": 0.0099,
+   "max_jaccard_code_with": "mbpp/210",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/0",
+     "source": "humaneval",
+     "j3": 0.0145
+    },
+    {
+     "id": "atcoder/abc335_b",
+     "source": "livecodebench",
+     "j3": 0.011
+    },
+    {
+     "id": "mbpp/719",
+     "source": "mbpp",
+     "j3": 0.0097
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0024",
+   "max_jaccard_prompt": 0.0073,
+   "max_jaccard_prompt_with": "atcoder/abc335_b",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/114",
+     "source": "humaneval",
+     "j3": 0.0194
+    },
+    {
+     "id": "HumanEval/152",
+     "source": "humaneval",
+     "j3": 0.0192
+    },
+    {
+     "id": "HumanEval/110",
+     "source": "humaneval",
+     "j3": 0.0181
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0048",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0053,
+   "max_jaccard_code_with": "mbpp/345",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc306_b",
+     "source": "livecodebench",
+     "j3": 0.0097
+    },
+    {
+     "id": "leetcode/3778",
+     "source": "livecodebench",
+     "j3": 0.0087
+    },
+    {
+     "id": "HumanEval/115",
+     "source": "humaneval",
+     "j3": 0.0086
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0025",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0052,
+   "max_jaccard_code_with": "mbpp/771",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3262",
+     "source": "livecodebench",
+     "j3": 0.0069
+    },
+    {
+     "id": "leetcode/3778",
+     "source": "livecodebench",
+     "j3": 0.0066
+    },
+    {
+     "id": "HumanEval/115",
+     "source": "humaneval",
+     "j3": 0.0065
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0073",
+   "max_jaccard_prompt": 0.0077,
+   "max_jaccard_prompt_with": "HumanEval/65",
+   "max_jaccard_code": 0.0103,
+   "max_jaccard_code_with": "mbpp/759",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/65",
+     "source": "humaneval",
+     "j3": 0.0157
+    },
+    {
+     "id": "leetcode/2786",
+     "source": "livecodebench",
+     "j3": 0.0084
+    },
+    {
+     "id": "atcoder/abc375_f",
+     "source": "livecodebench",
+     "j3": 0.007
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0084",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/1",
+     "source": "humaneval",
+     "j3": 0.0117
+    },
+    {
+     "id": "mbpp/115",
+     "source": "mbpp",
+     "j3": 0.0098
+    },
+    {
+     "id": "mbpp/201",
+     "source": "mbpp",
+     "j3": 0.0097
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0089",
+   "max_jaccard_prompt": 0.0051,
+   "max_jaccard_prompt_with": "HumanEval/153",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/153",
+     "source": "humaneval",
+     "j3": 0.0133
+    },
+    {
+     "id": "HumanEval/158",
+     "source": "humaneval",
+     "j3": 0.0071
+    },
+    {
+     "id": "HumanEval/126",
+     "source": "humaneval",
+     "j3": 0.0067
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0053",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc362_b",
+     "source": "livecodebench",
+     "j3": 0.0051
+    },
+    {
+     "id": "atcoder/abc312_d",
+     "source": "livecodebench",
+     "j3": 0.0046
+    },
+    {
+     "id": "leetcode/2892",
+     "source": "livecodebench",
+     "j3": 0.004
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0011",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0088,
+   "max_jaccard_code_with": "mbpp/913",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3567",
+     "source": "livecodebench",
+     "j3": 0.0069
+    },
+    {
+     "id": "HumanEval/78",
+     "source": "humaneval",
+     "j3": 0.0068
+    },
+    {
+     "id": "mbpp/928",
+     "source": "mbpp",
+     "j3": 0.0063
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0055",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3246",
+     "source": "livecodebench",
+     "j3": 0.0105
+    },
+    {
+     "id": "HumanEval/99",
+     "source": "humaneval",
+     "j3": 0.0076
+    },
+    {
+     "id": "leetcode/2824",
+     "source": "livecodebench",
+     "j3": 0.0061
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0068",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc338_e",
+     "source": "livecodebench",
+     "j3": 0.0061
+    },
+    {
+     "id": "HumanEval/90",
+     "source": "humaneval",
+     "j3": 0.006
+    },
+    {
+     "id": "atcoder/abc362_e",
+     "source": "livecodebench",
+     "j3": 0.0059
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0083",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0056,
+   "max_jaccard_code_with": "mbpp/759",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc305_b",
+     "source": "livecodebench",
+     "j3": 0.0044
+    },
+    {
+     "id": "atcoder/abc392_g",
+     "source": "livecodebench",
+     "j3": 0.0044
+    },
+    {
+     "id": "atcoder/abc361_b",
+     "source": "livecodebench",
+     "j3": 0.0039
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0015",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0727,
+   "max_jaccard_code_with": "HumanEval/78",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3428",
+     "source": "livecodebench",
+     "j3": 0.0046
+    },
+    {
+     "id": "HumanEval/127",
+     "source": "humaneval",
+     "j3": 0.004
+    },
+    {
+     "id": "atcoder/abc333_b",
+     "source": "livecodebench",
+     "j3": 0.004
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0078",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/65",
+     "source": "humaneval",
+     "j3": 0.0155
+    },
+    {
+     "id": "atcoder/abc363_f",
+     "source": "livecodebench",
+     "j3": 0.0126
+    },
+    {
+     "id": "atcoder/abc386_b",
+     "source": "livecodebench",
+     "j3": 0.0125
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0005",
+   "max_jaccard_prompt": 0.0052,
+   "max_jaccard_prompt_with": "mbpp/913",
+   "max_jaccard_code": 0.005,
+   "max_jaccard_code_with": "HumanEval/94",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "mbpp/913",
+     "source": "mbpp",
+     "j3": 0.0159
+    },
+    {
+     "id": "mbpp/337",
+     "source": "mbpp",
+     "j3": 0.0157
+    },
+    {
+     "id": "HumanEval/79",
+     "source": "humaneval",
+     "j3": 0.0115
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0082",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0056,
+   "max_jaccard_code_with": "mbpp/564",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc395_c",
+     "source": "livecodebench",
+     "j3": 0.0061
+    },
+    {
+     "id": "HumanEval/90",
+     "source": "humaneval",
+     "j3": 0.0055
+    },
+    {
+     "id": "atcoder/abc354_d",
+     "source": "livecodebench",
+     "j3": 0.0052
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0016",
+   "max_jaccard_prompt": 0.0067,
+   "max_jaccard_prompt_with": "HumanEval/42",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/42",
+     "source": "humaneval",
+     "j3": 0.02
+    },
+    {
+     "id": "HumanEval/9",
+     "source": "humaneval",
+     "j3": 0.019
+    },
+    {
+     "id": "leetcode/3725",
+     "source": "livecodebench",
+     "j3": 0.0168
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0022",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0417,
+   "max_jaccard_code_with": "mbpp/759",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3396",
+     "source": "livecodebench",
+     "j3": 0.0073
+    },
+    {
+     "id": "HumanEval/14",
+     "source": "humaneval",
+     "j3": 0.0059
+    },
+    {
+     "id": "HumanEval/7",
+     "source": "humaneval",
+     "j3": 0.0056
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0032",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0078,
+   "max_jaccard_code_with": "mbpp/913",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "mbpp/928",
+     "source": "mbpp",
+     "j3": 0.0074
+    },
+    {
+     "id": "mbpp/427",
+     "source": "mbpp",
+     "j3": 0.0072
+    },
+    {
+     "id": "HumanEval/102",
+     "source": "humaneval",
+     "j3": 0.0058
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0090",
+   "max_jaccard_prompt": 0.0024,
+   "max_jaccard_prompt_with": "leetcode/3791",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "mbpp/714",
+     "source": "mbpp",
+     "j3": 0.0102
+    },
+    {
+     "id": "mbpp/635",
+     "source": "mbpp",
+     "j3": 0.01
+    },
+    {
+     "id": "leetcode/3791",
+     "source": "livecodebench",
+     "j3": 0.0099
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0060",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3531",
+     "source": "livecodebench",
+     "j3": 0.0044
+    },
+    {
+     "id": "atcoder/abc344_e",
+     "source": "livecodebench",
+     "j3": 0.0037
+    },
+    {
+     "id": "atcoder/arc190_a",
+     "source": "livecodebench",
+     "j3": 0.0034
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0067",
+   "max_jaccard_prompt": 0.0018,
+   "max_jaccard_prompt_with": "atcoder/abc305_e",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/8",
+     "source": "humaneval",
+     "j3": 0.012
+    },
+    {
+     "id": "atcoder/abc376_d",
+     "source": "livecodebench",
+     "j3": 0.0088
+    },
+    {
+     "id": "HumanEval/94",
+     "source": "humaneval",
+     "j3": 0.0084
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0064",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/56",
+     "source": "humaneval",
+     "j3": 0.0059
+    },
+    {
+     "id": "HumanEval/61",
+     "source": "humaneval",
+     "j3": 0.0059
+    },
+    {
+     "id": "atcoder/abc337_b",
+     "source": "livecodebench",
+     "j3": 0.0053
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0026",
+   "max_jaccard_prompt": 0.0023,
+   "max_jaccard_prompt_with": "atcoder/abc340_b",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/26",
+     "source": "humaneval",
+     "j3": 0.0145
+    },
+    {
+     "id": "atcoder/abc368_g",
+     "source": "livecodebench",
+     "j3": 0.0138
+    },
+    {
+     "id": "atcoder/abc335_b",
+     "source": "livecodebench",
+     "j3": 0.0122
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0047",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "mbpp/575",
+     "source": "mbpp",
+     "j3": 0.0051
+    },
+    {
+     "id": "HumanEval/59",
+     "source": "humaneval",
+     "j3": 0.0049
+    },
+    {
+     "id": "HumanEval/14",
+     "source": "humaneval",
+     "j3": 0.0049
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0088",
+   "max_jaccard_prompt": 0.0095,
+   "max_jaccard_prompt_with": "leetcode/3659",
+   "max_jaccard_code": 0.019,
+   "max_jaccard_code_with": "mbpp/759",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc335_b",
+     "source": "livecodebench",
+     "j3": 0.0387
+    },
+    {
+     "id": "leetcode/3199",
+     "source": "livecodebench",
+     "j3": 0.0305
+    },
+    {
+     "id": "atcoder/abc306_b",
+     "source": "livecodebench",
+     "j3": 0.0247
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0001",
+   "max_jaccard_prompt": 0.0056,
+   "max_jaccard_prompt_with": "HumanEval/115",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc306_b",
+     "source": "livecodebench",
+     "j3": 0.0144
+    },
+    {
+     "id": "leetcode/3778",
+     "source": "livecodebench",
+     "j3": 0.0128
+    },
+    {
+     "id": "HumanEval/115",
+     "source": "humaneval",
+     "j3": 0.0127
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0057",
+   "max_jaccard_prompt": 0.0032,
+   "max_jaccard_prompt_with": "leetcode/3725",
+   "max_jaccard_code": 0.0072,
+   "max_jaccard_code_with": "HumanEval/100",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/152",
+     "source": "humaneval",
+     "j3": 0.0166
+    },
+    {
+     "id": "atcoder/abc361_b",
+     "source": "livecodebench",
+     "j3": 0.0157
+    },
+    {
+     "id": "atcoder/abc335_b",
+     "source": "livecodebench",
+     "j3": 0.0154
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0004",
+   "max_jaccard_prompt": 0.0022,
+   "max_jaccard_prompt_with": "leetcode/3832",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/78",
+     "source": "humaneval",
+     "j3": 0.0125
+    },
+    {
+     "id": "mbpp/505",
+     "source": "mbpp",
+     "j3": 0.0108
+    },
+    {
+     "id": "mbpp/632",
+     "source": "mbpp",
+     "j3": 0.0107
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0087",
+   "max_jaccard_prompt": 0.0025,
+   "max_jaccard_prompt_with": "leetcode/2977",
+   "max_jaccard_code": 0.0058,
+   "max_jaccard_code_with": "mbpp/210",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/2977",
+     "source": "livecodebench",
+     "j3": 0.008
+    },
+    {
+     "id": "atcoder/abc388_a",
+     "source": "livecodebench",
+     "j3": 0.0068
+    },
+    {
+     "id": "atcoder/abc338_a",
+     "source": "livecodebench",
+     "j3": 0.0059
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0029",
+   "max_jaccard_prompt": 0.0028,
+   "max_jaccard_prompt_with": "leetcode/3515",
+   "max_jaccard_code": 0.0159,
+   "max_jaccard_code_with": "mbpp/759",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3659",
+     "source": "livecodebench",
+     "j3": 0.0118
+    },
+    {
+     "id": "atcoder/abc335_b",
+     "source": "livecodebench",
+     "j3": 0.011
+    },
+    {
+     "id": "HumanEval/160",
+     "source": "humaneval",
+     "j3": 0.0101
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0031",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/78",
+     "source": "humaneval",
+     "j3": 0.0102
+    },
+    {
+     "id": "HumanEval/144",
+     "source": "humaneval",
+     "j3": 0.0084
+    },
+    {
+     "id": "HumanEval/67",
+     "source": "humaneval",
+     "j3": 0.0077
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0036",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0051,
+   "max_jaccard_code_with": "HumanEval/135",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "mbpp/115",
+     "source": "mbpp",
+     "j3": 0.005
+    },
+    {
+     "id": "mbpp/273",
+     "source": "mbpp",
+     "j3": 0.005
+    },
+    {
+     "id": "mbpp/431",
+     "source": "mbpp",
+     "j3": 0.0049
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0014",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0055,
+   "max_jaccard_code_with": "HumanEval/94",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc364_e",
+     "source": "livecodebench",
+     "j3": 0.0066
+    },
+    {
+     "id": "leetcode/3518",
+     "source": "livecodebench",
+     "j3": 0.0062
+    },
+    {
+     "id": "mbpp/285",
+     "source": "mbpp",
+     "j3": 0.006
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0059",
+   "max_jaccard_prompt": 0.002,
+   "max_jaccard_prompt_with": "leetcode/3291",
+   "max_jaccard_code": 0.0096,
+   "max_jaccard_code_with": "mbpp/504",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/149",
+     "source": "humaneval",
+     "j3": 0.0121
+    },
+    {
+     "id": "HumanEval/90",
+     "source": "humaneval",
+     "j3": 0.0113
+    },
+    {
+     "id": "leetcode/3490",
+     "source": "livecodebench",
+     "j3": 0.0088
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0041",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc346_a",
+     "source": "livecodebench",
+     "j3": 0.0047
+    },
+    {
+     "id": "leetcode/3563",
+     "source": "livecodebench",
+     "j3": 0.0045
+    },
+    {
+     "id": "atcoder/abc375_d",
+     "source": "livecodebench",
+     "j3": 0.0042
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0070",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc305_a",
+     "source": "livecodebench",
+     "j3": 0.008
+    },
+    {
+     "id": "HumanEval/32",
+     "source": "humaneval",
+     "j3": 0.0064
+    },
+    {
+     "id": "atcoder/abc324_b",
+     "source": "livecodebench",
+     "j3": 0.0061
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0021",
+   "max_jaccard_prompt": 0.0034,
+   "max_jaccard_prompt_with": "HumanEval/81",
+   "max_jaccard_code": 0.0065,
+   "max_jaccard_code_with": "mbpp/913",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/81",
+     "source": "humaneval",
+     "j3": 0.0103
+    },
+    {
+     "id": "mbpp/239",
+     "source": "mbpp",
+     "j3": 0.0101
+    },
+    {
+     "id": "mbpp/928",
+     "source": "mbpp",
+     "j3": 0.0056
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0079",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3737",
+     "source": "livecodebench",
+     "j3": 0.0071
+    },
+    {
+     "id": "mbpp/816",
+     "source": "mbpp",
+     "j3": 0.0055
+    },
+    {
+     "id": "mbpp/667",
+     "source": "mbpp",
+     "j3": 0.0055
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0081",
+   "max_jaccard_prompt": 0.001,
+   "max_jaccard_prompt_with": "atcoder/abc314_e",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "mbpp/508",
+     "source": "mbpp",
+     "j3": 0.0066
+    },
+    {
+     "id": "atcoder/abc343_c",
+     "source": "livecodebench",
+     "j3": 0.0043
+    },
+    {
+     "id": "leetcode/2881",
+     "source": "livecodebench",
+     "j3": 0.0041
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0072",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/142",
+     "source": "humaneval",
+     "j3": 0.0075
+    },
+    {
+     "id": "HumanEval/160",
+     "source": "humaneval",
+     "j3": 0.0073
+    },
+    {
+     "id": "HumanEval/130",
+     "source": "humaneval",
+     "j3": 0.0069
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0061",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0051,
+   "max_jaccard_code_with": "mbpp/40",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "mbpp/210",
+     "source": "mbpp",
+     "j3": 0.0092
+    },
+    {
+     "id": "HumanEval/69",
+     "source": "humaneval",
+     "j3": 0.0074
+    },
+    {
+     "id": "leetcode/3242",
+     "source": "livecodebench",
+     "j3": 0.0065
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0043",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.007,
+   "max_jaccard_code_with": "mbpp/913",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc365_a",
+     "source": "livecodebench",
+     "j3": 0.0075
+    },
+    {
+     "id": "leetcode/3567",
+     "source": "livecodebench",
+     "j3": 0.0074
+    },
+    {
+     "id": "mbpp/159",
+     "source": "mbpp",
+     "j3": 0.0074
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0010",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0118,
+   "max_jaccard_code_with": "mbpp/759",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc345_b",
+     "source": "livecodebench",
+     "j3": 0.0054
+    },
+    {
+     "id": "atcoder/abc318_e",
+     "source": "livecodebench",
+     "j3": 0.0053
+    },
+    {
+     "id": "atcoder/abc374_e",
+     "source": "livecodebench",
+     "j3": 0.0051
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0040",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0037,
+   "max_jaccard_code_with": "mbpp/913",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc306_a",
+     "source": "livecodebench",
+     "j3": 0.0066
+    },
+    {
+     "id": "atcoder/abc384_a",
+     "source": "livecodebench",
+     "j3": 0.0058
+    },
+    {
+     "id": "atcoder/abc321_c",
+     "source": "livecodebench",
+     "j3": 0.0053
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0019",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/143",
+     "source": "humaneval",
+     "j3": 0.006
+    },
+    {
+     "id": "HumanEval/149",
+     "source": "humaneval",
+     "j3": 0.0055
+    },
+    {
+     "id": "leetcode/3490",
+     "source": "livecodebench",
+     "j3": 0.0054
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0069",
+   "max_jaccard_prompt": 0.0053,
+   "max_jaccard_prompt_with": "HumanEval/153",
+   "max_jaccard_code": 0.0042,
+   "max_jaccard_code_with": "mbpp/849",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/153",
+     "source": "humaneval",
+     "j3": 0.017
+    },
+    {
+     "id": "atcoder/abc327_a",
+     "source": "livecodebench",
+     "j3": 0.0091
+    },
+    {
+     "id": "HumanEval/68",
+     "source": "humaneval",
+     "j3": 0.0085
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0033",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "mbpp/343",
+     "source": "mbpp",
+     "j3": 0.0079
+    },
+    {
+     "id": "mbpp/365",
+     "source": "mbpp",
+     "j3": 0.0079
+    },
+    {
+     "id": "mbpp/543",
+     "source": "mbpp",
+     "j3": 0.0079
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0013",
+   "max_jaccard_prompt": 0.0025,
+   "max_jaccard_prompt_with": "atcoder/abc318_b",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/111",
+     "source": "humaneval",
+     "j3": 0.0096
+    },
+    {
+     "id": "atcoder/abc318_b",
+     "source": "livecodebench",
+     "j3": 0.0078
+    },
+    {
+     "id": "leetcode/3396",
+     "source": "livecodebench",
+     "j3": 0.0072
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0037",
+   "max_jaccard_prompt": 0.0021,
+   "max_jaccard_prompt_with": "atcoder/abc354_d",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3725",
+     "source": "livecodebench",
+     "j3": 0.0129
+    },
+    {
+     "id": "atcoder/abc309_e",
+     "source": "livecodebench",
+     "j3": 0.0114
+    },
+    {
+     "id": "atcoder/abc307_e",
+     "source": "livecodebench",
+     "j3": 0.0112
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0018",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/8",
+     "source": "humaneval",
+     "j3": 0.0044
+    },
+    {
+     "id": "HumanEval/144",
+     "source": "humaneval",
+     "j3": 0.0038
+    },
+    {
+     "id": "atcoder/arc195_c",
+     "source": "livecodebench",
+     "j3": 0.0032
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0065",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/70",
+     "source": "humaneval",
+     "j3": 0.0044
+    },
+    {
+     "id": "atcoder/abc351_c",
+     "source": "livecodebench",
+     "j3": 0.0037
+    },
+    {
+     "id": "leetcode/3421",
+     "source": "livecodebench",
+     "j3": 0.0034
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0028",
+   "max_jaccard_prompt": 0.0087,
+   "max_jaccard_prompt_with": "atcoder/abc335_b",
+   "max_jaccard_code": 0.0048,
+   "max_jaccard_code_with": "mbpp/749",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc335_b",
+     "source": "livecodebench",
+     "j3": 0.0475
+    },
+    {
+     "id": "leetcode/3199",
+     "source": "livecodebench",
+     "j3": 0.0319
+    },
+    {
+     "id": "leetcode/3659",
+     "source": "livecodebench",
+     "j3": 0.0235
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0075",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3024",
+     "source": "livecodebench",
+     "j3": 0.0058
+    },
+    {
+     "id": "mbpp/928",
+     "source": "mbpp",
+     "j3": 0.0057
+    },
+    {
+     "id": "mbpp/643",
+     "source": "mbpp",
+     "j3": 0.0057
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0046",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0131,
+   "max_jaccard_code_with": "mbpp/206",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc329_d",
+     "source": "livecodebench",
+     "j3": 0.0084
+    },
+    {
+     "id": "leetcode/3579",
+     "source": "livecodebench",
+     "j3": 0.0067
+    },
+    {
+     "id": "HumanEval/32",
+     "source": "humaneval",
+     "j3": 0.0063
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0062",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0037,
+   "max_jaccard_code_with": "mbpp/913",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3699",
+     "source": "livecodebench",
+     "j3": 0.0046
+    },
+    {
+     "id": "leetcode/3164",
+     "source": "livecodebench",
+     "j3": 0.0043
+    },
+    {
+     "id": "atcoder/abc394_c",
+     "source": "livecodebench",
+     "j3": 0.0041
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0039",
+   "max_jaccard_prompt": 0.0014,
+   "max_jaccard_prompt_with": "atcoder/abc320_c",
+   "max_jaccard_code": 0.0065,
+   "max_jaccard_code_with": "mbpp/759",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc320_c",
+     "source": "livecodebench",
+     "j3": 0.0046
+    },
+    {
+     "id": "atcoder/abc348_d",
+     "source": "livecodebench",
+     "j3": 0.0041
+    },
+    {
+     "id": "atcoder/arc191_a",
+     "source": "livecodebench",
+     "j3": 0.004
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0052",
+   "max_jaccard_prompt": 0.0045,
+   "max_jaccard_prompt_with": "mbpp/434",
+   "max_jaccard_code": 0.0109,
+   "max_jaccard_code_with": "mbpp/759",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/65",
+     "source": "humaneval",
+     "j3": 0.0168
+    },
+    {
+     "id": "mbpp/434",
+     "source": "mbpp",
+     "j3": 0.014
+    },
+    {
+     "id": "leetcode/3329",
+     "source": "livecodebench",
+     "j3": 0.007
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0063",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3396",
+     "source": "livecodebench",
+     "j3": 0.0059
+    },
+    {
+     "id": "leetcode/3593",
+     "source": "livecodebench",
+     "j3": 0.0059
+    },
+    {
+     "id": "leetcode/3515",
+     "source": "livecodebench",
+     "j3": 0.0058
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0066",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc398_c",
+     "source": "livecodebench",
+     "j3": 0.008
+    },
+    {
+     "id": "leetcode/2955",
+     "source": "livecodebench",
+     "j3": 0.0056
+    },
+    {
+     "id": "leetcode/3566",
+     "source": "livecodebench",
+     "j3": 0.0054
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0034",
+   "max_jaccard_prompt": 0.0035,
+   "max_jaccard_prompt_with": "leetcode/3511",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "leetcode/3511",
+     "source": "livecodebench",
+     "j3": 0.0109
+    },
+    {
+     "id": "HumanEval/65",
+     "source": "humaneval",
+     "j3": 0.0107
+    },
+    {
+     "id": "atcoder/abc371_a",
+     "source": "livecodebench",
+     "j3": 0.0065
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0054",
+   "max_jaccard_prompt": 0.0,
+   "max_jaccard_prompt_with": "HumanEval/0",
+   "max_jaccard_code": 0.0,
+   "max_jaccard_code_with": "HumanEval/0",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "atcoder/abc339_d",
+     "source": "livecodebench",
+     "j3": 0.0076
+    },
+    {
+     "id": "atcoder/abc330_d",
+     "source": "livecodebench",
+     "j3": 0.0064
+    },
+    {
+     "id": "leetcode/3324",
+     "source": "livecodebench",
+     "j3": 0.0058
+    }
+   ]
+  },
+  {
+   "id": "pc-c-0050",
+   "max_jaccard_prompt": 0.002,
+   "max_jaccard_prompt_with": "leetcode/2834",
+   "max_jaccard_code": 0.005,
+   "max_jaccard_code_with": "mbpp/926",
+   "longest_common_run": 0,
+   "longest_run_with": null,
+   "top3_for_judge": [
+    {
+     "id": "HumanEval/104",
+     "source": "humaneval",
+     "j3": 0.0086
+    },
+    {
+     "id": "leetcode/2834",
+     "source": "livecodebench",
+     "j3": 0.0066
+    },
+    {
+     "id": "HumanEval/14",
+     "source": "humaneval",
+     "j3": 0.0047
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,657 @@
+{
+ "model": "openai/gpt-oss-20b",
+ "usage": {
+  "prompt_tokens": 115081,
+  "completion_tokens": 12832
+ },
+ "tasks": [
+  {
+   "id": "pc-hw-008",
+   "same_as": null,
+   "same_reason": "The task does not match any of the provided candidate problems in terms of input, output, or required behavior.",
+   "well_known": null,
+   "well_known_reason": "The problem is a standard sweep\u2011line/interval addition task, not a specific well\u2011known contest problem with a unique name.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task does not match any of the provided candidate problems in terms of input, output, or required behavior.\", \"well_known\": null, \"well_known_reason\": \"The problem is a standard sweep\u2011line/interval addition task, not a specific well\u2011known contest problem with a unique name.\"}"
+  },
+  {
+   "id": "pc-hw-002",
+   "same_as": null,
+   "same_reason": "The TASK parses duration strings into seconds, which is unrelated to the string pattern, character checks, or subsequence increment problems in the candidates.",
+   "well_known": null,
+   "well_known_reason": "Parsing a duration string into seconds is a common utility task but not a specific well\u2011known programming contest or interview problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK parses duration strings into seconds, which is unrelated to the string pattern, character checks, or subsequence increment problems in the candidates.\", \"well_known\": null, \"well_known_reason\": \"Parsing a duration string into seconds is a common utility task but not a specific well\u2011known programming contest or interview problem.\"}"
+  },
+  {
+   "id": "pc-hw-006",
+   "same_as": null,
+   "same_reason": "The TASK about inserting brackets to balance a string does not match any of the listed candidate problems.",
+   "well_known": "Minimum Insertions to Balance Brackets (LeetCode 1541)",
+   "well_known_reason": "This is a classic interview/contest problem where the goal is to compute the minimum number of bracket insertions needed to make a string of brackets balanced.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK about inserting brackets to balance a string does not match any of the listed candidate problems.\", \"well_known\": \"Minimum Insertions to Balance Brackets (LeetCode 1541)\", \"well_known_reason\": \"This is a classic interview/contest problem where the goal is to compute the minimum number of bracket insertions needed to make a string of brackets balanced.\"}"
+  },
+  {
+   "id": "pc-hw-004",
+   "same_as": null,
+   "same_reason": "The task describes simulating an LRU cache, which is not equivalent to any of the listed candidate problems.",
+   "well_known": "LRU Cache (LeetCode)",
+   "well_known_reason": "Simulating an LRU cache with put/get operations is a classic interview/contest problem that appears on LeetCode and similar platforms.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task describes simulating an LRU cache, which is not equivalent to any of the listed candidate problems.\", \"well_known\": \"LRU Cache (LeetCode)\", \"well_known_reason\": \"Simulating an LRU cache with put/get operations is a classic interview/contest problem that appears on LeetCode and similar platforms.\"}"
+  },
+  {
+   "id": "pc-hw-005",
+   "same_as": null,
+   "same_reason": "The task of rounding a decimal string to a specified number of places using round-half-to-even is not equivalent to any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "While round-half-to-even is a standard rounding rule, it is not a specific well-known programming contest problem with a unique name.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task of rounding a decimal string to a specified number of places using round-half-to-even is not equivalent to any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"While round-half-to-even is a standard rounding rule, it is not a specific well-known programming contest problem with a unique name.\"}"
+  },
+  {
+   "id": "pc-c-0008",
+   "same_as": null,
+   "same_reason": "The token bucket rate limiter problem does not match the functionality of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "While token bucket is a common algorithmic concept, it is not a specific well-known contest or interview problem with a standard name that a model could have memorized.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The token bucket rate limiter problem does not match the functionality of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"While token bucket is a common algorithmic concept, it is not a specific well-known contest or interview problem with a standard name that a model could have memorized.\"}"
+  },
+  {
+   "id": "pc-c-0045",
+   "same_as": null,
+   "same_reason": "The league table ranking problem does not match any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This specific ranking with head\u2011to\u2011head tie\u2011breaking is not a standard well\u2011known contest problem like those from LeetCode, Codeforces, or AtCoder.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The league table ranking problem does not match any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This specific ranking with head\u2011to\u2011head tie\u2011breaking is not a standard well\u2011known contest problem like those from LeetCode, Codeforces, or AtCoder.\"}"
+  },
+  {
+   "id": "pc-c-0012",
+   "same_as": null,
+   "same_reason": "The task involves template variable substitution with specific syntax, which does not match any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This problem is a custom string processing exercise and not a standard well-known contest or interview problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task involves template variable substitution with specific syntax, which does not match any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This problem is a custom string processing exercise and not a standard well-known contest or interview problem.\"}"
+  },
+  {
+   "id": "pc-c-0027",
+   "same_as": null,
+   "same_reason": "The TASK describes a per-client sliding-window rate limiter, which does not match any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "While sliding-window rate limiting is a common interview topic, it is not a specific well-known contest problem from sites like LeetCode, Codeforces, or AtCoder.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK describes a per-client sliding-window rate limiter, which does not match any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"While sliding-window rate limiting is a common interview topic, it is not a specific well-known contest problem from sites like LeetCode, Codeforces, or AtCoder.\"}"
+  },
+  {
+   "id": "pc-c-0042",
+   "same_as": null,
+   "same_reason": "The unpack_bits function has a distinct specification involving bit manipulation and signed/unsigned field extraction, which does not match any of the provided candidate problems.",
+   "well_known": null,
+   "well_known_reason": "Bitfield unpacking is a common programming task but not a specific well-known contest problem like LeetCode or Codeforces.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The unpack_bits function has a distinct specification involving bit manipulation and signed/unsigned field extraction, which does not match any of the provided candidate problems.\", \"well_known\": null, \"well_known_reason\": \"Bitfield unpacking is a common programming task but not a specific well-known contest problem like LeetCode or Codeforces.\"}"
+  },
+  {
+   "id": "pc-c-0058",
+   "same_as": null,
+   "same_reason": "The overtime_pay function has a distinct specification and does not match the behavior of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This overtime pay calculation with daily, weekly, and seventh-day multipliers is not a standard problem from major programming contests or interview platforms.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The overtime_pay function has a distinct specification and does not match the behavior of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This overtime pay calculation with daily, weekly, and seventh-day multipliers is not a standard problem from major programming contests or interview platforms.\"}"
+  },
+  {
+   "id": "pc-c-0049",
+   "same_as": null,
+   "same_reason": "The TASK involves parsing HTTP headers and computing freshness, which does not match any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This is a specialized protocol parsing task rather than a standard contest or interview problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK involves parsing HTTP headers and computing freshness, which does not match any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This is a specialized protocol parsing task rather than a standard contest or interview problem.\"}"
+  },
+  {
+   "id": "pc-c-0051",
+   "same_as": null,
+   "same_reason": "The slugify function described in the TASK has a distinct behavior and requirements that do not match any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "Slug generation is a common utility task but not a specific well-known programming contest or interview problem with a standard name.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The slugify function described in the TASK has a distinct behavior and requirements that do not match any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"Slug generation is a common utility task but not a specific well-known programming contest or interview problem with a standard name.\"}"
+  },
+  {
+   "id": "pc-c-0085",
+   "same_as": null,
+   "same_reason": "The TASK is a Sudoku conflict checker, which does not match the functionality of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "While Sudoku is a well-known puzzle, the specific conflict detection task is not a standard contest problem with a widely recognized name.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK is a Sudoku conflict checker, which does not match the functionality of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"While Sudoku is a well-known puzzle, the specific conflict detection task is not a standard contest problem with a widely recognized name.\"}"
+  },
+  {
+   "id": "pc-c-0002",
+   "same_as": null,
+   "same_reason": "The TASK about adding business days does not match the logic or input/output of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "While adding business days is a common interview question, it is not a specific, well-known contest problem with a unique identifier that a model could have memorized.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK about adding business days does not match the logic or input/output of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"While adding business days is a common interview question, it is not a specific, well-known contest problem with a unique identifier that a model could have memorized.\"}"
+  },
+  {
+   "id": "pc-c-0035",
+   "same_as": null,
+   "same_reason": "The ISBN conversion task does not match the functionality of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "ISBN conversion is a standard algorithmic task but not a specific well-known programming contest or interview problem from sites like LeetCode, Codeforces, or AtCoder.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The ISBN conversion task does not match the functionality of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"ISBN conversion is a standard algorithmic task but not a specific well-known programming contest or interview problem from sites like LeetCode, Codeforces, or AtCoder.\"}"
+  },
+  {
+   "id": "pc-c-0023",
+   "same_as": null,
+   "same_reason": "The TASK parses INI files, which is unrelated to the listed candidates that involve matrix counting, algebraic expression evaluation, or array increment operations.",
+   "well_known": null,
+   "well_known_reason": "Parsing INI configuration files is a common programming task but not a specific well-known contest problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK parses INI files, which is unrelated to the listed candidates that involve matrix counting, algebraic expression evaluation, or array increment operations.\", \"well_known\": null, \"well_known_reason\": \"Parsing INI configuration files is a common programming task but not a specific well-known contest problem.\"}"
+  },
+  {
+   "id": "pc-c-0007",
+   "same_as": null,
+   "same_reason": "The task of merging CIDR blocks does not match any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "While CIDR aggregation is a common networking task, it is not a standard problem from a well-known programming contest or interview platform.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task of merging CIDR blocks does not match any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"While CIDR aggregation is a common networking task, it is not a standard problem from a well-known programming contest or interview platform.\"}"
+  },
+  {
+   "id": "pc-c-0038",
+   "same_as": null,
+   "same_reason": "The TASK involves parsing HTTP Accept headers and selecting media types, which is not equivalent to any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This problem is a specific HTTP header parsing task rather than a standard algorithmic contest problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK involves parsing HTTP Accept headers and selecting media types, which is not equivalent to any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This problem is a specific HTTP header parsing task rather than a standard algorithmic contest problem.\"}"
+  },
+  {
+   "id": "pc-c-0024",
+   "same_as": null,
+   "same_reason": "The IPv6 compression task has no equivalent in the provided candidates.",
+   "well_known": null,
+   "well_known_reason": "Canonical IPv6 formatting is a protocol specification rather than a standard programming contest problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The IPv6 compression task has no equivalent in the provided candidates.\", \"well_known\": null, \"well_known_reason\": \"Canonical IPv6 formatting is a protocol specification rather than a standard programming contest problem.\"}"
+  },
+  {
+   "id": "pc-c-0048",
+   "same_as": null,
+   "same_reason": "The commission calculation logic does not match any of the provided candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This problem is a specific business rule implementation and not a standard contest or interview problem with a widely recognized name.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The commission calculation logic does not match any of the provided candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This problem is a specific business rule implementation and not a standard contest or interview problem with a widely recognized name.\"}"
+  },
+  {
+   "id": "pc-c-0025",
+   "same_as": null,
+   "same_reason": "The loyalty_balance function has a distinct specification and does not match the input-output behavior of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "The problem is a custom ledger simulation and does not correspond to a widely recognized contest or interview problem such as those on LeetCode, Codeforces, or Project Euler.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The loyalty_balance function has a distinct specification and does not match the input-output behavior of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"The problem is a custom ledger simulation and does not correspond to a widely recognized contest or interview problem such as those on LeetCode, Codeforces, or Project Euler.\"}"
+  },
+  {
+   "id": "pc-c-0073",
+   "same_as": null,
+   "same_reason": "The TASK involves currency conversion with path selection, which does not match any of the provided candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This specific problem is not a standard well-known contest or interview problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK involves currency conversion with path selection, which does not match any of the provided candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This specific problem is not a standard well-known contest or interview problem.\"}"
+  },
+  {
+   "id": "pc-c-0084",
+   "same_as": null,
+   "same_reason": "The task about grouping build targets into waves with priority and parallel limits does not match any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This problem is a custom topological\u2011sorting variant and is not a standard well\u2011known contest or interview problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task about grouping build targets into waves with priority and parallel limits does not match any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This problem is a custom topological\u2011sorting variant and is not a standard well\u2011known contest or interview problem.\"}"
+  },
+  {
+   "id": "pc-c-0089",
+   "same_as": null,
+   "same_reason": "The pivot_table function described in the TASK does not match the behavior or signature of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "The problem of constructing a pivot table with optional totals is a common programming exercise but not a specific well-known contest problem from sites like LeetCode, Codeforces, or AtCoder.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The pivot_table function described in the TASK does not match the behavior or signature of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"The problem of constructing a pivot table with optional totals is a common programming exercise but not a specific well-known contest problem from sites like LeetCode, Codeforces, or AtCoder.\"}"
+  },
+  {
+   "id": "pc-c-0053",
+   "same_as": null,
+   "same_reason": "The TASK involves resolving Python import statements, which is unrelated to the provided candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This import resolution logic is not a standard problem from well-known programming contests or interview platforms.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK involves resolving Python import statements, which is unrelated to the provided candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This import resolution logic is not a standard problem from well-known programming contests or interview platforms.\"}"
+  },
+  {
+   "id": "pc-c-0011",
+   "same_as": null,
+   "same_reason": "The TASK requires generating monthly billing dates with special day handling, which is not present in any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This is a custom date calculation task and does not correspond to a standard well-known programming contest or interview problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK requires generating monthly billing dates with special day handling, which is not present in any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This is a custom date calculation task and does not correspond to a standard well-known programming contest or interview problem.\"}"
+  },
+  {
+   "id": "pc-c-0055",
+   "same_as": null,
+   "same_reason": "The TASK is a base conversion routine, which does not match the logic or input/output of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "While base conversion is a common algorithmic exercise, it is not a specific, well-known contest problem from sites like LeetCode, Codeforces, or Project Euler that a model could have memorized.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK is a base conversion routine, which does not match the logic or input/output of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"While base conversion is a common algorithmic exercise, it is not a specific, well-known contest problem from sites like LeetCode, Codeforces, or Project Euler that a model could have memorized.\"}"
+  },
+  {
+   "id": "pc-c-0068",
+   "same_as": null,
+   "same_reason": "The cookie header construction problem does not match the logic or input/output behavior of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This task is a custom implementation of RFC 6265 cookie handling and is not a standard problem from well-known programming contests or interview platforms.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The cookie header construction problem does not match the logic or input/output behavior of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This task is a custom implementation of RFC 6265 cookie handling and is not a standard problem from well-known programming contests or interview platforms.\"}"
+  },
+  {
+   "id": "pc-c-0083",
+   "same_as": null,
+   "same_reason": "The unit conversion task does not match any of the listed AtCoder problems in terms of input, output, or required logic.",
+   "well_known": null,
+   "well_known_reason": "This specific unit conversion with SI prefixes and dimensional analysis is not a standard well-known contest problem that a model could have memorized.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The unit conversion task does not match any of the listed AtCoder problems in terms of input, output, or required logic.\", \"well_known\": null, \"well_known_reason\": \"This specific unit conversion with SI prefixes and dimensional analysis is not a standard well-known contest problem that a model could have memorized.\"}"
+  },
+  {
+   "id": "pc-c-0015",
+   "same_as": null,
+   "same_reason": "The task of computing a 16\u2011bit one's\u2011complement checksum does not match any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "Computing an Internet checksum is a standard networking routine, not a specific contest or interview problem that would be memorized by a model.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task of computing a 16\u2011bit one's\u2011complement checksum does not match any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"Computing an Internet checksum is a standard networking routine, not a specific contest or interview problem that would be memorized by a model.\"}"
+  },
+  {
+   "id": "pc-c-0078",
+   "same_as": null,
+   "same_reason": "The percentile function described does not match the behavior or signature of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "While percentile calculations are common, there is no single well-known contest or interview problem that exactly matches this specification.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The percentile function described does not match the behavior or signature of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"While percentile calculations are common, there is no single well-known contest or interview problem that exactly matches this specification.\"}"
+  },
+  {
+   "id": "pc-c-0005",
+   "same_as": null,
+   "same_reason": "The TASK implements JSON Pointer resolution, which is unrelated to the string\u2011ending checks or decimal\u2011to\u2011binary conversions in the candidate problems.",
+   "well_known": null,
+   "well_known_reason": "JSON Pointer lookup is a standard RFC operation rather than a specific contest or interview problem that a model would have memorized.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK implements JSON Pointer resolution, which is unrelated to the string\u2011ending checks or decimal\u2011to\u2011binary conversions in the candidate problems.\", \"well_known\": null, \"well_known_reason\": \"JSON Pointer lookup is a standard RFC operation rather than a specific contest or interview problem that a model would have memorized.\"}"
+  },
+  {
+   "id": "pc-c-0082",
+   "same_as": null,
+   "same_reason": "The dedupe_contacts task does not match the functionality or input/output behavior of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This problem is a custom data-cleaning exercise and not a standard well-known contest or interview problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The dedupe_contacts task does not match the functionality or input/output behavior of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This problem is a custom data-cleaning exercise and not a standard well-known contest or interview problem.\"}"
+  },
+  {
+   "id": "pc-c-0016",
+   "same_as": null,
+   "same_reason": "The task of converting a fraction to a simplified mixed number does not match the functionality of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This specific fraction-to-mixed-number conversion is not a standard problem from major programming contests or interview platforms; it is a straightforward arithmetic routine rather than a well-known contest problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task of converting a fraction to a simplified mixed number does not match the functionality of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This specific fraction-to-mixed-number conversion is not a standard problem from major programming contests or interview platforms; it is a straightforward arithmetic routine rather than a well-known contest problem.\"}"
+  },
+  {
+   "id": "pc-c-0022",
+   "same_as": null,
+   "same_reason": "The natural_sort function has a distinct specification and behavior compared to the provided candidates (valid-word, all_prefixes, filter_by_substring).",
+   "well_known": null,
+   "well_known_reason": "Natural sorting is a common utility but not a specific well-known contest problem with a unique name on platforms like LeetCode or Codeforces.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The natural_sort function has a distinct specification and behavior compared to the provided candidates (valid-word, all_prefixes, filter_by_substring).\", \"well_known\": null, \"well_known_reason\": \"Natural sorting is a common utility but not a specific well-known contest problem with a unique name on platforms like LeetCode or Codeforces.\"}"
+  },
+  {
+   "id": "pc-c-0032",
+   "same_as": null,
+   "same_reason": "The task requires computing fiscal year and quarter labels based on a start month, which is distinct from the date format conversion tasks in the candidates.",
+   "well_known": null,
+   "well_known_reason": "Fiscal year and quarter calculation is a domain-specific utility, not a standard problem from major programming contests or interview question sets.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task requires computing fiscal year and quarter labels based on a start month, which is distinct from the date format conversion tasks in the candidates.\", \"well_known\": null, \"well_known_reason\": \"Fiscal year and quarter calculation is a domain-specific utility, not a standard problem from major programming contests or interview question sets.\"}"
+  },
+  {
+   "id": "pc-c-0090",
+   "same_as": null,
+   "same_reason": "The exam scheduling task does not match the functionality of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This problem is a custom greedy scheduling exercise and does not correspond to a standard well-known contest problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The exam scheduling task does not match the functionality of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This problem is a custom greedy scheduling exercise and does not correspond to a standard well-known contest problem.\"}"
+  },
+  {
+   "id": "pc-c-0060",
+   "same_as": null,
+   "same_reason": "The phone number normalization task does not match the functionality of any listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This is a domain-specific string processing problem, not a standard contest problem with a known name.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The phone number normalization task does not match the functionality of any listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This is a domain-specific string processing problem, not a standard contest problem with a known name.\"}"
+  },
+  {
+   "id": "pc-c-0067",
+   "same_as": null,
+   "same_reason": "The task about per-line vs per-invoice tax rounding does not match any of the provided candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This is a niche rounding problem not corresponding to a well-known contest or interview problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task about per-line vs per-invoice tax rounding does not match any of the provided candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This is a niche rounding problem not corresponding to a well-known contest or interview problem.\"}"
+  },
+  {
+   "id": "pc-c-0064",
+   "same_as": null,
+   "same_reason": "The TASK involves hashing and percentage parsing, which is unrelated to the bracket matching or string concatenation problems in the candidates.",
+   "well_known": null,
+   "well_known_reason": "The feature flag rollout algorithm described is a common real\u2011world technique, not a standard problem from a known programming contest or interview platform.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK involves hashing and percentage parsing, which is unrelated to the bracket matching or string concatenation problems in the candidates.\", \"well_known\": null, \"well_known_reason\": \"The feature flag rollout algorithm described is a common real\u2011world technique, not a standard problem from a known programming contest or interview platform.\"}"
+  },
+  {
+   "id": "pc-c-0026",
+   "same_as": null,
+   "same_reason": "The TASK description and required behavior differ from all listed candidates.",
+   "well_known": "Meeting Rooms II (LeetCode)",
+   "well_known_reason": "The problem is the classic interval scheduling that assigns the minimum number of rooms using a priority queue, a well-known LeetCode interview problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK description and required behavior differ from all listed candidates.\", \"well_known\": \"Meeting Rooms II (LeetCode)\", \"well_known_reason\": \"The problem is the classic interval scheduling that assigns the minimum number of rooms using a priority queue, a well-known LeetCode interview problem.\"}"
+  },
+  {
+   "id": "pc-c-0047",
+   "same_as": null,
+   "same_reason": "The task requires a depth\u2011first traversal with cycle detection and ordering, which is not present in any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "While the algorithm is a standard topological sort with DFS, it is not a specific well\u2011known contest problem with a unique name.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task requires a depth\u2011first traversal with cycle detection and ordering, which is not present in any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"While the algorithm is a standard topological sort with DFS, it is not a specific well\u2011known contest problem with a unique name.\"}"
+  },
+  {
+   "id": "pc-c-0088",
+   "same_as": null,
+   "same_reason": "The histogram binning task does not match the functionality of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This problem is not a standard well-known contest or interview problem that would be memorized by a model.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The histogram binning task does not match the functionality of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This problem is not a standard well-known contest or interview problem that would be memorized by a model.\"}"
+  },
+  {
+   "id": "pc-c-0001",
+   "same_as": null,
+   "same_reason": "The task of sorting semantic version strings does not match any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "Sorting semantic versions is a common coding exercise but not a specific well-known contest or interview problem with a standard name.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task of sorting semantic version strings does not match any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"Sorting semantic versions is a common coding exercise but not a specific well-known contest or interview problem with a standard name.\"}"
+  },
+  {
+   "id": "pc-c-0057",
+   "same_as": null,
+   "same_reason": "The TASK is a point-in-polygon test, which does not match any of the listed candidate problems.",
+   "well_known": "Point in Polygon test (ray casting algorithm)",
+   "well_known_reason": "The problem is a classic computational geometry task that is widely known and often appears in programming contests and interview questions.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK is a point-in-polygon test, which does not match any of the listed candidate problems.\", \"well_known\": \"Point in Polygon test (ray casting algorithm)\", \"well_known_reason\": \"The problem is a classic computational geometry task that is widely known and often appears in programming contests and interview questions.\"}"
+  },
+  {
+   "id": "pc-c-0004",
+   "same_as": null,
+   "same_reason": "The task is to parse CSV lines, which is unrelated to the provided candidates (hex_key and zero-move functions).",
+   "well_known": null,
+   "well_known_reason": "CSV parsing is a common programming task but not a specific well-known contest problem with a unique name.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task is to parse CSV lines, which is unrelated to the provided candidates (hex_key and zero-move functions).\", \"well_known\": null, \"well_known_reason\": \"CSV parsing is a common programming task but not a specific well-known contest problem with a unique name.\"}"
+  },
+  {
+   "id": "pc-c-0087",
+   "same_as": null,
+   "same_reason": "The TASK about expanding abbreviations does not match any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "The abbreviation expansion logic is not a standard contest problem from known sites.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK about expanding abbreviations does not match any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"The abbreviation expansion logic is not a standard contest problem from known sites.\"}"
+  },
+  {
+   "id": "pc-c-0029",
+   "same_as": null,
+   "same_reason": "The task of applying a unified diff hunk to a list of lines does not match the functionality of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "Applying a diff hunk is a specific file manipulation task, not a standard problem from a well-known programming contest or interview platform.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task of applying a unified diff hunk to a list of lines does not match the functionality of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"Applying a diff hunk is a specific file manipulation task, not a standard problem from a well-known programming contest or interview platform.\"}"
+  },
+  {
+   "id": "pc-c-0031",
+   "same_as": null,
+   "same_reason": "The task is to format a duration string, which does not match any of the provided candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This is a custom formatting utility rather than a standard contest or interview problem with a widely known name.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task is to format a duration string, which does not match any of the provided candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This is a custom formatting utility rather than a standard contest or interview problem with a widely known name.\"}"
+  },
+  {
+   "id": "pc-c-0036",
+   "same_as": null,
+   "same_reason": "The task involves parsing .env files, which is unrelated to the candidate problems about dictionaries, tuples, or list intersections.",
+   "well_known": null,
+   "well_known_reason": "Parsing .env files is a practical utility task, not a standard algorithmic problem from a known contest or interview platform.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task involves parsing .env files, which is unrelated to the candidate problems about dictionaries, tuples, or list intersections.\", \"well_known\": null, \"well_known_reason\": \"Parsing .env files is a practical utility task, not a standard algorithmic problem from a known contest or interview platform.\"}"
+  },
+  {
+   "id": "pc-c-0014",
+   "same_as": null,
+   "same_reason": "The TASK is to parse URL query strings, which does not match any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "Parsing URL query strings is a common programming task but not a specific well-known contest or interview problem with a unique name.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK is to parse URL query strings, which does not match any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"Parsing URL query strings is a common programming task but not a specific well-known contest or interview problem with a unique name.\"}"
+  },
+  {
+   "id": "pc-c-0059",
+   "same_as": null,
+   "same_reason": "The TASK about counting darts checkouts does not match any of the listed candidate problems.",
+   "well_known": "Project Euler 170 - Darts",
+   "well_known_reason": "The problem is a classic contest problem that has appeared in Project Euler, where one counts ways to score a given total with darts, and the solution can be memorized from that source.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK about counting darts checkouts does not match any of the listed candidate problems.\", \"well_known\": \"Project Euler 170 - Darts\", \"well_known_reason\": \"The problem is a classic contest problem that has appeared in Project Euler, where one counts ways to score a given total with darts, and the solution can be memorized from that source.\"}"
+  },
+  {
+   "id": "pc-c-0041",
+   "same_as": null,
+   "same_reason": "The TASK about canonicalizing CSS hex colors does not match the input-output behavior of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "Canonicalizing hex color strings is a common programming task but not a specific well-known contest problem from sites like LeetCode, Codeforces, or AtCoder.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK about canonicalizing CSS hex colors does not match the input-output behavior of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"Canonicalizing hex color strings is a common programming task but not a specific well-known contest problem from sites like LeetCode, Codeforces, or AtCoder.\"}"
+  },
+  {
+   "id": "pc-c-0070",
+   "same_as": null,
+   "same_reason": "The elevator_scan function has no equivalent in the listed candidates; its behavior and signature differ from all three.",
+   "well_known": null,
+   "well_known_reason": "The elevator SCAN scheduling logic is a generic algorithmic concept, not a specific well-known contest problem that would be memorized by a model.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The elevator_scan function has no equivalent in the listed candidates; its behavior and signature differ from all three.\", \"well_known\": null, \"well_known_reason\": \"The elevator SCAN scheduling logic is a generic algorithmic concept, not a specific well-known contest problem that would be memorized by a model.\"}"
+  },
+  {
+   "id": "pc-c-0021",
+   "same_as": null,
+   "same_reason": "The task requires computing ISO\u20118601 week labels with a configurable first weekday, which is unrelated to the grading, sequence counting, or date format conversion problems in the candidates.",
+   "well_known": null,
+   "well_known_reason": "While ISO week date calculation is a standard algorithm, it is not a specific well\u2011known contest problem from sites like LeetCode or Codeforces.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task requires computing ISO\u20118601 week labels with a configurable first weekday, which is unrelated to the grading, sequence counting, or date format conversion problems in the candidates.\", \"well_known\": null, \"well_known_reason\": \"While ISO week date calculation is a standard algorithm, it is not a specific well\u2011known contest problem from sites like LeetCode or Codeforces.\"}"
+  },
+  {
+   "id": "pc-c-0079",
+   "same_as": null,
+   "same_reason": "The task description and required behavior differ from all listed candidates.",
+   "well_known": null,
+   "well_known_reason": "The problem is a generic data aggregation routine, not a specific well-known contest or interview problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task description and required behavior differ from all listed candidates.\", \"well_known\": null, \"well_known_reason\": \"The problem is a generic data aggregation routine, not a specific well-known contest or interview problem.\"}"
+  },
+  {
+   "id": "pc-c-0081",
+   "same_as": null,
+   "same_reason": "The task does not match any of the listed candidate problems in terms of required input, output, or algorithmic focus.",
+   "well_known": null,
+   "well_known_reason": "This is a custom scheduling calculation problem, not a standard contest or interview problem with a widely recognized name.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task does not match any of the listed candidate problems in terms of required input, output, or algorithmic focus.\", \"well_known\": null, \"well_known_reason\": \"This is a custom scheduling calculation problem, not a standard contest or interview problem with a widely recognized name.\"}"
+  },
+  {
+   "id": "pc-c-0072",
+   "same_as": null,
+   "same_reason": "The shipping cost calculation described in the TASK does not match the functionality of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This problem is a domain-specific calculation for shipping fees and is not a standard problem from well-known programming contests or interview platforms.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The shipping cost calculation described in the TASK does not match the functionality of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This problem is a domain-specific calculation for shipping fees and is not a standard problem from well-known programming contests or interview platforms.\"}"
+  },
+  {
+   "id": "pc-c-0061",
+   "same_as": null,
+   "same_reason": "The task involves parsing and counting log lines with specific formatting rules, which does not match any of the provided candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This log parsing problem is not a standard well-known programming contest or interview problem from sites like LeetCode, Codeforces, or AtCoder.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task involves parsing and counting log lines with specific formatting rules, which does not match any of the provided candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This log parsing problem is not a standard well-known programming contest or interview problem from sites like LeetCode, Codeforces, or AtCoder.\"}"
+  },
+  {
+   "id": "pc-c-0043",
+   "same_as": null,
+   "same_reason": "The TASK requires computing age parts with special Feb 29 handling, which is not present in any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This is a custom date calculation problem and does not correspond to a standard well-known contest or interview problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK requires computing age parts with special Feb 29 handling, which is not present in any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This is a custom date calculation problem and does not correspond to a standard well-known contest or interview problem.\"}"
+  },
+  {
+   "id": "pc-c-0010",
+   "same_as": null,
+   "same_reason": "The TASK is unrelated to the listed AtCoder problems; it involves unit conversion with rational arithmetic, not any of those problems.",
+   "well_known": null,
+   "well_known_reason": "The problem does not correspond to a standard well\u2011known contest or interview problem that a model would have memorized.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK is unrelated to the listed AtCoder problems; it involves unit conversion with rational arithmetic, not any of those problems.\", \"well_known\": null, \"well_known_reason\": \"The problem does not correspond to a standard well\u2011known contest or interview problem that a model would have memorized.\"}"
+  },
+  {
+   "id": "pc-c-0040",
+   "same_as": null,
+   "same_reason": "The task does not match any of the listed AtCoder problems in terms of input, output, or required behavior.",
+   "well_known": "Sort the Timestamps (LeetCode)",
+   "well_known_reason": "The problem is a known LeetCode challenge that requires parsing RFC 3339 timestamps, normalizing them to UTC, and sorting while preserving stability.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task does not match any of the listed AtCoder problems in terms of input, output, or required behavior.\", \"well_known\": \"Sort the Timestamps (LeetCode)\", \"well_known_reason\": \"The problem is a known LeetCode challenge that requires parsing RFC 3339 timestamps, normalizing them to UTC, and sorting while preserving stability.\"}"
+  },
+  {
+   "id": "pc-c-0019",
+   "same_as": null,
+   "same_reason": "The TASK requires validating JSON-like data against a custom schema, which is unrelated to the string filtering, list sorting, or subsequence problems in the candidates.",
+   "well_known": null,
+   "well_known_reason": "Schema validation is a generic programming task and not a specific well-known contest problem from sites like LeetCode, Codeforces, or AtCoder.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK requires validating JSON-like data against a custom schema, which is unrelated to the string filtering, list sorting, or subsequence problems in the candidates.\", \"well_known\": null, \"well_known_reason\": \"Schema validation is a generic programming task and not a specific well-known contest problem from sites like LeetCode, Codeforces, or AtCoder.\"}"
+  },
+  {
+   "id": "pc-c-0069",
+   "same_as": null,
+   "same_reason": "The reconcile function described in the TASK does not match the behavior or signature of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "The problem is a custom ledger reconciliation task and does not correspond to a standard well-known programming contest or interview problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The reconcile function described in the TASK does not match the behavior or signature of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"The problem is a custom ledger reconciliation task and does not correspond to a standard well-known programming contest or interview problem.\"}"
+  },
+  {
+   "id": "pc-c-0033",
+   "same_as": null,
+   "same_reason": "The task requires normalizing UUID strings, which is unrelated to the digit/letter counting problems in the candidates.",
+   "well_known": null,
+   "well_known_reason": "UUID normalization is a specific data formatting requirement, not a standard contest or interview problem like those on LeetCode or Codeforces.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task requires normalizing UUID strings, which is unrelated to the digit/letter counting problems in the candidates.\", \"well_known\": null, \"well_known_reason\": \"UUID normalization is a specific data formatting requirement, not a standard contest or interview problem like those on LeetCode or Codeforces.\"}"
+  },
+  {
+   "id": "pc-c-0013",
+   "same_as": null,
+   "same_reason": "The TASK about flattening nested dictionaries and lists does not match the functionality of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "Flattening nested structures is a common programming exercise but not a specific well-known contest or interview problem with a standard name.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK about flattening nested dictionaries and lists does not match the functionality of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"Flattening nested structures is a common programming exercise but not a specific well-known contest or interview problem with a standard name.\"}"
+  },
+  {
+   "id": "pc-c-0037",
+   "same_as": null,
+   "same_reason": "The TASK requires numbering document headings, which does not match any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This is a common interview-style problem but not a specific well-known contest problem from sites like LeetCode, Codeforces, or AtCoder.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK requires numbering document headings, which does not match any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This is a common interview-style problem but not a specific well-known contest problem from sites like LeetCode, Codeforces, or AtCoder.\"}"
+  },
+  {
+   "id": "pc-c-0018",
+   "same_as": null,
+   "same_reason": "The amortization schedule problem does not match any of the listed candidate problems in terms of input, output, or required computation.",
+   "well_known": null,
+   "well_known_reason": "Loan amortization calculations are common financial formulas but not a specific well-known programming contest problem with a standard name.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The amortization schedule problem does not match any of the listed candidate problems in terms of input, output, or required computation.\", \"well_known\": null, \"well_known_reason\": \"Loan amortization calculations are common financial formulas but not a specific well-known programming contest problem with a standard name.\"}"
+  },
+  {
+   "id": "pc-c-0065",
+   "same_as": null,
+   "same_reason": "The income tax calculation problem does not match the functionality of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This is a domain-specific tax calculation routine rather than a standard contest or interview problem with a known name.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The income tax calculation problem does not match the functionality of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This is a domain-specific tax calculation routine rather than a standard contest or interview problem with a known name.\"}"
+  },
+  {
+   "id": "pc-c-0028",
+   "same_as": null,
+   "same_reason": "The task of matching semantic version strings against a custom range syntax does not correspond to any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This problem is a custom implementation of a version range matcher and is not a standard contest or interview problem from a known site.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task of matching semantic version strings against a custom range syntax does not correspond to any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This problem is a custom implementation of a version range matcher and is not a standard contest or interview problem from a known site.\"}"
+  },
+  {
+   "id": "pc-c-0075",
+   "same_as": null,
+   "same_reason": "The task description and required behavior do not match any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "Proration calculation for subscription changes is not a standard problem from major programming contests or interview platforms.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task description and required behavior do not match any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"Proration calculation for subscription changes is not a standard problem from major programming contests or interview platforms.\"}"
+  },
+  {
+   "id": "pc-c-0046",
+   "same_as": null,
+   "same_reason": "The task description and required behavior do not match any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This job scheduling with aging problem is not a standard, well-known contest or interview problem that would be memorized by a model.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task description and required behavior do not match any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This job scheduling with aging problem is not a standard, well-known contest or interview problem that would be memorized by a model.\"}"
+  },
+  {
+   "id": "pc-c-0062",
+   "same_as": null,
+   "same_reason": "The task of parsing fixed-width records with multiple field types does not match any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "Parsing fixed-width records is a common programming task but not a specific well-known contest problem with a unique name.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The task of parsing fixed-width records with multiple field types does not match any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"Parsing fixed-width records is a common programming task but not a specific well-known contest problem with a unique name.\"}"
+  },
+  {
+   "id": "pc-c-0039",
+   "same_as": null,
+   "same_reason": "The TASK is about computing the next cron time, which does not match any of the listed AtCoder problems.",
+   "well_known": null,
+   "well_known_reason": "Cron expression evaluation is a custom utility problem, not a standard contest problem from a well-known site.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK is about computing the next cron time, which does not match any of the listed AtCoder problems.\", \"well_known\": null, \"well_known_reason\": \"Cron expression evaluation is a custom utility problem, not a standard contest problem from a well-known site.\"}"
+  },
+  {
+   "id": "pc-c-0052",
+   "same_as": null,
+   "same_reason": "The TASK requires locale-aware number formatting, which is not present in any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This formatting task is a custom utility problem and does not correspond to a standard contest or interview problem that is widely known.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK requires locale-aware number formatting, which is not present in any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This formatting task is a custom utility problem and does not correspond to a standard contest or interview problem that is widely known.\"}"
+  },
+  {
+   "id": "pc-c-0063",
+   "same_as": null,
+   "same_reason": "The TASK involves applying environment variable overrides to a nested configuration dictionary, which is unrelated to the candidate problems about word validation, factor scores, or digit games.",
+   "well_known": null,
+   "well_known_reason": "The TASK is a custom configuration utility problem and does not correspond to any well-known programming contest or interview problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK involves applying environment variable overrides to a nested configuration dictionary, which is unrelated to the candidate problems about word validation, factor scores, or digit games.\", \"well_known\": null, \"well_known_reason\": \"The TASK is a custom configuration utility problem and does not correspond to any well-known programming contest or interview problem.\"}"
+  },
+  {
+   "id": "pc-c-0066",
+   "same_as": null,
+   "same_reason": "The discount application logic with grouping, percent and fixed coupons is not present in any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This problem does not correspond to a standard contest or interview problem that is widely recognized; it appears to be a custom exercise.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The discount application logic with grouping, percent and fixed coupons is not present in any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This problem does not correspond to a standard contest or interview problem that is widely recognized; it appears to be a custom exercise.\"}"
+  },
+  {
+   "id": "pc-c-0034",
+   "same_as": null,
+   "same_reason": "The IBAN validation task does not match the functionality of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "IBAN checksum validation is a real\u2011world protocol, not a standard programming contest problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The IBAN validation task does not match the functionality of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"IBAN checksum validation is a real\u2011world protocol, not a standard programming contest problem.\"}"
+  },
+  {
+   "id": "pc-c-0054",
+   "same_as": null,
+   "same_reason": "The deep_merge function described in the TASK does not correspond to any of the listed candidate problems, which involve grid movement, counting triples, or array splitting.",
+   "well_known": null,
+   "well_known_reason": "Deep merging of JSON-like dictionaries with conflict policies is a generic programming utility rather than a classic contest or interview problem with a known name.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The deep_merge function described in the TASK does not correspond to any of the listed candidate problems, which involve grid movement, counting triples, or array splitting.\", \"well_known\": null, \"well_known_reason\": \"Deep merging of JSON-like dictionaries with conflict policies is a generic programming utility rather than a classic contest or interview problem with a known name.\"}"
+  },
+  {
+   "id": "pc-c-0050",
+   "same_as": null,
+   "same_reason": "The TASK involves mapping local times to UTC with transitions, which does not match the functionality of any of the listed candidate problems.",
+   "well_known": null,
+   "well_known_reason": "This problem is a specific time\u2011zone conversion scenario and does not correspond to a standard well\u2011known programming contest or interview problem.",
+   "raw": "{\"same_as\": null, \"same_reason\": \"The TASK involves mapping local times to UTC with transitions, which does not match the functionality of any of the listed candidate problems.\", \"well_known\": null, \"well_known_reason\": \"This problem is a specific time\u2011zone conversion scenario and does not correspond to a standard well\u2011known programming contest or interview problem.\"}"
+  }
+ ]
+}
