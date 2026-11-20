@@ -107,13 +107,18 @@ The v1 API is still changing. Verify names against the installed version instead
 - Base URL: `https://api.pinference.ai/api/v1` (OpenAI-compatible). Key: `PRIME_API_KEY`. Teams only: header `X-Prime-Team-ID`.
 - List live catalog: `prime inference models` or `GET /models`. Use IDs exactly as shown.
 
-| Role | Model ID (verify) | $/M in | $/M cached in | $/M out | Notes |
-|---|---|---|---|---|---|
-| Filter model + high-volume rollouts | `deepseek/deepseek-v4.1-flash-1017` | 0.0437 | 0.0024 | 0.70 | 1M ctx |
-| Coding specialist | `poolside/laguna-s-2.1` | 0.09 | n/a | 0.18 | |
-| Open-weight all-rounder | `qwen/qwen3.6-35b-a3b` | 0.11 | 0.099 | 1.01 | 262K ctx |
-| Comparison | `google/gemma-4-31b-it` | 0.20 | 0.10 | 0.335 | 262K ctx |
-| Optional heavy baseline | `openai/gpt-oss-120b` | 0.35 | n/a | 0.75 | 131K ctx |
+**Leaderboard line-up (decided 2026-11-20 after pilots and probes; all "Hosted by Prime"):**
+
+| Role | Model ID | $/M in / out | Measured (8192-token cap unless noted) |
+|---|---|---|---|
+| Difficulty filter + labelled calibration row | `openai/gpt-oss-20b` | 0.20 / 0.30 | ~1k tokens, 0% truncated, mean 0.475 |
+| Strong reference | `deepseek/deepseek-v4.1-flash-1017` | 0.0437 / 0.70 | ~3.5k tokens, 7-10% truncated, mean 0.90 |
+| Mid-tier comparison | `google/gemma-4-31b-it` | 0.20 / 0.335 | ~5k tokens, 14% truncated, mean 0.65 |
+| Larger sibling of the filter (disclose family overlap) | `openai/gpt-oss-120b` | 0.35 / 0.75 | ~1.2k tokens, 0% truncated (probe 4/4) |
+| Open all-rounder | `qwen/qwen3.6-35b-a3b` | 0.11 / 1.01 | **16k cap, 2 attempts**: ~12-16k tokens, still ~25% truncated; report it |
+
+- Dropped: `poolside/laguna-s-2.1` (catalog lists it, but the Gateway returns "no longer available on the API") and its substitute `qwen/qwen3-coder-next` ("No allowed providers"). **"Gateway" models can be listed but unserved; prefer "Hosted by Prime" and always probe.**
+- Ruled out as filter: `google/gemma-4-26b-a4b-it` (4/4 truncated at 8192), Qwen3.6 (79% truncated at 8192), DeepSeek (too strong: 17/20 tasks 4/4).
 
 **Design cautions (document in REPORT.md):**
 - **Self-preference/selection bias:** if the filter model also appears on the leaderboard, difficulty is calibrated to it. Either filter with a model excluded from the leaderboard, or flag it and report on the held-out split.

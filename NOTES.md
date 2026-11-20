@@ -43,6 +43,22 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
+## 2026-11-20: Leaderboard line-up decided (Middle plan) + difficulty filter started
+
+- **Budget plan "Middle"** (user decision): 5-model single-turn leaderboard + bash comparison on 2 models x 20 tasks x 2 attempts. Projected project total about $4.5-5, keeping about $5 for other projects.
+- **Probes (8192 cap; Qwen at 16384):**
+  - gpt-oss-120b 4/4 passed, ~1.2k tokens, 0% truncated;
+  - Qwen3.6 at 16k: 1 pass, 2 genuine wrong, 1 still truncated (~12-16k tokens);
+  - `poolside/laguna-s-2.1`: 404 "no longer available on the API: no provider serves";
+  - substitute `qwen/qwen3-coder-next`: 404 "No allowed providers are available".
+  - Both are "Gateway" models (catalog-listed but served by an outside provider). Coding-specialist slot dropped. Both failures were recorded as provider errors, not model failures (correct separation).
+- **Line-up:** DeepSeek V4.1 Flash, Gemma 4 31B, gpt-oss-120b, Qwen3.6 (16k x 2 attempts), gpt-oss-20b (filter, labelled calibration row). All Hosted by Prime. CLAUDE.md section 5 updated.
+- **Difficulty filter started:**
+  - gpt-oss-20b on `data/filter_input.jsonl` (10 hand-written + 90 candidates) x 8 attempts, run `difficulty-r8`, launched under `nohup` in the Codespace;
+  - a local watcher holds an SSH session open with a heartbeat, because the Codespace idle timeout is **10 minutes** and cannot be changed on an existing codespace (`gh api user/codespaces/<name>`);
+  - summarize with `pipeline/03_difficulty.py summarize <traces>`.
+- Wallet $8.62 during the filter run.
+
 ## 2026-11-20: Filter-model probes, gpt-oss-20b pilot, b09 (first v3 batch) and the v3 difficulty check
 
 - **Probes (2 tasks x 2, 8192 tokens; about $0.02):**
