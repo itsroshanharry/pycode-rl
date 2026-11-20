@@ -48,6 +48,11 @@ CASES = [
     _g(E, ".9.......", E, E, E, E, E, ".......9."),
     _g("534678912", "672195348", "198342567", "859761423", "426853791", "713924856", "961537284", "287419635", "345286179"),
     _g(E, E, "......8..", E, E, E, "..8......"),
+    # conflicts that only exist inside boxes of the lower rows (no row/column/diagonal clash)
+    _g(E, E, E, E, "...5.....", ".....5..."),
+    _g(E, E, E, E, E, E, E, ".....7...", "...7....."),
+    _g(E, E, E, ".......2.", E, "......2.."),
+    _g(E, E, E, E, E, E, "1........", E, ".2.1....."),
 ]
 
 # Literal results produced by _oracle (not by hand).
@@ -86,7 +91,8 @@ def test_invalid(grid):
 
 def test_random_against_oracle():
     rng = random.Random(69)
-    for _ in range(400):
-        grid = ["".join(rng.choice("123456789" + "." * 12) for _ in range(9)) for _ in range(9)]
+    for n in range(600):
+        blanks = 12 if n % 2 else 120  # half the grids are sparse, so first conflicts appear in lower rows
+        grid = ["".join(rng.choice("123456789" + "." * blanks) for _ in range(9)) for _ in range(9)]
         got = sudoku_check(grid)
         assert (None if got is None else (got[0], got[1], list(got[2]))) == _oracle(grid)

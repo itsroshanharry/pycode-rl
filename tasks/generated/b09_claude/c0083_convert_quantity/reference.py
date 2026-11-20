@@ -2,9 +2,6 @@ import re
 from fractions import Fraction
 
 # dimension vector order: m, kg, s, A, K, mol, cd
-_D = {"m": (1, 0, 0, 0, 0, 0, 0), "kg": (0, 1, 0, 0, 0, 0, 0), "s": (0, 0, 1, 0, 0, 0, 0)}
-
-
 def _dim(m=0, kg=0, s=0, A=0, K=0, mol=0, cd=0):
     return (m, kg, s, A, K, mol, cd)
 

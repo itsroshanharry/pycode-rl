@@ -67,6 +67,7 @@ VALID = [
     ("1 mol/L", "mol/m^3"), ("1 g", "kg"), ("1 Mg", "kg"), ("1 us", "ns"), ("1 min", "s"), ("1 MHz", "1/s"),
     ("1 N*m", "J"), ("1 W", "J/s"), ("7 km^-1", "1/m"), ("1 dm^3", "L"), ("3 GPa", "N/mm^2"), ("-12.5 kN*m/s^2", "N*m/s^2"),
     ("1 m*m*m", "L"), ("5 A*s", "mA*h"), ("1 K/s", "K/min"), ("1 nm/us", "mm/s"),
+    ("-0.000000001 m", "m"), ("-0.0000000006 m", "m"), ("2 cd*mol", "mol*cd"), ("1 mA*A", "A^2"),
 ]
 
 # Literal values below were produced by _oracle (not by hand).
@@ -91,6 +92,7 @@ def test_against_oracle(text, target):
         ("1 mmin", "s"), ("1 km^0", "m"), ("1 km^", "m"), ("1 km^1.5", "m"), ("1 Km", "m"), ("1 m", "s"), ("+1 m", "m"),
         ("1. m", "m"), (".5 m", "m"), ("1 m*1", "m"), ("1 m**s", "m*s"), ("1 kh", "s"), ("1 N", "kg*m/s"), ("1 m", "m^2"),
         ("1 m", "foo"), ("1 m ", "m"), (" 1 m", "m"), ("1e m", "m"), ("１ m", "m"), ("1 m", ""), ("1 m", "m/"),
+        ("1 cd*m", "m"), ("1 A*s", "s"), ("1 mol", "1/s*s"), ("1 cd", "K"),
     ],
 )
 def test_invalid(text, target):
