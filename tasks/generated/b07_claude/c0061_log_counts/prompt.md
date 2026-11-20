@@ -9,7 +9,7 @@ def log_counts(lines: list[str]) -> tuple[list[tuple[str, str, int]], int]:
       "." and 1+ digits, optionally followed by "Z"; it must be a real date and
       time (seconds 00-59);
     - one or more spaces;
-    - level: letters, either bare (ERROR) or in square brackets ([ERROR]);
+    - level: ASCII letters (A-Z, a-z), either bare (ERROR) or in square brackets ([ERROR]);
       case-insensitive; must be DEBUG, INFO, WARN, WARNING or ERROR, where
       WARNING counts as WARN;
     - optionally a single space and any message text.

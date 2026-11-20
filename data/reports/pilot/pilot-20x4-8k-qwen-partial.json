@@ -1,0 +1,31 @@
+{
+ "rollouts": 33,
+ "tasks": 9,
+ "mean_reward": 0.152,
+ "pass_count_histogram": {
+  "0": 7,
+  "1": 1,
+  "4": 1
+ },
+ "per_task": {
+  "pc-c-0009": "4/4",
+  "pc-c-0012": "0/4",
+  "pc-c-0014": "1/4",
+  "pc-c-0028": "0/4",
+  "pc-c-0037": "0/4",
+  "pc-c-0061": "0/4",
+  "pc-c-0069": "0/4",
+  "pc-c-0070": "0/4",
+  "pc-c-0074": "0/1"
+ },
+ "failure_modes": {
+  "no_code_truncated": 26,
+  "pass": 5,
+  "wrong_answer": 1,
+  "infra_error": 1
+ },
+ "truncated_rate": 0.788,
+ "mean_output_tokens": 7574,
+ "mean_reasoning_tokens": 0,
+ "token_cost_usd_estimate": 0.1754
+}

@@ -11,7 +11,8 @@ def toc_numbers(headings: list[tuple[int, str]]) -> list[str]:
     siblings ("2.1", "2.1.3"). Levels may skip (a level-3 heading right under a
     level-1 heading is simply its child).
     Return "<number> <title>" for each heading, in order.
-    Raise ValueError if a level is not an int from 1 to 6.
+    Raise ValueError if a level is not an int from 1 to 6. A bool (True/False) is
+    NOT an acceptable level, even though bool is a subclass of int in Python.
 
     >>> toc_numbers([(1, "Intro"), (2, "Goals"), (2, "Scope"), (1, "Design"), (3, "Detail"), (2, "API")])
     ['1 Intro', '1.1 Goals', '1.2 Scope', '2 Design', '2.1 Detail', '2.2 API']

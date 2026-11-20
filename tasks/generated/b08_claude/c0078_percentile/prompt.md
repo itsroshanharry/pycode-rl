@@ -9,7 +9,7 @@ def percentile(values: list[int], p: str, method: str) -> str:
       "higher":   x[hi]
       "nearest":  x[round(h)], where an exact .5 rounds to the EVEN index
       "midpoint": (x[lo] + x[hi]) / 2
-    `p` is a string: 0-100 with optional decimals ("50", "2.5", "99.99",
+    `p` is a string of ASCII digits: 0-100 with optional decimals ("50", "2.5", "99.99",
     "100.0"); it must not exceed 100.
     Compute exactly (no floats) and return the result rounded to 6 decimal
     places (ties to even) as a string with exactly 6 decimals; never "-0.000000".

@@ -1,0 +1,42 @@
+{
+ "rollouts": 80,
+ "tasks": 20,
+ "mean_reward": 0.65,
+ "pass_count_histogram": {
+  "0": 6,
+  "2": 2,
+  "4": 12
+ },
+ "per_task": {
+  "pc-c-0009": "4/4",
+  "pc-c-0011": "4/4",
+  "pc-c-0012": "4/4",
+  "pc-c-0014": "4/4",
+  "pc-c-0020": "4/4",
+  "pc-c-0021": "4/4",
+  "pc-c-0022": "4/4",
+  "pc-c-0028": "2/4",
+  "pc-c-0031": "2/4",
+  "pc-c-0034": "4/4",
+  "pc-c-0035": "0/4",
+  "pc-c-0036": "0/4",
+  "pc-c-0037": "0/4",
+  "pc-c-0052": "0/4",
+  "pc-c-0061": "0/4",
+  "pc-c-0067": "4/4",
+  "pc-c-0069": "0/4",
+  "pc-c-0070": "4/4",
+  "pc-c-0074": "4/4",
+  "pc-c-0077": "4/4"
+ },
+ "failure_modes": {
+  "pass": 52,
+  "wrong_answer": 17,
+  "load_error": 7,
+  "no_code_truncated": 4
+ },
+ "truncated_rate": 0.138,
+ "mean_output_tokens": 5025,
+ "mean_reasoning_tokens": 4216,
+ "token_cost_usd_estimate": 0.2821
+}
