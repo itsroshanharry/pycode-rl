@@ -1,0 +1,1 @@
+{"id": "pc-c-0076", "entry_point": "retry_delays", "topic": "backoff schedules", "difficulty_hint": "easy", "seed_id": "s059", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v2", "levers": ["spec-trap"]}
