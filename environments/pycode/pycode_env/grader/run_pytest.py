@@ -55,7 +55,7 @@ import tempfile
 import time
 import types
 
-GRADER_VERSION = "2"
+GRADER_VERSION = "3"
 NOBODY = 65534
 MAX_MSG_BYTES = 8 * 1024 * 1024
 MAX_DEPTH = 200
@@ -184,7 +184,17 @@ def _worker(conn, source: str, mem_mb: int) -> None:  # pragma: no cover - runs 
             data = json.dumps({"s": "err", "t": "MemoryError", "m": "reply too large"}).encode()
         conn.send_bytes(data)
 
-    ns: dict = {"__name__": "solution", "__builtins__": builtins}
+    # A real module registered in this (untrusted) worker's sys.modules, not a bare dict:
+    # valid code that looks itself up there (dataclasses with string annotations,
+    # typing.get_type_hints, singledispatch on annotations, enum pickling) otherwise
+    # fails to load. Found in the 0.2.0 leaderboard (grader v2 -> v3).
+    import types
+
+    module = types.ModuleType("solution")
+    module.__file__ = "solution.py"
+    sys.modules["solution"] = module
+    ns: dict = module.__dict__
+    ns["__builtins__"] = builtins
     load_error = None
     try:
         exec(compile(source, "solution.py", "exec"), ns)
