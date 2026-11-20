@@ -27,6 +27,7 @@ import json
 import math
 import os
 import random
+import re
 import shutil
 import subprocess
 from concurrent.futures import ThreadPoolExecutor
@@ -57,6 +58,20 @@ def _rows_file(model: str) -> Path:
     return OUT / f"rollouts_{_short(model)}.jsonl.gz"
 
 
+_FENCE = re.compile(r"```[^\n`]*\n(.*?)```", re.DOTALL)  # same rule as the taskset's extract_code
+
+
+def _reply(doc: dict) -> str:
+    for node in reversed(doc.get("nodes") or []):
+        msg = node.get("message") or node
+        if isinstance(msg, dict) and msg.get("role") == "assistant":
+            content = msg.get("content") or ""
+            if isinstance(content, list):
+                content = " ".join(p.get("text", "") for p in content if isinstance(p, dict))
+            return content
+    return ""
+
+
 def _compact(doc: dict, model: str, eval_id: str, meta: dict) -> dict:
     call = (doc.get("calls") or [{}])[-1]
     usage = call.get("usage") or {}
@@ -71,6 +86,8 @@ def _compact(doc: dict, model: str, eval_id: str, meta: dict) -> dict:
         "reward": reward, "frac_tests_passed": m.get("frac_tests_passed"),
         "no_code": m.get("no_code"), "load_error": m.get("load_error"), "call_timeouts": m.get("call_timeouts"),
         "finish_reason": call.get("finish_reason"), "truncated": call.get("finish_reason") == "length",
+        # a reply with no code block (e.g. a refusal) is graded as text, so it shows up as a load error
+        "has_code_block": bool(_FENCE.search(_reply(doc))), "reply_chars": len(_reply(doc)),
         "prompt_tokens": usage.get("prompt_tokens"), "completion_tokens": usage.get("completion_tokens"),
         "reasoning_tokens": usage.get("reasoning_tokens"), "cost": usage.get("cost"),
         "ok": doc.get("ok"), "is_timeout": doc.get("is_timeout"),
@@ -158,8 +175,8 @@ def failure_mode(r: dict) -> str:
         return "pass"
     if r["truncated"]:
         return "truncated"
-    if r["no_code"]:
-        return "no_code"
+    if r["no_code"] or r.get("has_code_block") is False:
+        return "no_code"  # empty reply, or prose only (e.g. a refusal)
     if r["load_error"]:
         return "load_error"
     if r["call_timeouts"]:
