@@ -1,0 +1,1 @@
+{"id": "pc-c-0086", "entry_point": "word_frequency", "topic": "tokenization", "difficulty_hint": "medium", "seed_id": "s100", "generator": "claude-code (claude-opus-5-5)", "prompt_version": "generate_v3", "levers": ["state-machine", "layered-rules", "spec-trap"]}
