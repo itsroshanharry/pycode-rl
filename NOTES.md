@@ -6,7 +6,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ## CURRENT STATUS (read this first in a new session), updated 2026-11-20
 
-**Where we are:** dataset built and audited; now freezing, publishing 0.2.0, then the leaderboard.
+**Where we are:** dataset frozen; leaderboard wave 1 done (0.2.0), grader v3 pushed as 0.2.1, waves 2-3 running on it.
 - **Dataset:** 75 tasks (38 train / 37 test), sha256 `119ed403e4977450209a44a3c2d99e7661fd0c17611c9525b7e8f1d182fc2680`.
   - Funnel: 100 written -> 100 validated -> 81 after the difficulty filter -> 75 after contamination -> 75 after the audit.
   - Audit: all 75 reviewed (DeepSeek 31 + gpt-oss-120b 44) plus a user spot-check of 8. See the Stage 6 entry below.
@@ -36,6 +36,33 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 - the SWE-env reward-hack audit is out of scope.
 
 **How to run things:** see CLAUDE.md section 3 (Codespace workflow), section 7 (gate order) and section 9 (hosted command).
+
+## 2026-11-20: Leaderboard wave 1 + grader v2 bug found and fixed (0.2.1)
+
+- **Wave 1 on 0.2.0** (all 75 tasks x 4, temperature 1.0, reasoning low, max_tokens 16384, -c 8). Wallet $7.52 -> $6.16, so **$1.37**: model fees $1.01, the rest sandboxes. Analysis with `pipeline/07_leaderboard.py`.
+
+  | Model | pass@1 (task-bootstrap 95% CI) | pass@4 | pass^4 | truncated | model $/task |
+  |---|---|---|---|---|---|
+  | DeepSeek V4.1 Flash | 0.940 (0.90-0.97) | 0.987 | 0.853 | 2.0% | 0.0119 |
+  | gpt-oss-20b (filter model) | 0.380 (0.30-0.46) | 0.680 | 0.107 | 0% | 0.0015 |
+
+  - **Paired:** DeepSeek is +0.56 (CI 0.48-0.64); it is better on 66 tasks and worse on 1.
+  - **Filter retest:** gpt-oss-20b, filter r8 vs leaderboard r4 on the same 75 tasks: 0.342 vs 0.380, **Pearson r = 0.84**. The difficulty labels are stable.
+  - **Hard tasks** (0/8 in the filter, solved by triage): DeepSeek 0.88, gpt-oss-20b 0.05. Hard but solvable.
+  - **DeepSeek failures:** 18 of 300 (12 wrong, 6 truncated). Most of the wrong answers trip stated ASCII traps (full-width digits, dotted capital I).
+  - **gpt-oss-20b failures:** mostly wrong answers that still pass 86% of tests on average. One **refusal** on a benign unit-conversion task (c0083); 07_leaderboard now classifies prose-only replies as no_code.
+- **Grader v2 bug (harness, not model):**
+  - **Cause:** the worker exec'd the candidate in a bare dict. Valid code that looks its module up in sys.modules (a dataclass with string annotations, get_type_hints, singledispatch) failed to load with "'NoneType' object has no attribute '__dict__'".
+  - **How it was found:** checking gpt-oss-20b's load errors one by one (c0001).
+  - **Fix (grader v3):** a real `types.ModuleType("solution")` registered in the worker's sys.modules.
+  - **Regression test:** fixture `legit/module_introspection.py`, which fails on v2 (reproduced) and passes on v3. Grader suite 28/28 (19 cheats still score 0).
+  - **Impact, measured:** 1 of 600 wave-1 attempts (gpt-oss-20b c0001), 0 of DeepSeek's, 0 in the difficulty-filter traces.
+- **Decision (user, option 1):**
+  - pushed **0.2.1** (grader v3, same dataset 119ed403, wheel 4721718d) before wave 2; smoke test `qlneer6pw368k6qfsavvcmxd` traces show grader 3;
+  - waves 2-3 run on 0.2.1;
+  - the one affected wave-1 attempt was re-graded with v3 through `pipeline/07b_regrade.py`. That script puts the stored code in as the "reference" and runs `vf-validate --only-gold` in a Prime sandbox. Result: **still fails, 0 -> 0, so no score changes**;
+  - therefore every leaderboard score reflects grader v3. (Limitation: vf-validate reports only valid/invalid, not the tests passed.)
+- The README draft for the final push is in `drafts/README_hub_draft.md`. The Hub README for 0.2.1 is still the 0.2.0 text.
 
 ## 2026-11-20: Stage 6 audit -- 75 tasks (38 train / 37 test)
 

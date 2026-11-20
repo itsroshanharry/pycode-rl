@@ -7,6 +7,10 @@
   "band_filter": 52,
   "band_hard": 23
  },
+ "regraded_v3": {
+  "attempts": 1,
+  "reward_changes": []
+ },
  "by_subset": {
   "all": {
    "ranking": [

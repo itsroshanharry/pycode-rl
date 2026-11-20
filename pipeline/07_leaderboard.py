@@ -253,6 +253,17 @@ def cmd_analyze() -> None:
         with gzip.open(f, "rt", encoding="utf-8") as fh:
             rows = [json.loads(l) for l in fh if l.strip()]
         models[rows[0]["model"]] = rows
+    # attempts re-graded with grader v3 (pipeline/07b_regrade.py) override the hosted v2 reward
+    regrade_file = OUT / "regrade.json"
+    regraded = json.loads(regrade_file.read_text(encoding="utf-8"))["attempts"] if regrade_file.exists() else {}
+    changes = []
+    for rows in models.values():
+        for r in rows:
+            if r["trace_id"] in regraded:
+                new = regraded[r["trace_id"]]["v3_reward"]
+                if new != r["reward"]:
+                    changes.append({"trace_id": r["trace_id"], "task_id": r["task_id"], "from": r["reward"], "to": new})
+                r["reward"], r["regraded_v3"] = new, True
     subsets = {
         "all": sorted(meta),
         "test": sorted(t for t in meta if meta[t]["split"] == "test"),
@@ -260,7 +271,8 @@ def cmd_analyze() -> None:
         "band_filter": sorted(t for t in meta if meta[t]["band"] == "filter"),
         "band_hard": sorted(t for t in meta if (meta[t]["band"] or "").startswith("hard")),
     }
-    summary: dict = {"dataset_tasks": len(meta), "subsets": {k: len(v) for k, v in subsets.items()}, "by_subset": {}}
+    summary: dict = {"dataset_tasks": len(meta), "subsets": {k: len(v) for k, v in subsets.items()},
+                     "regraded_v3": {"attempts": len(regraded), "reward_changes": changes}, "by_subset": {}}
     for name, ids in subsets.items():
         rng = random.Random(SEED)
         stats = {m: _model_stats(rows, ids, rng) for m, rows in models.items()}

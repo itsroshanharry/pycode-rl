@@ -1,10 +1,49 @@
 {
  "dataset_sha256": "119ed403e4977450209a44a3c2d99e7661fd0c17611c9525b7e8f1d182fc2680",
- "package": "itsroshanharry/pycode-env@0.2.0",
- "settings": {"tasks": "all 75 (split all)", "rollouts": 4, "temperature": 1.0, "reasoning_effort": "low", "max_tokens": 16384, "concurrency": 8, "harness": "null"},
- "runs": {
-  "deepseek/deepseek-v4.1-flash-1017": {"eval_id": "sejc1ih370l7bvm63dlm8wrh", "wave": 1},
-  "openai/gpt-oss-20b": {"eval_id": "d8jyud550zvxewm0bwmvv8ae", "wave": 1}
+ "package": "itsroshanharry/pycode-env 0.2.0 (wave 1) / 0.2.1 (waves 2-3); same dataset; wave-1 attempts possibly hit by the grader-v2 bug re-graded with v3 (pipeline/07b_regrade.py)",
+ "settings": {
+  "tasks": "all 75 (split all)",
+  "rollouts": 4,
+  "temperature": 1.0,
+  "reasoning_effort": "low",
+  "max_tokens": 16384,
+  "concurrency": 8,
+  "harness": "null"
  },
- "smoke_test": {"eval_id": "nmzewnbjsxv66ytoe5xz43df", "model": "openai/gpt-oss-20b", "tasks": 2}
+ "runs": {
+  "deepseek/deepseek-v4.1-flash-1017": {
+   "eval_id": "sejc1ih370l7bvm63dlm8wrh",
+   "wave": 1,
+   "package": "0.2.0 (grader v2)"
+  },
+  "openai/gpt-oss-20b": {
+   "eval_id": "d8jyud550zvxewm0bwmvv8ae",
+   "wave": 1,
+   "package": "0.2.0 (grader v2)"
+  },
+  "google/gemma-4-31b-it": {
+   "eval_id": "u8ibo4fn19zn1n6901ehgwrb",
+   "wave": 2,
+   "package": "0.2.1 (grader v3)"
+  },
+  "openai/gpt-oss-120b": {
+   "eval_id": "skz9xmsfrtskb92xtlje97n4",
+   "wave": 2,
+   "package": "0.2.1 (grader v3)"
+  }
+ },
+ "smoke_test": {
+  "eval_id": "nmzewnbjsxv66ytoe5xz43df",
+  "model": "openai/gpt-oss-20b",
+  "tasks": 2
+ },
+ "smoke_test_0.2.1": {
+  "eval_id": "qlneer6pw368k6qfsavvcmxd",
+  "grader": "3"
+ },
+ "wallet": {
+  "before_wave1": 7.5228,
+  "after_wave1": 6.1574,
+  "before_wave2": 6.1335
+ }
 }

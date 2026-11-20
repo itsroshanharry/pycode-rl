@@ -1,0 +1,11 @@
+{
+ "grader": "3",
+ "attempts": {
+  "38344aee613d498ca1a4ef6f59eb96c1": {
+   "task_id": "pc-c-0001",
+   "model": "openai/gpt-oss-20b",
+   "v3_reward": 0.0,
+   "v3_reason": "invalid"
+  }
+ }
+}
