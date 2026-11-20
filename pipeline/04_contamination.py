@@ -5,7 +5,8 @@ A task that is a reworded HumanEval/MBPP/LiveCodeBench problem (or a well-known 
 problem) measures memorization, not ability.
 
 Steps (run in the Codespace: LiveCodeBench is about 4.5 GB, streamed and reduced to its
-problem text; HumanEval/MBPP are parquet, so use `uv run --no-project --with pyarrow`):
+problem text; HumanEval/MBPP come from their authors' original JSONL releases on GitHub,
+pinned by commit, so no extra packages are needed):
   fetch    -> data/external/corpus.jsonl (pinned revisions; git-ignored, not redistributed)
   lexical  -> data/reports/contamination/lexical.json
               normalized-token 5-gram Jaccard (prompt vs problem text, reference vs solution
@@ -21,7 +22,6 @@ Thresholds: drop if 5-gram Jaccard >= 0.5, a common run >= 30 tokens, or a judge
 that survives manual review (--overrule lists judge flags rejected after reading them).
 """
 import argparse
-import io
 import json
 import os
 import re
@@ -34,12 +34,13 @@ CORPUS = ROOT / "data" / "external" / "corpus.jsonl"
 REPORTS = ROOT / "data" / "reports" / "contamination"
 TASKS = ROOT / "data" / "filtered.jsonl"
 HF = "https://huggingface.co/datasets/{repo}/resolve/{rev}/{path}"
+GH = "https://raw.githubusercontent.com/{repo}/{rev}/{path}"
+# HumanEval and MBPP: the authors' original releases (same data as openai/openai_humaneval and
+# google-research-datasets/mbpp on Hugging Face), pinned by git commit.
 SOURCES = {
-    "humaneval": ("openai/openai_humaneval", "7dce6050a7d6d172f3cc5c32aa97f52fa1a2e544",
-                  ["openai_humaneval/test-00000-of-00001.parquet"]),
-    "mbpp": ("google-research-datasets/mbpp", "4bb6404fdc6cacfda99d4ac4205087b89d32030c",
-             [f"full/{s}-00000-of-00001.parquet" for s in ("train", "validation", "test", "prompt")]),
-    "livecodebench": ("livecodebench/code_generation_lite", "0fe84c3912ea0c4d4a78037083943e8f0c4dd505",
+    "humaneval": (GH, "openai/human-eval", "b9453e8f1865df0a0057a1383767caa400acfbcf", ["data/HumanEval.jsonl.gz"]),
+    "mbpp": (GH, "google-research/google-research", "f82046ba5aabbbb427dbfd38a254d26bff08b533", ["mbpp/mbpp.jsonl"]),
+    "livecodebench": (HF, "livecodebench/code_generation_lite", "0fe84c3912ea0c4d4a78037083943e8f0c4dd505",
                       ["test.jsonl"] + [f"test{i}.jsonl" for i in range(2, 7)]),
 }
 JUDGE_MODEL = "openai/gpt-oss-20b"
