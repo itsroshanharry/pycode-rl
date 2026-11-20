@@ -43,6 +43,32 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
+## 2026-11-20: Stage 4 contamination + Stage 5 split -- 76 tasks, 38 train / 38 test
+
+- **Corpora** (`pipeline/04_contamination.py fetch`, run in the Codespace; `data/external/` is git-ignored, revisions in `data/reports/contamination/sources.json`):
+  - HumanEval 164 (openai/human-eval @ b9453e8);
+  - MBPP 974 (google-research @ f82046b), both the authors' JSONL. `uv` could not reach PyPI from the Codespace for pyarrow, so the parquet copies were avoided;
+  - LiveCodeBench code_generation_lite all 6 releases, 1055 problems (HF @ 0fe84c3, 4.5 GB streamed, problem text only).
+  - Total 2193.
+- **(a) Lexical, all 81 x 2193 pairs:** max 5-gram Jaccard prompt **0.011**, code **0.073** (threshold 0.5); **no shared 13-gram at all** (longest common run 0). Clean.
+- **(b) LLM judge** (gpt-oss-20b, temperature 0, task + top-3 similar benchmark problems; about $0.035): **0 "same problem reworded"**; **6 "well-known problem" flags**, reviewed by hand:
+  - dropped:
+    - pc-hw-004 lru_trace (= LeetCode 146 semantics; my own hand-written task);
+    - pc-hw-006 min_bracket_insertions (classic interval-DP "Brackets"; the judge cited the wrong LeetCode number);
+    - pc-c-0026 assign_rooms (Meeting Rooms pattern);
+    - pc-c-0057 point_in_polygon (standard problem; the judge was not clearly wrong);
+    - pc-c-0059 checkouts (actually Project Euler **109** Darts; the judge said 170).
+  - overruled: **pc-c-0040** utc_order (the judge invented "Sort the Timestamps (LeetCode)"; RFC 3339 is a real-world rule). Policy: overrule only clear judge errors.
+  - REPORT point: the judge's citations were often wrong (2 wrong problem numbers, 1 invented) even when its yes/no was right, so judge reasons need human review.
+- **Split** (`pipeline/05_split_export.py`, seed 2026): **76 tasks -> 38 train / 38 test.**
+  - 26 "seen" tasks (pilot set, b09/v3 check, c0004, c0036) forced to train; the unseen pool stratified by band and prompt version.
+  - Test bands: hard 11, high 10, low 9, mid 8. Train bands: hard 12, high 8, low 8, mid 10.
+  - **Limitation:** the test split has **no v3 tasks** (all 10 v3 tasks were pilot-checked, so they are in train).
+  - `dataset.jsonl` sha256 **b5159e5f16ad4d88cc46e7f802a5d206064f70c83826392a44a8e872d0623be0**, written to data/ and the package (not pushed yet).
+- **Funnel so far:** 100 (90 generated + 10 hand-written) -> 81 after the difficulty filter -> 76 after contamination -> 38/38.
+- Spend about $1.94; wallet $8.06.
+- **Next:** stage 6 audit (40 tasks; must not be self-graded), full vf-validate on the final dataset, push 0.2.0, then the leaderboard at a 16k cap.
+
 ## 2026-11-20: Stage 3 difficulty filter done -- 81 tasks kept
 
 - **Filter:** gpt-oss-20b, 100 tasks (10 hand-written + 90 candidates) x 8, temperature 1.0, reasoning low, 8192 cap; 800/800 ok, **0% truncated**, about $0.37. Histogram of pass counts 0..8: 25, 9, 7, 6, 7, 7, 12, 8, 19.
