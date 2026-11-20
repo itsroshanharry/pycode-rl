@@ -9,6 +9,7 @@ from solution import parse_csv_line
     [
         ('a,"b,c",d', ",", ["a", "b,c", "d"]),
         ('"say ""hi""";;x', ";", ['say "hi"', "", "x"]),
+        ('"say ""hi"" now";;x', ";", ['say "hi" now', "", "x"]),
         ("", ",", [""]),
         ("a", ",", ["a"]),
         ("a,", ",", ["a", ""]),

@@ -20,7 +20,7 @@ def parse_csv_line(line: str, delimiter: str = ",") -> list[str]:
 
     >>> parse_csv_line('a,"b,c",d')
     ['a', 'b,c', 'd']
-    >>> parse_csv_line('"say ""hi""";;x', ";")
-    ['say "hi"', '', 'x']
+    >>> parse_csv_line('"say ""hi"" now";;x', ";")
+    ['say "hi" now', '', 'x']
     """
 ```

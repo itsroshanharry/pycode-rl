@@ -29,6 +29,13 @@ def lint(task_dir: str) -> list[str]:
         hits.append("non-ASCII in tests, spec never says ASCII")
     if BOOL_INPUT.search(tests) and "bool" not in prompt:
         hits.append("True used in tests, spec never mentions bool")
+    # A triple quote inside the docstring breaks any solution that copies the docstring
+    # (found 2026-11-20: c0004's example '"say ""hi""";;x' gave DeepSeek and gpt-oss SyntaxErrors).
+    raw = open(os.path.join(task_dir, "prompt.md"), encoding="utf-8").read()
+    if raw.count('"""') >= 2:
+        body = raw.split('"""', 1)[1].rsplit('"""', 1)[0]
+        if '"""' in body or "'''" in body:
+            hits.append("triple quote inside the docstring (copied docstrings will not parse)")
     return hits
 
 
