@@ -40,5 +40,5 @@
  "truncated_rate": 0.0,
  "mean_output_tokens": 918,
  "mean_reasoning_tokens": 218,
- "token_cost_usd_estimate": 0.0518
+ "token_cost_usd_estimate": 0.0283
 }

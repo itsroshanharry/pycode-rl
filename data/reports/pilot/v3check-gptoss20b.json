@@ -1,0 +1,33 @@
+{
+ "rollouts": 40,
+ "tasks": 10,
+ "mean_reward": 0.5,
+ "pass_count_histogram": {
+  "0": 3,
+  "1": 1,
+  "2": 1,
+  "3": 3,
+  "4": 2
+ },
+ "per_task": {
+  "pc-c-0081": "3/4",
+  "pc-c-0082": "0/4",
+  "pc-c-0083": "0/4",
+  "pc-c-0084": "3/4",
+  "pc-c-0085": "2/4",
+  "pc-c-0086": "4/4",
+  "pc-c-0087": "4/4",
+  "pc-c-0088": "0/4",
+  "pc-c-0089": "1/4",
+  "pc-c-0090": "3/4"
+ },
+ "failure_modes": {
+  "pass": 20,
+  "wrong_answer": 19,
+  "load_error": 1
+ },
+ "truncated_rate": 0.0,
+ "mean_output_tokens": 1134,
+ "mean_reasoning_tokens": 242,
+ "token_cost_usd_estimate": 0.0174
+}

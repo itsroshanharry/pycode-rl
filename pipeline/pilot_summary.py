@@ -1,19 +1,23 @@
 """Summarize a vf-run traces.jsonl (pilot / difficulty filter): per-task pass counts,
 truncation, failure modes, tokens and estimated cost. Data only; safe on Windows.
 Usage: uv run python pipeline/pilot_summary.py <traces.jsonl> [--out data/reports/pilot/<name>.json]
+       [--price-in 0.04368 --price-cached 0.0024 --price-out 0.70]  ($/M tokens of the model that ran)
 """
 import argparse
 import collections
 import json
 from pathlib import Path
 
-PRICE_IN, PRICE_CACHED, PRICE_OUT = 0.04368, 0.0024, 0.70  # $/M tokens, deepseek-v4.1-flash-1017 (2026-11-20)
+PRICE_IN, PRICE_CACHED, PRICE_OUT = 0.04368, 0.0024, 0.70  # $/M tokens, default deepseek-v4.1-flash-1017 (2026-11-20); override with --price
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("traces")
     ap.add_argument("--out")
+    ap.add_argument("--price-in", type=float, default=PRICE_IN)
+    ap.add_argument("--price-cached", type=float, default=PRICE_CACHED)
+    ap.add_argument("--price-out", type=float, default=PRICE_OUT)
     args = ap.parse_args()
     rows = [json.loads(line) for line in Path(args.traces).read_text(encoding="utf-8").splitlines() if line.strip()]
     per_task = collections.defaultdict(list)
@@ -47,7 +51,7 @@ def main() -> None:
             mode = "wrong_answer"
         modes[mode] += 1
     hist = collections.Counter(int(sum(v)) for v in per_task.values())
-    cost = (in_tok * PRICE_IN + cached_tok * PRICE_CACHED + sum(out_tok) * PRICE_OUT) / 1e6
+    cost = (in_tok * args.price_in + cached_tok * args.price_cached + sum(out_tok) * args.price_out) / 1e6
     summary = {
         "rollouts": len(rows),
         "tasks": len(per_task),

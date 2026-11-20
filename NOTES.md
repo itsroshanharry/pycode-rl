@@ -16,8 +16,8 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
   - **Batch b02** (c0011-c0020, prompt v1): all gates passed, `vf-validate` 20/20. The automatic mutants exposed 3 real test gaps (c0012, c0019), which are fixed.
   - **Grader fixed** (UnicodeDecodeError false negative). The Hub package 0.1.0 is outdated, so re-push before the next hosted run.
   - **Prompt `generate_v2.md`** (difficulty levers twist/combo/efficiency/spec-trap) is ready; **b03 onward use v2.**
-  - **b03-b08** (c0021-c0080, v2): all gates passed. **80 candidates total, 80/80 validated** (`data/reports/validated_hashes.json`, 2026-11-20).
-- **Wallet:** $9.932 (about $0.07 spent). The user has not set a dashboard usage limit yet.
+  - **b03-b08** (c0021-c0080, v2) and **b09** (c0081-c0090, first v3 batch): all gates passed. **90 candidates total, 90/90 validated** (`data/reports/validated_hashes.json`, 2026-11-20).
+- **Wallet:** $8.780 (about $1.22 spent: pilots and probes about $1.15). The user has not set a dashboard usage limit yet.
 
 **Agreed decisions (don't relitigate):**
 - function-level tasks (no repo pivot);
@@ -30,7 +30,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 **Next steps, in order:**
 1. ~~Review the 02b results on b01~~ done: 0 flagged.
 2. ~~Re-push the Hub package~~ **done:** `itsroshanharry/pycode-env` **0.1.1** (PRIVATE, wheel sha256 `8ea95510...`). Hosted smoke run `tajnohon1b6p3cf6hhmksirk`: 2/2 reward 1.0, 0% error/truncation; the trace shows `grader: "2"`, `isolated: true`, `temperature: 0.0`. Wallet $9.98.
-3. **Keep writing Claude batches b04, b05, ...** (user decision 2026-11-19: as many as possible). Each batch: 10 tasks with **generate_v2**, new seeds; hard efficiency tasks get `slow.py`; commit after every few tasks; then assemble -> 02a -> 02b (inspect survivors) -> vf-validate. **b01-b08 done: 80 candidates, all valid.** Next batch b09 starts at c0081. vf-validate now runs only on pending rows (`pipeline/02c_pending.py`, CLAUDE.md section 7). Seeds used so far: s034, s042, s045, s046, s049, s059, s067, s076, s091, s102, s027, s029, s036, s038, s039, s044, s048, s057, s084, s096, s017, s018, s030, s032, s047, s063, s074, s079, s087, s090, s006, s009, s037, s050, s054, s070, s072, s083, s086, s098, s002, s004, s007, s008, s013, s014, s015, s022, s023, s024, s001, s003, s005, s011, s012, s016, s019, s020, s021, s025, s026, s031, s033, s035, s040, s041, s043, s051, s052, s055, s056, s066, s071, s078, s081, s082, s088, s092, s093, s094.
+3. **Keep writing Claude batches b04, b05, ...** (user decision 2026-11-19: as many as possible). Each batch: 10 tasks with **generate_v2**, new seeds; hard efficiency tasks get `slow.py`; commit after every few tasks; then assemble -> 02a -> 02b (inspect survivors) -> vf-validate. **b01-b09 done: 90 candidates, all valid.** Next batch b10 starts at c0091. vf-validate now runs only on pending rows (`pipeline/02c_pending.py`, CLAUDE.md section 7). Seeds used so far: s034, s042, s045, s046, s049, s059, s067, s076, s091, s102, s027, s029, s036, s038, s039, s044, s048, s057, s084, s096, s017, s018, s030, s032, s047, s063, s074, s079, s087, s090, s006, s009, s037, s050, s054, s070, s072, s083, s086, s098, s002, s004, s007, s008, s013, s014, s015, s022, s023, s024, s001, s003, s005, s011, s012, s016, s019, s020, s021, s025, s026, s031, s033, s035, s040, s041, s043, s051, s052, s055, s056, s066, s071, s078, s081, s082, s088, s092, s093, s094.
 4. Write `01b_generate_api.py` (cheap model not on the leaderboard, same template) for about 450 more candidates; run the same gates. Report pass rates per generator.
 5. Pilot (20 tasks x 4 rollouts) to measure $/rollout and truncation.
 6. Difficulty filter (-r 8, temperature 1.0, keep 1/8..7/8; 0/8 -> one stronger-model try, then manual). Ask first (> $1).
@@ -42,6 +42,27 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 **User preferences:** plain language, technical terms explained in brackets, concise answers. Ask before spending more than $1 or doing anything outward-facing.
 
 ---
+
+## 2026-11-20: Filter-model probes, gpt-oss-20b pilot, b09 (first v3 batch) and the v3 difficulty check
+
+- **Probes (2 tasks x 2, 8192 tokens; about $0.02):**
+  - `google/gemma-4-26b-a4b-it`: 4/4 truncated at 8192 (thinks even longer than Qwen). Ruled out.
+  - `openai/gpt-oss-20b`: about 1,000 output tokens, 0 truncation, genuine wrong answers (one timed out on c0069's large test).
+- **gpt-oss-20b pilot** (same 20 tasks x 4): mean 0.475, **0% truncated**, pass-count histogram 0:5, 1:4, 2:4, 3:2, 4:5, so **10/20 tasks in the mixed band** (DeepSeek 2/20, Gemma 2/20); about $0.04 for 80 rollouts (about $0.0005 each with sandbox). **Chosen as the difficulty-filter model:**
+  - cheap;
+  - no truncation;
+  - mid-strength, so it spreads the tasks;
+  - not on the leaderboard (disclose the family overlap if gpt-oss-120b is used as a baseline).
+- **b09** (c0081-c0090; seeds s053, s089, s080, s060, s069, s100, s101, s077, s095, s058), written with generate_v3:
+  - 3 hard: rota_hours (efficiency over a 10^12-day range), dedupe_contacts (no efficiency: argument budget), convert_quantity (no efficiency: single expression);
+  - 7 medium.
+  - All expected values came from independent oracles/brute force. That still caught 2 docstring examples I had hand-written (c0081 ana 86 -> 70; c0090), which shows the v3 rule is needed.
+  - Gates: 02a 90/90; 02b mean 0.939, c0083 flagged at 0.725 (6 survivors in a dead table I left in the reference; plus 2 real gaps), fixed to 0.975; real gaps in c0085 (box checks below row 0 never reached by random grids) and c0090 (validation with no exams). **vf-validate 10/10.** Running tally of real gaps: **20**.
+- **v3 difficulty check** (b09 10 tasks x 4, 8192 tokens; about $0.10):
+  - **DeepSeek mean 0.90, unchanged from v1/v2.** 9/10 tasks 4/4. The only failure (c0083 0/4) is 4 truncations, not wrong answers.
+  - gpt-oss-20b mean 0.50 (v1/v2 0.475), 5/10 tasks in the mixed band, 19 genuine wrong answers.
+  - **Honest negative result:** v3's levers (more rules, stated precedence, exactness, explicit traps) did not make tasks harder for a strong reasoning model. When every rule is stated, a model that thinks for ~3k tokens follows them. Single-function, fully specified tasks appear to saturate for this tier; separation lives at mid-tier models. That is a REPORT.md finding, not a failure to hide. v3 is still kept for quality (stronger tests, explicit specs, oracle-computed values).
+- `pipeline/pilot_summary.py` gained `--price-in/--price-cached/--price-out` (it had used DeepSeek prices for every model).
 
 ## 2026-11-20: 3-model pilot comparison + 4 spec defects found
 
