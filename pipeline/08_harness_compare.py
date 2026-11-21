@@ -70,6 +70,10 @@ def cmd_ingest(traces: str, model: str, harness: str) -> None:
                         "stop_condition": doc.get("stop_condition"),
                         **_tool_stats(doc),
                     })
+                    if harness == "bash":
+                        # the answer is the graded file, not the reply: a final "done" message without a
+                        # code block is not "no code" (only an empty graded file is, via the grade)
+                        row["has_code_block"] = None
                     rows.append(row)
     out = OUT / f"rollouts_{lb._short(model)}_{harness}.jsonl.gz"
     OUT.mkdir(parents=True, exist_ok=True)

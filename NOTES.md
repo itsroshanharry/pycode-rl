@@ -56,8 +56,18 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
   - Qwen 9B costs about $0.019 per bash attempt (12-15 turns, about 100k cached input tokens),
     about 4x gpt-oss, so a Qwen pairing would exceed the $7 cap.
   - gpt-oss models try the Codex `apply_patch` command first (harness mismatch).
-- **Proposed (awaiting the user's go-ahead):** bash comparison on gpt-oss-120b + gpt-oss-20b (same family; cons
-  recorded in REPORT), 20 tasks x 2 attempts, about $0.40.
+- **Decision (user, 2026-11-21):** gpt-oss-120b + Nemotron 3.5 Super (both about 120B MoE, two families).
+  - Nemotron probe: served, uses the tools, about $0.003 per bash attempt (cache $0.02/M), no `apply_patch`.
+  - Run locally with `vf-run` (`08_harness_compare.py launch/status`).
+  - **Mistake:** I chose local without telling the user that local runs leave no platform record. They wanted the
+    result on the leaderboard. Memory rule added: state where results will appear in every run proposal.
+- **Result (REPORT F9):**
+  - gpt-oss-120b: no tools 0.45 -> bash 0.30 (paired -0.15, CI -0.31 to +0.01). 7/40 attempts claimed to have
+    written /work/solution.py but never did; 26/40 tried `apply_patch` first.
+  - Nemotron: 0.725 -> 0.75 (+0.025, CI -0.15 to +0.18). Truncation dominates its failures in both modes.
+  - Cost $0.79 against the $0.57 estimate. Wallet $3.19, so spend $6.81 and $0.19 left under the $7 cap.
+- **Analysis bug caught:** bash attempts whose final reply had no code block were labelled `no_code` even when the
+  file was graded. Fixed in ingest (`has_code_block = None` for bash). Only an empty graded file counts as no code.
 - **Pitfall (again):** `pgrep -f`/`pkill -f` patterns match the ssh session's own command
   line. Wait on PIDs (`wait`) or use a pattern that cannot occur in the command itself.
 

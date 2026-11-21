@@ -172,3 +172,57 @@ Findings:
     value of tools. Measure it per attempt in the main run (apply_patch attempts, test runs).
 - gpt-oss-20b's 0/24 on c0014 was its own bug: the module referenced an undefined `Solution`
   (a LeetCode-style class habit), not a grading problem.
+
+## F9. Null vs bash harness (2026-11-21): tools did not help, and gpt-oss-120b got worse
+
+Setup:
+- The pre-registered 20 tasks (`data/reports/harness/selection.json`: random, seed 2026,
+  from the 53 tasks with filter pass rate <= 0.5).
+- 2 bash attempts per task: `--env.agent.harness.id bash --env.taskset.solution file`,
+  max 16 turns, isolated scoring.
+- Sampling as on the leaderboard.
+- No-tools baselines:
+  - gpt-oss-120b: its leaderboard attempts (4 per task);
+  - Nemotron 3.5 Super (not on the leaderboard): its own run (2 per task).
+- Local `vf-run` in the Codespace, so there is no platform record (see limitations). Cost
+  $0.79 (model fees $0.71). All 80 bash attempts were graded in a fresh sandbox; 0 infra errors.
+- Analysis: `pipeline/08_harness_compare.py`, `data/reports/harness/summary.json`.
+
+| Model (both about 120B MoE) | No tools pass@1 | Bash pass@1 | Paired diff (95% CI, tasks) | Tasks better / worse | Model $ per attempt (no tools -> bash) |
+|---|---|---|---|---|---|
+| gpt-oss-120b | 0.45 | **0.30** | -0.15 (-0.31 to +0.01) | 2 / 7 | 0.0011 -> 0.0053 (5x) |
+| Nemotron 3.5 Super | 0.725 | 0.75 | +0.025 (-0.15 to +0.18) | 5 / 3 | 0.0051 -> 0.0073 (1.4x) |
+
+Why:
+- **gpt-oss-120b: false completion claims plus a harness mismatch.**
+  - In 7 of 40 attempts (17.5%) it ran its solution inside a throwaway `python - <<'PY'`
+    script, never wrote `/work/solution.py`, and then replied "Implemented X in
+    /work/solution.py". That is a claim of success without the work. Those attempts score 0.
+  - 26 of 40 attempts first called the non-existent Codex `apply_patch` command (0.88 calls
+    per attempt), then recovered.
+  - Even when it delivered a file, it passed only 12 of 33 (0.36, against 0.45 without tools).
+  - Its tests were mostly the docstring examples, which do not reach the edge cases and spec
+    traps the hidden tests check. It also thought less per answer: about 640 output tokens per
+    turn, against about 1,240 in one no-tools reply.
+- **Nemotron: tools changed nothing.**
+  - Its failures are mostly truncation in both modes (6/40 no tools, 4/40 bash, at 16k tokens
+    per response). It thinks about 10k tokens per answer; `reasoning_effort` is not a listed
+    parameter for it and appears to be ignored.
+  - Leaving truncated attempts out, both modes are about 0.83-0.85.
+  - It ran its own code more (2.3 calls per attempt) and never tried `apply_patch`.
+- **Interpretation:**
+  - On fully specified single-function tasks, an act -> observe -> debug loop only helps if
+    the model writes tests for the spec's rules. Both models mostly re-checked the examples.
+  - For gpt-oss, harness fit (`apply_patch`) and agentic reliability (claiming to have saved
+    a file) cost more than the tools gave.
+  - Neither difference is statistically clear at 20 tasks x 2 attempts. gpt-oss-120b's CI
+    barely includes 0.
+
+Limitations:
+- 2 models, 20 tasks, 2 bash attempts.
+- Same sampling settings but a different delivery (file vs reply).
+- `max_turns` 16 (1 Nemotron attempt hit it).
+- These local runs have no platform record, unlike the hosted leaderboard runs.
+- Cost: estimated $0.57 from the probes, actual $0.79, because Nemotron's thinking per attempt
+  in the full run was longer than in the 2-task probe. Probes this small under-estimate
+  long-tail token use.

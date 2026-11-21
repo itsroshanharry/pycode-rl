@@ -1,0 +1,132 @@
+{
+ "tasks": [
+  "pc-c-0001",
+  "pc-c-0013",
+  "pc-c-0014",
+  "pc-c-0019",
+  "pc-c-0032",
+  "pc-c-0033",
+  "pc-c-0039",
+  "pc-c-0047",
+  "pc-c-0050",
+  "pc-c-0054",
+  "pc-c-0055",
+  "pc-c-0061",
+  "pc-c-0062",
+  "pc-c-0063",
+  "pc-c-0064",
+  "pc-c-0066",
+  "pc-c-0069",
+  "pc-c-0073",
+  "pc-c-0088",
+  "pc-hw-005"
+ ],
+ "models": {
+  "openai/gpt-oss-120b": {
+   "tasks_compared": 20,
+   "null_pass@1": 0.45,
+   "bash_pass@1": 0.3,
+   "diff_bash_minus_null": -0.15,
+   "diff_ci95_bootstrap_tasks": [
+    -0.312,
+    0.013
+   ],
+   "tasks_bash_better": 2,
+   "tasks_null_better": 7,
+   "failure_modes": {
+    "null": {
+     "pass": 36,
+     "wrong_answer": 43,
+     "load_error": 1
+    },
+    "bash": {
+     "pass": 12,
+     "wrong_answer": 19,
+     "call_timeout": 2,
+     "no_code": 7
+    }
+   },
+   "bash_solution_source": {
+    "file": 26,
+    "none": 7,
+    "reply_fallback": 7
+   },
+   "bash_all_graded_in_fresh_sandbox": true,
+   "bash_mean_turns": 4.0,
+   "mean_prompt_tokens": {
+    "null": 94,
+    "bash": 2549
+   },
+   "mean_completion_tokens": {
+    "null": 1241,
+    "bash": 2556
+   },
+   "model_cost_per_attempt": {
+    "null": 0.00108,
+    "bash": 0.00533
+   },
+   "bash_truncated_rate": 0.0,
+   "null_baseline": "data\\reports\\leaderboard\\rollouts_gpt-oss-120b.jsonl.gz",
+   "null_attempts": 80,
+   "bash_attempts": 40,
+   "bash_tool_fit": {
+    "tool_calls": 3.05,
+    "apply_patch_calls": 0.88,
+    "ran_python_calls": 1.27
+   },
+   "bash_attempts_with_apply_patch": 26
+  },
+  "nvidia/nemotron-3.5-super-vl": {
+   "tasks_compared": 20,
+   "null_pass@1": 0.725,
+   "bash_pass@1": 0.75,
+   "diff_bash_minus_null": 0.025,
+   "diff_ci95_bootstrap_tasks": [
+    -0.15,
+    0.175
+   ],
+   "tasks_bash_better": 5,
+   "tasks_null_better": 3,
+   "failure_modes": {
+    "null": {
+     "pass": 29,
+     "truncated": 6,
+     "wrong_answer": 5
+    },
+    "bash": {
+     "pass": 30,
+     "truncated": 4,
+     "wrong_answer": 6
+    }
+   },
+   "bash_solution_source": {
+    "file": 36,
+    "none": 4
+   },
+   "bash_all_graded_in_fresh_sandbox": true,
+   "bash_mean_turns": 4.8,
+   "mean_prompt_tokens": {
+    "null": 236,
+    "bash": 9821
+   },
+   "mean_completion_tokens": {
+    "null": 10059,
+    "bash": 10305
+   },
+   "model_cost_per_attempt": {
+    "null": 0.00507,
+    "bash": 0.00727
+   },
+   "bash_truncated_rate": 0.1,
+   "null_baseline": "data\\reports\\harness\\rollouts_nemotron-3.5-super-vl_null.jsonl.gz",
+   "null_attempts": 40,
+   "bash_attempts": 40,
+   "bash_tool_fit": {
+    "tool_calls": 3.92,
+    "apply_patch_calls": 0.0,
+    "ran_python_calls": 2.27
+   },
+   "bash_attempts_with_apply_patch": 0
+  }
+ }
+}
