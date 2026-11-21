@@ -7,6 +7,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 Every entry in this log, newest first (generated from the headings; entries are unchanged).
 
 - [CURRENT STATUS (read this first in a new session), updated 2026-11-21](#current-status-read-this-first-in-a-new-session-updated-2026-11-21)
+- [2026-11-21: MIT license; upstream contribution candidates (nothing opened)](#2026-11-21-mit-license-upstream-contribution-candidates-nothing-opened)
 - [2026-11-21: REPORT.md and NOTES.md structured (additions only)](#2026-11-21-reportmd-and-notesmd-structured-additions-only)
 - [2026-11-21: 0.2.4: README attribution and per-stage methods](#2026-11-21-024-readme-attribution-and-per-stage-methods)
 - [2026-11-21: Hosted bash smoke test failed on 0.2.2 (the guard caught it); fixed in 0.2.3](#2026-11-21-hosted-bash-smoke-test-failed-on-022-the-guard-caught-it-fixed-in-023)
@@ -92,6 +93,36 @@ Every entry in this log, newest first (generated from the headings; entries are 
 - the SWE-env reward-hack audit is out of scope.
 
 **How to run things:** see CLAUDE.md section 3 (Codespace workflow), section 7 (gate order) and section 9 (hosted command).
+
+## 2026-11-21: MIT license; upstream contribution candidates (nothing opened)
+
+- **License:** MIT (`LICENSE`, "Copyright (c) 2026 Roshan Kumar"), linked from the repo README. The Hub package's
+  `pyproject.toml` has no `license` field yet; add one with the next push.
+- **Contribution plan** (CLAUDE.md deliverable 6, section 11): one small, useful PR to a Prime repo, opened only
+  after the user approves the diff. Reference clones were refreshed on 2026-11-21: verifiers `96f0707`, prime-rl
+  `2b1fc1270`, prime-cli `6062f9e`.
+- **verifiers `AGENTS.md`** says `docs/` are "kept intentionally minimal ... Don't touch them unless your change
+  breaks their assumptions". So a docs-only PR is unlikely to be welcome; prefer a code fix.
+- **Candidates, best first:**
+  1. **Served runs silently change a task's class (our F10).**
+     - Still present on prime-rl main: `src/prime_rl/env/worker.py:105-106,135` rebuilds every task as
+       `type(taskset).task_type()` from data that `orchestrator/dispatcher.py:640` dumps with
+       `task.data.model_dump(mode="json")`.
+     - A `load()` that yields a subclass of the declared type works locally but changes behaviour in hosted runs,
+       with no error.
+     - Proposed fix: fail fast on a type mismatch, either in the dispatcher before dumping, or in the worker by
+       comparing the type name.
+     - Start with an issue and a minimal repro, then a PR if the maintainers agree on where the check belongs.
+  2. **prime-cli crashes on Windows when stdout is cp1252.**
+     - `prime eval run --hosted` prints "[green]✓ Hosted evaluation started" (`commands/evals.py:1775,1787` on
+       main). It crashes with UnicodeEncodeError *after* the eval is created.
+     - A user who re-runs then creates a duplicate, paid eval.
+     - Workaround: `PYTHONUTF8=1`.
+     - Fix candidate: make the console output encoding-safe.
+  3. **The Hub copy of `primeintellect/humaneval`** is still 0.1.0 and still calls `runtime.prepare_execution`
+     (`taskset.py:66`). It failed on the hosted runner on 2026-11-16. Whether it still fails on today's runner is
+     not re-tested (a hosted probe costs about $0.01). That fix is a maintainer re-publish, so it would be an
+     issue, not a PR.
 
 ## 2026-11-21: REPORT.md and NOTES.md structured (additions only)
 
