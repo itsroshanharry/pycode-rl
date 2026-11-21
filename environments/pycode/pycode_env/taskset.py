@@ -12,6 +12,11 @@ Design (see NOTES.md for the reasoning):
 - Grade once in `finalize` and store it on `trace.info`; the reward and metrics read it.
 - Infrastructure failures raise (never a silent 0.0), so they show up as errors rather
   than as model failures.
+- Tool-using variant (`--env.taskset.solution file` with `--env.agent.harness.id bash`): the
+  agent writes /work/solution.py and may run it. Grading then uses isolated scoring: a fresh
+  sandbox receives only that file, and the grade is computed in the scoring phase (network
+  locked). A marker file proves the grading sandbox is not the agent's. Never combine a
+  shell-equipped harness with the default `reply` mode, which grades in the agent's sandbox.
 """
 
 from __future__ import annotations
@@ -36,6 +41,17 @@ INSTRUCTION = (
     "Implement the Python function specified below. Use Python 3.11 and only the "
     "standard library. Reply with the complete implementation in one ```python code block."
 )
+# `solution = "file"` (for tool-using harnesses such as `bash`): the agent writes the module
+# itself and may run it; only the file's final bytes are graded, in a fresh sandbox.
+INSTRUCTION_FILE = (
+    "Implement the Python function specified below and save the complete module to "
+    "/work/solution.py. Use Python 3.11 and only the standard library. You can run commands "
+    "in the sandbox to test your code (there is no network access). Only the final contents "
+    "of /work/solution.py are graded, by hidden tests."
+)
+SOLUTION_PATH = f"{WORKDIR}/solution.py"
+MAX_SOLUTION_BYTES = 1_000_000
+SOLVER_MARKER = "/tmp/pycode-solver-sandbox"  # written in the solver; must not exist where we grade
 
 _FENCE = re.compile(r"```[^\n`]*\n(.*?)```", re.DOTALL)
 _THINK = re.compile(r"<think>.*?</think>", re.DOTALL)
@@ -56,6 +72,9 @@ class PyCodeData(vf.TaskData):
     reference: str
     mutants: list[str] = []
     meta: dict = {}
+    solution_mode: str = "reply"
+    """"reply": grade the last fenced code block of the reply (null harness, shared scoring).
+    "file": grade /work/solution.py (tool-using harness, isolated scoring)."""
 
 
 class PyCodeTaskConfig(vf.TaskConfig):
@@ -98,18 +117,68 @@ class PyCodeTask(vf.Task[PyCodeData, vf.State, PyCodeTaskConfig]):
         return grade
 
     async def finalize(self, trace: vf.Trace, runtime: vf.Runtime) -> None:
+        if self.data.solution_mode == "file":
+            await self._collect_file_solution(trace, runtime)
+            return
         code = extract_code(trace.last_reply)
         if not code:
             trace.info["grade"] = {"score": 0.0, "passed": 0, "total": 0, "no_code": True}
             return
         trace.info["grade"] = await self._grade(runtime, code)
 
+    async def _collect_file_solution(self, trace: vf.Trace, runtime: vf.Runtime) -> None:
+        """File mode, in the SOLVER sandbox. The agent had a shell here (it could have edited
+        pytest, planted sitecustomize.py or left a background process), so nothing is graded
+        here. The solution is normalized to one regular file, the only artifact that crosses
+        into the fresh grading sandbox."""
+        await runtime.write(SOLVER_MARKER, b"1")
+        res = await runtime.run(
+            ["sh", "-c", 'if [ -f "$0" ] && [ ! -L "$0" ]; then stat -c %s "$0"; else echo missing; fi',
+             SOLUTION_PATH], {})
+        size = res.stdout.strip()
+        code, source = "", "none"
+        if size.isdigit() and int(size) > MAX_SOLUTION_BYTES:
+            source = "oversized"  # graded as no code
+        elif size.isdigit() and int(size) > 0:
+            code = (await runtime.read(SOLUTION_PATH, MAX_SOLUTION_BYTES)).decode("utf-8", errors="replace")
+            source = "file" if code.strip() else "none"
+        if source == "none":
+            # The model answered with a code block instead of writing the file: grade that block,
+            # so the comparison measures the tools, not the delivery format. Recorded per attempt.
+            blocks = _FENCE.findall(_THINK.sub("", trace.last_reply or ""))
+            if blocks and blocks[-1].strip():
+                code, source = blocks[-1].strip(), "reply_fallback"
+        # a symlink, directory or oversized file is replaced by a plain file (or an empty one)
+        await runtime.run(["rm", "-rf", SOLUTION_PATH], {})
+        await runtime.write(SOLUTION_PATH, code.encode() if source != "oversized" else b"")
+        trace.info["solution_source"] = source
+
+    async def _grade_file_solution(self, trace: vf.Trace, runtime: vf.Runtime | None) -> None:
+        """File mode, in the GRADING sandbox (isolated scoring: fresh box, network locked,
+        only /work/solution.py restored)."""
+        if self.data.solution_mode != "file" or runtime is None:
+            raise RuntimeError("no grade: reply mode grades in finalize; file mode needs a scoring runtime")
+        res = await runtime.run(["sh", "-c", f'test -e "{SOLVER_MARKER}" && echo shared || echo fresh'], {})
+        if res.stdout.strip() != "fresh":
+            # grading in the agent's own sandbox would let a shell-using agent tamper with it
+            raise RuntimeError("file mode must be graded in a fresh sandbox (scoring mode 'isolated')")
+        code = (await runtime.read(SOLUTION_PATH, MAX_SOLUTION_BYTES)).decode("utf-8", errors="replace")
+        if not code.strip():
+            trace.info["grade"] = {"score": 0.0, "passed": 0, "total": 0, "no_code": True}
+        else:
+            trace.info["grade"] = await self._grade(runtime, code)
+        trace.info["graded_in_fresh_sandbox"] = True
+
     @vf.reward(weight=1.0)
     async def passed_all_tests(self, trace: vf.Trace) -> float:
         return float(trace.info["grade"]["score"])
 
     @vf.metric
-    async def grading_details(self, trace: vf.Trace) -> dict[str, float]:
+    async def grading_details(self, trace: vf.Trace, runtime: vf.Runtime | None = None) -> dict[str, float]:
+        # Metrics run before rewards, and this is the only metric, so file-mode grading happens
+        # here exactly once (inside the scoring phase, after the network policy is applied).
+        if "grade" not in trace.info:
+            await self._grade_file_solution(trace, runtime)
         g = trace.info["grade"]
         return {
             "frac_tests_passed": g["passed"] / g["total"] if g["total"] else 0.0,
@@ -139,6 +208,10 @@ class PyCodeConfig(vf.TasksetConfig):
     dataset_path: str | None = None
     """Load rows from this JSONL file on the evaluator instead of the bundled dataset
     (used by the pipeline to validate and filter candidate tasks before release)."""
+    solution: str = "reply"
+    """"reply" (default, for the null harness): the answer is the reply's code block.
+    "file" (for tool-using harnesses such as bash): the agent writes /work/solution.py, and
+    grading switches to isolated scoring with that file as the only artifact."""
     task: PyCodeTaskConfig = PyCodeTaskConfig()
 
 
@@ -155,11 +228,20 @@ class PyCodeTaskset(vf.Taskset[PyCodeTask, PyCodeConfig]):
             r = json.loads(line)
             if self.config.split not in ("all", r["split"]):
                 continue
+            if self.config.solution not in ("reply", "file"):
+                raise ValueError(f"taskset.solution must be 'reply' or 'file', not {self.config.solution!r}")
+            file_mode = self.config.solution == "file"
+            mode_fields = (
+                {"artifacts": [vf.Artifact(source=SOLUTION_PATH)],
+                 "scoring": vf.ScoringConfig(mode="isolated")} if file_mode else {}
+            )
             yield PyCodeTask(
                 PyCodeData(
                     id=r["id"],
                     name=r["id"],
-                    prompt=f"{INSTRUCTION}\n\n{r['prompt']}",
+                    prompt=f"{INSTRUCTION_FILE if file_mode else INSTRUCTION}\n\n{r['prompt']}",
+                    solution_mode=self.config.solution,
+                    **mode_fields,
                     entry_point=r["entry_point"],
                     tests=r["tests"],
                     reference=r["reference"],
