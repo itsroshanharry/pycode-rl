@@ -1,9 +1,9 @@
 [project]
 name = "pycode-env"
-version = "0.2.1"
+version = "0.2.2"
 description = "Python function-implementation tasks graded by hidden pytest suites in a Prime sandbox."
 readme = "README.md"
-tags = ["code", "single-turn", "execution", "v1"]
+tags = ["code", "single-turn", "execution", "tool-use", "v1"]
 requires-python = ">=3.11"
 # Floor = the verifiers bundled in Prime's hosted-eval runner (prime-rl 3bd59c1 ->
 # verifiers 20c549f, reported as 0.4.1.dev150). A higher floor would make the runner

@@ -4,9 +4,21 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ---
 
-## CURRENT STATUS (read this first in a new session), updated 2026-11-20
+## CURRENT STATUS (read this first in a new session), updated 2026-11-21
 
-**Where we are:** dataset frozen; leaderboard wave 1 done (0.2.0), grader v3 pushed as 0.2.1, waves 2-3 running on it.
+**Where we are:** the leaderboard is done (4 models, hosted, `data/reports/leaderboard/`), the null vs bash comparison is done (local, `data/reports/harness/`, REPORT F8-F9), and **0.2.2** is pushed (PRIVATE) with the final README, `taskset.ids` and the harness guard.
+- **Published now:** `itsroshanharry/pycode-env` **0.2.2** (wheel sha256 `7fac02a6...`, dataset `119ed403...`, grader v3). The leaderboard ran on 0.2.0 (wave 1) and 0.2.1 (wave 2); 0.2.2 changes no grading code.
+- **Wallet:** $3.19 left, so spend is about $6.81 against the $7 cap (about $0.19 of room).
+- **Next steps:**
+  1. User: share the DeepSeek, Gemma and gpt-oss-20b runs to the Hub leaderboard (only gpt-oss-120b is shared).
+  2. Hosted bash smoke test, needs user approval: 1 task x 1 attempt, gpt-oss-120b, about $0.04. The hosted `-a '{"agent": {"harness": ...}}'` path in the README is not yet verified.
+  3. REPORT leaderboard chapter; move the near-miss / first-failing-test columns into `07_leaderboard.py`.
+  4. Make the environment public at the end; optional PR.
+  - Not run (budget): qwen3.5-9b leaderboard row, cross-benchmark calibration.
+
+**History below this line is the 2026-11-20 status, kept for reference.**
+
+**Where we were (2026-11-20):** dataset frozen; leaderboard wave 1 done (0.2.0), grader v3 pushed as 0.2.1, waves 2-3 running on it.
 - **Dataset:** 75 tasks (38 train / 37 test), sha256 `119ed403e4977450209a44a3c2d99e7661fd0c17611c9525b7e8f1d182fc2680`.
   - Funnel: 100 written -> 100 validated -> 81 after the difficulty filter -> 75 after contamination -> 75 after the audit.
   - Audit: all 75 reviewed (DeepSeek 31 + gpt-oss-120b 44) plus a user spot-check of 8. See the Stage 6 entry below.
@@ -36,6 +48,31 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 - the SWE-env reward-hack audit is out of scope.
 
 **How to run things:** see CLAUDE.md section 3 (Codespace workflow), section 7 (gate order) and section 9 (hosted command).
+
+## 2026-11-21: 0.2.2 pushed: `taskset.ids`, harness guard, final README
+
+- **Why:** anyone should be able to run both the no-tools and the bash setups, hosted or local. Hosted runs have no
+  task-selection flag (`--select.include.ids` is vf-run only), so the 20-task bash study could not be reproduced
+  hosted.
+- **`taskset.ids: list[str] = []`:** loads only those ids (empty = all). Any id missing from `split` raises (a typo or
+  wrong split must not silently shrink the run); the 20-task study spans both splits, so it needs `split: all`.
+  Local flag: `--env.taskset.ids a b c` (space-separated, per `vf-run --help`).
+- **Guard in `PyCodeEnv.run`:** a harness other than `null` with `solution: reply` raises before the agent runs.
+  Reply mode grades in the agent's own sandbox, so a shell could plant files that fake a pass. It reads
+  `agents.agent.harness.config.id` (verifiers `agent.py`: `Agent.harness = load_harness(config.harness)`).
+  `Env.run_episode` records the raise as an `EnvError` on the episode, with no trace and no score.
+- **Tests:** `tests/test_taskset_options.py` (9 tests, no sandbox). Full suite in the Codespace: 47 passed.
+  Real vf-run checks (gpt-oss-20b, pc-c-0001, about $0.002, local only):
+  - bash + reply: 0/1 episodes ok; the EnvError carries the guard message; no sandbox started.
+  - null + ids: graded normally (28/30 tests, grader 3, isolated worker).
+- **README:** the final Hub README (from `drafts/README_hub_draft.md`, now superseded), with:
+  - the 4-model leaderboard table;
+  - the null vs bash section;
+  - hosted and local commands for both setups;
+  - the options table.
+  The hosted bash command is unverified until the smoke test.
+- **Hub:** `prime env info` says private envs cannot be installed with `prime env install` (use `prime env pull`);
+  the README's install line applies once the env is public.
 
 ## 2026-11-21: Hub leaderboard format (user shared gpt-oss-120b's run from the dashboard)
 
