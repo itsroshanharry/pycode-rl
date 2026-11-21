@@ -6,14 +6,13 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ## CURRENT STATUS (read this first in a new session), updated 2026-11-21
 
-**Where we are:** the leaderboard is done (4 models, hosted, `data/reports/leaderboard/`), the null vs bash comparison is done (local, `data/reports/harness/`, REPORT F8-F9), and **0.2.3** is pushed (PRIVATE) with the final README, `taskset.ids`, the harness guard and the hosted file-mode fix (REPORT F10).
-- **Published now:** `itsroshanharry/pycode-env` **0.2.3** (wheel sha256 `72fb7cfa...`, dataset `119ed403...`, grader v3). The leaderboard ran on 0.2.0 (wave 1) and 0.2.1 (wave 2); 0.2.2-0.2.3 change no reply-mode grading behaviour.
+**Where we are:** the leaderboard is done (4 models, hosted, `data/reports/leaderboard/`), the null vs bash comparison is done (local, `data/reports/harness/`, REPORT F8-F9), and **0.2.4** is pushed (PRIVATE) with the final README, `taskset.ids`, the harness guard and the hosted file-mode fix (REPORT F10).
+- **Published now:** `itsroshanharry/pycode-env` **0.2.4** (wheel sha256 `ac2cda5a...`; 0.2.4 = 0.2.3 code + README, dataset `119ed403...`, grader v3). The leaderboard ran on 0.2.0 (wave 1) and 0.2.1 (wave 2); 0.2.2-0.2.3 change no reply-mode grading behaviour.
 - **Wallet:** $3.162 left, so spend is about $6.84 against the $7 cap (about $0.16 of room).
 - **Next steps:**
   1. User: share the DeepSeek, Gemma and gpt-oss-20b runs to the Hub leaderboard (only gpt-oss-120b is shared).
   2. ~~Hosted bash smoke test~~ done: failed on 0.2.2 (guard caught the hosted rebuild bug, REPORT F10), passed on 0.2.3.
-  2b. README attribution wording (replace "author" / "by hand" with who did each step), waiting on the user: did they
-      write pc-hw-002 / pc-hw-005 (labelled "human"), and how to describe their role. Then push 0.2.4.
+  2b. ~~README attribution wording~~ done in 0.2.4 (see the entry below).
   3. REPORT leaderboard chapter; move the near-miss / first-failing-test columns into `07_leaderboard.py`.
   4. Make the environment public at the end; optional PR.
   - Not run (budget): qwen3.5-9b leaderboard row, cross-benchmark calibration.
@@ -50,6 +49,33 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 - the SWE-env reward-hack audit is out of scope.
 
 **How to run things:** see CLAUDE.md section 3 (Codespace workflow), section 7 (gate order) and section 9 (hosted command).
+
+## 2026-11-21: 0.2.4: README attribution and per-stage methods
+
+- **Why:** "the author" and "by hand" read as the human publisher; most of those reviews were done by Claude Code.
+  The README now names who did each step:
+  - "produced with Claude Code under the project owner's direction" (user confirmed the wording);
+  - automatic checks;
+  - other-family models (DeepSeek, OpenAI) for triage, judging and audit;
+  - the owner's 8-task spot-check.
+- **Hand-written tasks:** per the user, no authorship claim either way. The README says "10 earlier examples were
+  written while the grader was built, 2 of them in the final set". The dataset's `meta.generator` still says
+  "human (hand-written)" for pc-hw-002 / pc-hw-005; it is left unchanged, because changing it changes the frozen hash.
+- **Methods written out per stage:**
+  1. writing;
+  2. spec and test checks (writing rules, the spec lint, test strength, vf-validate);
+  3. difficulty filter (histogram);
+  4. triage (17 + 6 at 16k + 2 reviewed);
+  5. decontamination (a) n-gram, (b) gpt-oss-20b judge (6 flags: 5 dropped, 1 overruled), (c) the audit-time
+     second pass (1 dropped, 1 overruled; Claude Code's web check labelled not independent);
+  6. audit (6 flagged, 3 fixed);
+  7. split.
+- **New README section "Two harnesses: null and bash":** a table of what the model can do, how the answer is handed
+  in, where it is graded, the settings, and hosted support.
+- **Corrections while checking facts:**
+  - the expected-values rule applies from v3 only, so the text now says so;
+  - the top-bullet triage claim now includes "or a review confirmed the spec" (c0036).
+- Pushed as 0.2.4 (wheel sha256 `ac2cda5a...`). No code changes.
 
 ## 2026-11-21: Hosted bash smoke test failed on 0.2.2 (the guard caught it); fixed in 0.2.3
 

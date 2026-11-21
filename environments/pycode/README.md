@@ -13,12 +13,12 @@ condition correctly.
 - **75 tasks** (38 `train` / 37 `test`), 73 distinct topics, about 2,200 hidden test cases
   (median 27 per task).
 - **Difficulty-calibrated:** tasks a reference model always solved were removed. Tasks it never
-  solved were kept only if a stronger model proved them solvable.
-- **Decontaminated** against HumanEval, MBPP and LiveCodeBench (model-free n-gram check plus LLM
-  judges), and audited task by task by a model other than the author.
+  solved were kept only after a stronger model solved them or a review confirmed the spec.
+- **Decontaminated** against HumanEval, MBPP and LiveCodeBench (a model-free n-gram check plus
+  LLM judges), and audited task by task by models from other families (DeepSeek, OpenAI).
 - **Hardened grader:** 19 reward-hacking and broken submissions all score 0.
-- **Two ways to run:** no tools (the model replies with code), or the `bash` harness (the model
-  writes and tests a file; grading happens in a fresh sandbox).
+- **Supports two harnesses:** `null` (no tools; the model replies with code) and `bash` (the
+  model writes and tests a file; that file is graded in a fresh sandbox). See below.
 
 ## Example task (train split)
 
@@ -38,6 +38,23 @@ def fiscal_label(date: str, start_month: int) -> str:
 
 The familiar shape hides a rule change ("named after the year in which it ends") and strict
 input validation. `gpt-oss-20b` solved it 0 of 8 times; `deepseek-v4.1-flash` solved it.
+
+## Two harnesses: `null` (no tools) and `bash`
+
+The same 75 tasks and the same hidden tests work with either harness. Only how the model works
+and how it hands in its answer differ.
+
+| | `null` harness (default) | `bash` harness |
+|---|---|---|
+| What the model can do | Read the task and reply once. No tools. | Run shell commands and edit files for several turns. It can run and test its own code. |
+| How it hands in the answer | A ```python code block in its reply (`taskset.solution: reply`, the default) | The file `/work/solution.py` (`taskset.solution: file`) |
+| Where the answer is graded | In the same sandbox, after the reply. Safe, because the model never touched it. | In a fresh sandbox that receives only `solution.py`. Anything else the agent left in its own sandbox cannot affect the grade. |
+| Settings | None needed | `agent.harness.id: bash` and `taskset.solution: file`, together |
+| Hosted runs | Yes (the leaderboard below) | Yes (tested with a hosted run) |
+
+The environment refuses a tool harness combined with `solution: reply`. That combination would
+grade inside the sandbox the agent had a shell in, so the attempt fails with an error before the
+model is called. Commands for both setups are in [How to run](#how-to-run).
 
 ## Leaderboard (no tools)
 
@@ -168,15 +185,41 @@ pilot, a 2k cap cut DeepSeek's score from 0.90 to 0.44, and every failure was a 
 
 ## How the tasks were built
 
-**Seed-grounded synthesis.** This follows the idea of OSS-Instruct (Magicoder; Wei et al., 2023).
-Asking a model for problems from a blank prompt drifts towards LeetCode clones, so every task
-is grounded in a *seed*: one of 102 short real-world rules in 11 categories (dates,
-text formats, business rules, scheduling, networking, identifiers, numeric, data cleaning,
-structured data, games, text). OSS-Instruct grounds problems in open-source code snippets.
-Here the grounding is a real-world rule, which yields specification-heavy tasks instead.
+**Funnel:**
+1. 100 candidates written.
+2. 100 pass the spec and test checks.
+3. 81 remain after the difficulty filter and triage.
+4. 75 remain after decontamination.
+5. 75 after the audit (3 fixed).
+6. Split into 38 `train` / 37 `test`.
 
-73 tasks were written by Claude Code (Claude Opus 5.5) from three versioned generation
-prompts, and 2 are hand-written. Prompts v2 and v3 (58 tasks) build in difficulty "levers":
+**Who did what.** The tasks and the pipeline code were produced with Claude Code (Claude Opus
+5.5), under the project owner's direction. When one model writes a task's spec, hidden tests and
+reference solution together, it can misread a rule the same way in all three, and its own
+self-checks would still pass. The later stages are there to catch that. They are automatic
+checks, attempts and reviews by models from other families, and a spot-check by the project
+owner. Every keep, drop and fix decision was recorded with its reason.
+
+### 1. Writing: seed-grounded synthesis (100 candidates)
+
+This follows the idea of OSS-Instruct (Magicoder; Wei et al., 2023). Asking a model for problems
+from a blank prompt drifts towards LeetCode clones, so every task is grounded in a *seed*: one of
+102 short real-world rules in 11 categories (dates, text formats, business rules, scheduling,
+networking, identifiers, numeric, data cleaning, structured data, games, text). OSS-Instruct
+grounds problems in open-source code snippets. Here the grounding is a real-world rule, which
+yields specification-heavy tasks instead.
+
+90 candidates were generated from three versioned prompts, in batches of 10. 10 earlier
+examples were written while the grader was built, and 2 of them are in the final set. Each task
+has:
+- a spec;
+- a reference solution;
+- the hidden tests;
+- 3 deliberately buggy variants (mutants);
+- metadata (topic, levers, prompt version, and the seed for generated tasks);
+- for efficiency tasks, a naive slow solution.
+
+Prompts v2 and v3 (58 of the final tasks) build in difficulty "levers":
 
 - **twist:** a familiar problem with one changed rule, so a memorized answer fails;
 - **combo / composition:** two techniques that must work together;
@@ -185,21 +228,111 @@ prompts, and 2 are hand-written. Prompts v2 and v3 (58 tasks) build in difficult
 - **efficiency:** stated input limits, a large-input test, and a naive solution that must time
   out.
 
-Each task records its seed, topic, levers and prompt version in `meta`.
+### 2. Spec and test checks (100 of 100 pass)
 
-**Every task then had to pass checks that do not depend on the author's judgment:**
+**Writing rules for specs and tests:**
+- A test may only check what the spec states. Every error rule is tested with its exact
+  exception type.
+- Many test files include a differential test: an independent oracle (a simpler or
+  brute-force method) checks the solution on 100-500 seeded random inputs. The v3 prompt
+  requires one for hard tasks.
+- Since v3, non-trivial expected values come from that oracle, not from hand arithmetic, which
+  had been wrong more than 10 times in earlier batches.
 
-| Stage | Kept | Checks |
-|---|---|---|
-| Written | 100 | 90 generated + 10 hand-written |
-| Test strength | 100 | The reference passes. At least 2 of 3 authored buggy variants (mutants) fail. An automatic AST mutation score of at least 0.80. Branch coverage of at least 0.90. A fake that only returns the docstring answers fails. Efficiency tasks: the naive solution times out. Gold and no-op checks run in a Prime sandbox (`vf-validate`). The automatic mutants found and fixed 20 real test gaps. |
-| Difficulty filter | 81 | `gpt-oss-20b`, 8 attempts per task. 19 tasks solved 8/8 were dropped as too easy. **Triage:** each of the 25 tasks solved 0/8 got an attempt by a stronger model (`deepseek-v4.1-flash`). 23 were solved, 6 of them only with a 16k-token budget. The 2 failures were inspected by hand: one had a spec defect, which was fixed and re-filtered; the other was kept after review. A "hard" task is therefore hard but solvable, not broken. |
-| Decontamination | 75 | **Model-free n-gram check** against 2,193 problems from HumanEval, MBPP and LiveCodeBench (all releases, pinned revisions), on both prompts and solutions. Highest 5-gram Jaccard similarity: 0.011 for prompts, 0.073 for code. No shared 13-gram. **LLM judges**, with the most similar benchmark problems as context, checked for reworded copies and well-known contest problems; every flag was reviewed by hand. 6 tasks were dropped as well-known problems. 2 flags were overruled, each with evidence: one judge invented a problem citation; for another, the standard snippet for the claimed "classic kata" fails 6 of 15 test groups. |
-| Audit | 75 | Every task was reviewed by a model other than the author (DeepSeek V4.1 Flash or gpt-oss-120b), comparing spec, tests and reference for ambiguity, unstated checks and reference bugs. 3 defects were fixed and re-validated. Then 8 tasks were spot-checked by a human. |
+**Spec lint.** A pilot found 4 tests that rejected inputs the spec allowed, for example
+full-width digits where the spec said only "digits". A lint (a script that scans for known
+problems) now flags:
+- tests with non-ASCII inputs when the spec never says ASCII;
+- `bool` inputs when the spec never mentions bool;
+- docstring text that breaks a solution which copies the docstring, such as a triple quote.
 
-**Split.** The 6 tasks whose specs were edited because of how models failed on them are all in
-`train`, so no `test` task was tuned on model attempts. The remaining tasks were stratified by
-difficulty band and prompt version (seed 2026).
+Each hit is reviewed. The 4 specs were fixed to state the rule.
+
+**Test strength.** These checks are free, run in a Linux container with the real grader:
+- the reference passes every test;
+- at least 2 of the 3 mutants fail;
+- an automatic AST mutation score of at least 0.80;
+- branch coverage of the reference of at least 0.90;
+- a fake solution that only returns the docstring answers fails;
+- for efficiency tasks, the naive solution times out.
+
+The automatic mutants found 20 real test gaps, which were fixed.
+
+**Prime sandbox (`vf-validate`).** The reference scores 1.0 (gold check) and an untouched task
+scores 0 (no-op check). This was run again on the frozen final dataset: 75 of 75 pass.
+
+### 3. Difficulty filter (100 -> 81)
+
+- `gpt-oss-20b` made 8 attempts per task: temperature 1.0, reasoning effort `low`, an 8k-token
+  cap, 0% truncated.
+- Number of tasks solved k of 8 times, for k = 0..8: 25, 9, 7, 6, 7, 7, 12, 8, 19.
+- Tasks solved 1-7 times out of 8 were kept. The 19 tasks solved 8/8 were dropped as too easy.
+
+### 4. Triage of the 25 never-solved tasks
+
+A task that no attempt solves is either hard or broken. Each of the 25 got one attempt by a
+stronger model, `deepseek-v4.1-flash`:
+- **17 were solved.**
+- **6 were cut off at 8k tokens, and all 6 were solved at 16k.** These tasks need long thinking,
+  which is why the leaderboard uses a 16k cap.
+- **2 failed and were reviewed against their specs by Claude Code:**
+  - One had a spec defect: a triple quote in a docstring example broke every solution that
+    copied the docstring. It was fixed, the lint rule above was added, and the task was
+    re-filtered: solved 2/8, so it was kept.
+  - In the other, every model misses one rule that the spec states explicitly. It was kept as
+    hard and flagged for the audit.
+
+Result: 57 tasks in the 1-7 band and 24 hard tasks. A hard task is hard but solvable, not broken.
+
+### 5. Decontamination (81 -> 75)
+
+**(a) Model-free n-gram check.**
+- Every task was compared with each of 2,193 benchmark problems, at pinned revisions:
+  HumanEval (164), MBPP (974) and LiveCodeBench (1,055, all 6 releases).
+- It compares normalized-token 5-gram Jaccard similarity and the longest common token run, on
+  the prompt and on the reference code.
+- Drop thresholds: Jaccard 0.5, or a shared 13-gram.
+- Result: the highest similarity was 0.011 for prompts and 0.073 for code, with no shared
+  13-gram.
+
+**(b) LLM judge.** `gpt-oss-20b` (temperature 0) saw each task with its 3 most similar benchmark
+problems from (a). It answered two questions:
+- Is this the same problem reworded?
+- Is it a well-known LeetCode or Codeforces-style problem, and which one?
+
+It found 0 reworded copies and flagged 6 tasks as well-known. 5 were dropped. 1 was overruled:
+the judge cited a LeetCode problem that does not exist, and the task implements the RFC 3339
+timestamp rule.
+
+**(c) Second pass during the audit.**
+- The audit models answered the same "well-known?" question.
+- Claude Code also checked all remaining tasks for resemblances using web searches. This pass
+  is not independent.
+- 1 more task was dropped: same input and output as LeetCode 1943.
+- 1 flag was overruled: the standard natural-sort snippet fails 6 of 15 of that task's test
+  groups.
+
+In total, 6 tasks were dropped as well-known problems and 2 flags were overruled with evidence.
+The judges' citations were often wrong even when their yes/no answer was right, so every flag
+was checked against the actual problem.
+
+### 6. Audit (75 tasks, 3 fixed)
+
+- Every task was reviewed by a model from a different family than the writer: DeepSeek V4.1
+  Flash (31 tasks) or `gpt-oss-120b` (44).
+- Each reviewer compared the spec, tests and reference, looking for ambiguity, tests that check
+  unstated rules, and reference bugs.
+- 6 tasks were flagged:
+  - 3 were fixed and re-validated. The one major defect fixed: the tests accepted input that
+    the spec did not allow.
+  - 3 were dismissed with reasons.
+- The project owner then spot-checked 8 randomly chosen tasks.
+
+### 7. Split
+
+The 6 tasks whose specs were edited because of how models failed on them are all in `train`, so
+no `test` task was tuned on model attempts. The remaining tasks were stratified by difficulty
+band and prompt version (seed 2026).
 
 ## Grader and anti-hacking design
 
@@ -221,6 +354,8 @@ difficulty band and prompt version (seed 2026).
     graded there.
   - A marker file written in the agent's sandbox proves that the grading sandbox is a
     different one. If the marker is found, grading stops with an error instead of a score.
+  - The mode is stored in each task's data, so hosted runs, which rebuild every task from its
+    data, grade the same way as local runs.
 - **Verified against 19 reward-hacking and broken submissions**, which all score 0:
   - rigged objects: `__eq__` that always returns true, int subclasses;
   - fake grader output: printing a fake result, patching pytest and `assert`;
@@ -253,8 +388,11 @@ difficulty band and prompt version (seed 2026).
   train on the `test` split if you report results on it.
 - **Difficulty calibration:** difficulty was calibrated with one model (`gpt-oss-20b`). It
   appears on the leaderboard as a labelled calibration row.
+- **One writing model:** the tasks come from one model family (Claude), so they share its style
+  and blind spots. Claude is not on the leaderboard, so no listed model is scored on tasks it
+  wrote.
 - **Well-known problems:** there is no public corpus of LeetCode or Codeforces problems, so
-  resemblance to them was checked with LLM judges and manual web verification.
+  resemblance to them was checked with LLM judges and web searches.
 - **Comparing models:** with 75 tasks, compare models with paired, per-task differences rather
   than by overlapping intervals.
 - **The bash comparison is small:** 2 models, 20 tasks, 2 attempts each. It shows how tool use
