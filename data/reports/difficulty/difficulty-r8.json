@@ -1,5 +1,5 @@
 {
- "traces": "C:\\Users\\nikhi\\AppData\\Local\\Temp/difficulty-r8.jsonl",
+ "traces": "<local temp>/difficulty-r8.jsonl",
  "rollouts_per_task": 8,
  "tasks": 100,
  "histogram_pass_count": {

@@ -60,8 +60,9 @@ Every entry in this log, newest first (generated from the headings; entries are 
   3. REPORT leaderboard chapter; move the near-miss / first-failing-test columns into `07_leaderboard.py`.
   4. Make the environment public at the end; optional PR.
   5. **Plan for 2026-11-22 (user):** go public.
-     - Optional first: redact the third-party mentions at NOTES.md (the "Nikhil's accounts" line) and the
-       Windows username in the 2 difficulty report paths (asked, not yet answered).
+     - ~~Redact the third-party name and the Windows username~~ done 2026-11-21: the git-identity note now says
+       "another user's accounts", and the 2 difficulty report paths say `<local temp>/difficulty-r8.jsonl`.
+       The old text remains in git history.
      - Make the GitHub repo public.
      - Add the repo link and `license = "MIT"` to `environments/pycode`, push 0.2.5, then make the Hub env public.
      - Share the DeepSeek, Gemma and gpt-oss-20b runs to the leaderboard.
