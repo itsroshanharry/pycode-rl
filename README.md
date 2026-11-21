@@ -138,3 +138,7 @@ Each script's docstring gives its exact usage.
   and safety rules: no model-written code runs outside Prime sandboxes, and spending is capped.
 
 Limitations are listed in [REPORT.md](REPORT.md#limitations).
+
+## License
+
+MIT. See [LICENSE](LICENSE).
