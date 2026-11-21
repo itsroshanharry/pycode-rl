@@ -65,3 +65,68 @@ The judge's yes/no was usually defensible, but it cited 2 wrong problem numbers 
 Two "Gateway" models (`poolside/laguna-s-2.1`, `qwen/qwen3-coder-next`) were listed by
 `prime inference models` but returned 404 "no provider serves" / "No allowed providers".
 The errors were recorded as provider errors, not model failures.
+
+## Failure-mode analysis (notes for the leaderboard chapter, recorded 2026-11-21)
+
+Every failed attempt is put into one diagnostic category instead of a bare 0. The goal is to
+show that a 0 is a real model limitation, not a harness or spec defect. The categories are
+computed in `pipeline/07_leaderboard.py` (`failure_mode`). Precedence: infra error > pass >
+truncated > no code > load error > call timeout > wrong answer.
+
+| Category | What it means | Leaderboard counts (DeepSeek / Gemma / gpt-oss-120b / gpt-oss-20b, out of 300 attempts each) |
+|---|---|---|
+| Truncated | hit `max_tokens` before finishing the code (harness cap) | 6 / 0 / 0 / 0 |
+| Load error | syntax error, a broken import, or a crash while the module loads | 0 / 0 / 1 / 8 |
+| Call timeout | too slow on a call, e.g. a naive solution on an efficiency task | 0 / 0 / 0 / 3 |
+| No code | empty or prose-only reply (a refusal) | 0 / 0 / 0 / 1 |
+| Wrong answer | ran, but failed hidden tests (edge cases and spec traps) | 12 / 78 / 142 / 174 |
+| Infra error | sandbox or grader failure (raised, never scored as 0) | 0 / 0 / 0 / 0 |
+
+### Harness vs model: evidence to cite
+- **Token cap artifact (F1):** DeepSeek at max_tokens 2048 scored 0.44, against 0.90 at 8192.
+  At 2048, **56% of all attempts** were truncated and **every** failure was a cut-off. Qwen3.6
+  was truncated on **79% of attempts** at 8192 (F2). (These are shares of all attempts. An
+  external summary called them shares of failures, which is wrong.)
+- **Spec-ambiguity traps (F3):** Gemma exposed 4 tasks whose tests rejected inputs the spec
+  never excluded (non-ASCII digits, a bool passed as an int). Fixed; `pipeline/lint_spec_traps.py`
+  now flags this class.
+- **Grader bug (grader v2 -> v3):** valid code using a `@dataclass` with string type annotations
+  failed to load. Found by inspecting load errors one by one; it hit 1 of 600 wave-1 attempts.
+  That attempt was re-graded with v3 and still fails, so no score changed. Its failure label
+  stays "load error" (from the v2 grade), because the re-grade reports only pass or fail.
+- **Infrastructure:** 0 infra errors and 0 lost attempts in all 1,200 leaderboard attempts
+  (not only in the gpt-oss-20b run).
+- **The small categories were checked by hand:**
+  - load errors: 7 model syntax errors and 2 broken regular expressions at import, plus the
+    c0001 grader-bug attempt;
+  - timeouts: 2 on c0039, an efficiency task whose naive solution must time out (the trap
+    working), and 1 infinite loop on c0004;
+  - no code: 1 refusal on a benign unit-conversion task (gpt-oss-20b).
+
+### Wrong answers are mostly near misses, and where they fail differs by model
+| Model | Wrong answers | Near misses (>= 90% of tests passed) | First failing test: examples / validation / other |
+|---|---|---|---|
+| DeepSeek | 12 | 11 | 3 / 4 / 5 |
+| Gemma 31B | 78 | 58 (74%) | 17 / 43 / 18 |
+| gpt-oss-120b | 142 | 94 (66%) | 50 / 52 / 40 |
+| gpt-oss-20b | 174 | 64 (37%) | 90 / 33 / 51 |
+
+- Gemma usually gets the core logic right and misses the **stated validation and error
+  rules**, which are what the spec traps target.
+- gpt-oss-20b fails the **basic examples** more often, so its core logic is wrong more often.
+- Caveat: "first failing test" depends on test order (examples usually come first), so this
+  is a rough view. These two columns were a one-off analysis (2026-11-21); add them to
+  `07_leaderboard.py` before the final chart.
+
+### Task design around realistic failure modes
+- Tasks target realistic failure modes instead of random puzzles: rule precedence (layered
+  rules), multi-mode parsing, exact arithmetic, efficiency under stated limits, and stated spec
+  traps (off-by-one boundaries, a bool passed as an int, non-ASCII digits, float precision,
+  tab vs space). See prompts v2 and v3.
+
+### Link to the null vs bash comparison
+- Mid-tier models mostly fail by missing a few edge-case tests in single-turn mode. For example,
+  gpt-oss-20b has pass@4 0.68 but pass^4 0.11, and gpt-oss-120b has 66% near misses.
+- That makes them good candidates for the question: does a shell, where the model can run its
+  own tests, reduce wrong answers and load errors?
+- Measure the failure-mode shift per model, not only the score.
