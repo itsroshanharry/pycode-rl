@@ -123,6 +123,30 @@ Every entry in this log, newest first (generated from the headings; entries are 
      (`taskset.py:66`). It failed on the hosted runner on 2026-11-16. Whether it still fails on today's runner is
      not re-tested (a hosted probe costs about $0.01). That fix is a maintainer re-publish, so it would be an
      issue, not a PR.
+- **The user's SWE reward-hack audit plan** (a PR to `prime-envs` for `swesmith_env` plus 1-2 neighbours) was
+  checked against prime-envs main (`c881465`) and its open PRs. No spend.
+  - **The 2026-11-18 lead was misread.** `swesmith_env/taskset.py:206` ("agent edits to tests are included as-is")
+    describes the patch captured in `finalize` *before* scoring restores test files. It is not about scoring:
+    `run_tests` does revert the known F2P/P2P files.
+  - **The real weaknesses are different:**
+    - grading runs in the agent's own container (no `ScoringConfig`, so shared), so conftest, sitecustomize or
+      pytest tampering survives;
+    - `git checkout HEAD~1` is relative to the agent's HEAD;
+    - the reference solution can be reached through branch history.
+    - Resources are 4 vCPU / 4 GiB / 10 GiB, about $0.13/hr per sandbox.
+  - **Already covered by open PR #943** (snimu, opened 2026-10-02, review required, +111/-30): fresh-container
+    grading of the captured patch, `HEAD~1` anchored, git history scrubbed, 19k empty prompts skipped, with
+    end-to-end verification on a real instance.
+  - **The same 2026-10-02 sweep has open PRs for the neighbours:** r2e_gym #925, openswe #941,
+    swebench_verified #947, swebench_multilingual #944, swelego #940, swerebench_v2 #954, scaleswe #937 and
+    nl2repobench #929. pi_deepswe (PROTECTED-path filter, separate verifier container) and swebench_pro already
+    grade separately. multiswe has no open grading fix that we found; its open #817 is about images.
+  - **Conclusion:** the PR as planned would duplicate #943.
+  - **Alternatives:**
+    - an independent model-free reproduction review on #943 (main vs branch);
+    - a multiswe fix in #943's pattern;
+    - the prime-rl F10 issue above.
+    Any SWE sandbox work needs the user to raise the $7 cap.
 
 ## 2026-11-21: REPORT.md and NOTES.md structured (additions only)
 
