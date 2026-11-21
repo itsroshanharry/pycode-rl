@@ -20,6 +20,9 @@ Design (see NOTES.md for the reasoning):
   with the default `reply` mode, which grades in the agent's sandbox: `PyCodeEnv.run`
   refuses that combination.
 - `taskset.ids` selects a fixed subset of tasks (hosted runs have no `--select` flag).
+- Every task is built as `PyCodeAnyTask`, which reads the mode from `data.solution` and runs
+  the `PyCodeTask` (reply) or `PyCodeFileTask` (file) hooks. Hosted runs rebuild tasks from
+  their data as the taskset's declared class, so the mode must be in the data.
 """
 
 from __future__ import annotations
@@ -75,6 +78,9 @@ class PyCodeData(vf.TaskData):
     reference: str
     mutants: list[str] = []
     meta: dict = {}
+    solution: str = "reply"
+    """How the answer is delivered, copied from `taskset.solution` ("reply" or "file"). It lives
+    in the data because hosted runs rebuild every task from its data alone (see PyCodeAnyTask)."""
 
 
 class PyCodeTaskConfig(vf.TaskConfig):
@@ -203,6 +209,26 @@ class PyCodeFileTask(PyCodeTask):
         return await super().grading_details(trace)
 
 
+class PyCodeAnyTask(PyCodeFileTask):
+    """The task class the taskset declares, so every task is built as this class, locally and
+    in hosted runs. Hosted runs (prime-rl's env server) send only a task's data to the worker
+    and rebuild it as the DECLARED class, so choosing `PyCodeFileTask` in `load()` is lost
+    there. This class therefore reads the mode from the data and runs the matching hooks:
+    `PyCodeTask`'s for "reply", `PyCodeFileTask`'s for "file". Both stay unchanged."""
+
+    async def finalize(self, trace: vf.Trace, runtime: vf.Runtime) -> None:
+        if self.data.solution == "file":
+            await PyCodeFileTask.finalize(self, trace, runtime)
+        else:
+            await PyCodeTask.finalize(self, trace, runtime)
+
+    @vf.metric
+    async def grading_details(self, trace: vf.Trace, runtime: vf.Runtime | None = None) -> dict[str, float]:
+        if self.data.solution == "file":
+            return await PyCodeFileTask.grading_details(self, trace, runtime)
+        return await PyCodeTask.grading_details(self, trace)
+
+
 class PyCodeConfig(vf.TasksetConfig):
     split: str = "test"
     """Which rows to load: "train", "test", or "all"."""
@@ -220,8 +246,8 @@ class PyCodeConfig(vf.TasksetConfig):
     task: PyCodeTaskConfig = PyCodeTaskConfig()
 
 
-class PyCodeTaskset(vf.Taskset[PyCodeTask, PyCodeConfig]):
-    def load(self) -> Iterator[PyCodeTask]:
+class PyCodeTaskset(vf.Taskset[PyCodeAnyTask, PyCodeConfig]):
+    def load(self) -> Iterator[PyCodeAnyTask]:
         if self.config.dataset_path:
             with open(self.config.dataset_path, encoding="utf-8") as f:
                 raw = f.read()
@@ -250,7 +276,7 @@ class PyCodeTaskset(vf.Taskset[PyCodeTask, PyCodeConfig]):
             if self.config.solution not in ("reply", "file"):
                 raise ValueError(f"taskset.solution must be 'reply' or 'file', not {self.config.solution!r}")
             file_mode = self.config.solution == "file"
-            task_cls = PyCodeFileTask if file_mode else PyCodeTask
+            task_cls = PyCodeAnyTask  # the declared class, so local runs match hosted ones
             mode_fields = (
                 {"artifacts": [vf.Artifact(source=SOLUTION_PATH)],
                  "scoring": vf.ScoringConfig(mode="isolated")} if file_mode else {}
@@ -266,6 +292,7 @@ class PyCodeTaskset(vf.Taskset[PyCodeTask, PyCodeConfig]):
                     reference=r["reference"],
                     mutants=r.get("mutants", []),
                     meta=r.get("meta", {}),
+                    solution=self.config.solution,
                     image="python:3.11-slim",
                     workdir=WORKDIR,
                     resources=vf.TaskResources(cpu=1, memory=1, disk=5),
@@ -290,7 +317,7 @@ class PyCodeEnv(vf.Env[PyCodeEnvConfig]):
         # Refuse the combination before the model is called; Prime records the error on the
         # episode, so it can never be mistaken for a model score.
         harness_id = agents.agent.harness.config.id
-        if harness_id != "null" and not isinstance(task, PyCodeFileTask):
+        if harness_id != "null" and getattr(task.data, "solution", "reply") != "file":
             raise ValueError(
                 f"harness {harness_id!r} gives the agent tools: add --env.taskset.solution file "
                 "(hosted: -a '{\"taskset\": {\"solution\": \"file\"}}'), which grades the "
