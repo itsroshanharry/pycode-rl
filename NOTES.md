@@ -2,6 +2,49 @@
 
 Running log of doc ambiguities resolved, design decisions, and cost. Newest first.
 
+## Contents
+
+Every entry in this log, newest first (generated from the headings; entries are unchanged).
+
+- [CURRENT STATUS (read this first in a new session), updated 2026-11-21](#current-status-read-this-first-in-a-new-session-updated-2026-11-21)
+- [2026-11-21: REPORT.md and NOTES.md structured (additions only)](#2026-11-21-reportmd-and-notesmd-structured-additions-only)
+- [2026-11-21: 0.2.4: README attribution and per-stage methods](#2026-11-21-024-readme-attribution-and-per-stage-methods)
+- [2026-11-21: Hosted bash smoke test failed on 0.2.2 (the guard caught it); fixed in 0.2.3](#2026-11-21-hosted-bash-smoke-test-failed-on-022-the-guard-caught-it-fixed-in-023)
+- [2026-11-21: 0.2.2 pushed: `taskset.ids`, harness guard, final README](#2026-11-21-022-pushed-tasksetids-harness-guard-final-readme)
+- [2026-11-21: Hub leaderboard format (user shared gpt-oss-120b's run from the dashboard)](#2026-11-21-hub-leaderboard-format-user-shared-gpt-oss-120bs-run-from-the-dashboard)
+- [2026-11-21: Bash harness variant built; probes; model choice](#2026-11-21-bash-harness-variant-built-probes-model-choice)
+- [2026-11-20: Leaderboard wave 1 + grader v2 bug found and fixed (0.2.1)](#2026-11-20-leaderboard-wave-1--grader-v2-bug-found-and-fixed-021)
+- [2026-11-20: Stage 6 audit -- 75 tasks (38 train / 37 test)](#2026-11-20-stage-6-audit----75-tasks-38-train--37-test)
+- [2026-11-20: Leaderboard plan finalized; split revised; REPORT.md draft started](#2026-11-20-leaderboard-plan-finalized-split-revised-reportmd-draft-started)
+- [2026-11-20: Stage 4 contamination + Stage 5 split -- 76 tasks, 38 train / 38 test](#2026-11-20-stage-4-contamination--stage-5-split----76-tasks-38-train--38-test)
+- [2026-11-20: Stage 3 difficulty filter done -- 81 tasks kept](#2026-11-20-stage-3-difficulty-filter-done----81-tasks-kept)
+- [2026-11-20: Leaderboard line-up decided (Middle plan) + difficulty filter started](#2026-11-20-leaderboard-line-up-decided-middle-plan--difficulty-filter-started)
+- [2026-11-20: Filter-model probes, gpt-oss-20b pilot, b09 (first v3 batch) and the v3 difficulty check](#2026-11-20-filter-model-probes-gpt-oss-20b-pilot-b09-first-v3-batch-and-the-v3-difficulty-check)
+- [2026-11-20: 3-model pilot comparison + 4 spec defects found](#2026-11-20-3-model-pilot-comparison--4-spec-defects-found)
+- [2026-11-20: Pilot (20 tasks x 4, filter model) -- token cap finding + "too easy" finding](#2026-11-20-pilot-20-tasks-x-4-filter-model----token-cap-finding--too-easy-finding)
+- [2026-11-20: Incremental validation + batch b08](#2026-11-20-incremental-validation--batch-b08)
+- [2026-11-19: Batch b07 (generate_v2)](#2026-11-19-batch-b07-generate_v2)
+- [2026-11-19: Batch b06 (generate_v2)](#2026-11-19-batch-b06-generate_v2)
+- [2026-11-19: Decisions: harness comparison stretch + naming the generation method](#2026-11-19-decisions-harness-comparison-stretch--naming-the-generation-method)
+- [2026-11-19: Batch b05 (generate_v2)](#2026-11-19-batch-b05-generate_v2)
+- [2026-11-19: Batch b04 (generate_v2)](#2026-11-19-batch-b04-generate_v2)
+- [2026-11-18: Batch b03 (first generate_v2 batch) + grader v2 codec](#2026-11-18-batch-b03-first-generate_v2-batch--grader-v2-codec)
+- [2026-11-18: Prompt generate_v2 (difficulty levers)](#2026-11-18-prompt-generate_v2-difficulty-levers)
+- [2026-11-18: Grader false-negative fix + batch b02](#2026-11-18-grader-false-negative-fix--batch-b02)
+- [2026-11-18: Generation pipeline + batch b01 (10 Claude-written candidates)](#2026-11-18-generation-pipeline--batch-b01-10-claude-written-candidates)
+- [2026-11-18: Published (PRIVATE) + hosted smoke test PASSED](#2026-11-18-published-private--hosted-smoke-test-passed)
+- [2026-11-18: Direction decision: stay function-level (no repo pivot)](#2026-11-18-direction-decision-stay-function-level-no-repo-pivot)
+- [2026-11-16: Contamination plan revised (Stage 4)](#2026-11-16-contamination-plan-revised-stage-4)
+- [2026-11-16: Phase 1 built and verified (spend so far: about $0.002)](#2026-11-16-phase-1-built-and-verified-spend-so-far-about-0002)
+- [2026-11-16: Project setup + Windows blocker](#2026-11-16-project-setup--windows-blocker)
+- [2026-11-16: Hosted probe, `primeintellect/humaneval` (eval `ndwnprmnzutjxj4wsb69l6v3`)](#2026-11-16-hosted-probe-primeintellecthumaneval-eval-ndwnprmnzutjxj4wsb69l6v3)
+- [2026-11-16: Toolchain + login (no spend)](#2026-11-16-toolchain--login-no-spend)
+- [2026-11-16: Hosted evals research (no spend)](#2026-11-16-hosted-evals-research-no-spend)
+- [2026-11-16: Session 1, grounding (no spend)](#2026-11-16-session-1-grounding-no-spend)
+  - [Verified against source (code wins over CLAUDE.md where they differ)](#verified-against-source-code-wins-over-claudemd-where-they-differ)
+  - [Model catalog (public `GET /api/v1/models`, 2026-11-16)](#model-catalog-public-get-apiv1models-2026-11-16)
+  - [Reference patterns worth copying](#reference-patterns-worth-copying)
+
 ---
 
 ## CURRENT STATUS (read this first in a new session), updated 2026-11-21
@@ -49,6 +92,26 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 - the SWE-env reward-hack audit is out of scope.
 
 **How to run things:** see CLAUDE.md section 3 (Codespace workflow), section 7 (gate order) and section 9 (hosted command).
+
+## 2026-11-21: REPORT.md and NOTES.md structured (additions only)
+
+- **User instruction:** structure both files without removing any detail; they are the project's proof of
+  authenticity. The user also said the existing files seemed fine as they were.
+- **So only additions were made, and nothing was reworded or reordered:**
+  - REPORT.md: an update note and a contents table at the top; new sections for the Environment summary, Verifier
+    design and reward-hack tests, Leaderboard results, F11 (hard tasks separate the top models), F12 (cost
+    estimates missed the runner sandbox), Process lessons, Costs, Limitations and Evidence index; one dated note
+    under F8 on the final model pairing.
+  - NOTES.md: a contents list of all entries at the top, and this entry.
+- **Check:** a script confirmed that every non-empty line of the previous REPORT.md is still present
+  (246 old lines, 0 missing).
+- **Facts re-checked while writing:**
+  - test split v3 count is 4 of 9 final v3 tasks (not 5: the split was re-run after the audit);
+  - the final prompt-version mix is v1 15, v2 49, v3 9, early examples 2;
+  - per-model task-bootstrap CI half-widths range from about 4 points (DeepSeek) to 9 (gpt-oss-120b).
+- **Pitfall recorded for completeness:** besides the c0038 quote case below, a bash heredoc also collapsed `\\` in
+  a regex while editing `pipeline/07_leaderboard.py` on 2026-11-21. It was fixed with the editor tool and a raw
+  string. No data impact.
 
 ## 2026-11-21: 0.2.4: README attribution and per-stage methods
 
