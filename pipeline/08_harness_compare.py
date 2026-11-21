@@ -125,16 +125,76 @@ def cmd_compare() -> None:
     print(json.dumps(result, indent=1))
 
 
+# Same sampling as the leaderboard; bash adds the harness, file delivery and a turn cap.
+SAMPLING = ["--sampling.temperature", "1.0", "--sampling.reasoning-effort", "low", "--sampling.max-tokens", "16384"]
+BASH = ["--env.agent.harness.id", "bash", "--env.taskset.solution", "file", "--env.agent.max-turns", "16"]
+PIDS = ROOT / "outputs" / "harness-pids.json"
+
+
+def cmd_launch(null_models: list[str], bash_models: list[str], rollouts: int, concurrency: int) -> None:
+    """Codespace only (vf-run needs Linux). Starts one detached vf-run per (model, harness), so the
+    runs survive the ssh session; `status` reports progress."""
+    import subprocess
+    sel = json.loads((OUT / "selection.json").read_text(encoding="utf-8"))["tasks"]
+    runs = [(m, "null") for m in null_models] + [(m, "bash") for m in bash_models]
+    pids = {}
+    for model, harness in runs:
+        name = f"harness-{harness}-{lb._short(model)}"
+        argv = [str(ROOT / ".venv" / "bin" / "vf-run"), "pycode-env", "-m", model, "-r", str(rollouts),
+                "-c", str(concurrency), "--env.taskset.split", "all", *SAMPLING, *(BASH if harness == "bash" else []),
+                "--select.include.ids", *sel, "-o", "outputs", "--run.name", name]
+        log = open(ROOT / "outputs" / f"{name}.log", "w", encoding="utf-8")
+        proc = subprocess.Popen(argv, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+        pids[name] = proc.pid
+        print(name, proc.pid, " ".join(argv[2:8]))
+    PIDS.write_text(json.dumps(pids, indent=1) + "\n", encoding="utf-8")
+
+
+def cmd_status(wait: int) -> None:
+    """Progress of the launched runs; with --wait N, poll every 30 s for up to N seconds."""
+    import os
+    import time
+    deadline = time.time() + wait
+    while True:
+        pids = json.loads(PIDS.read_text(encoding="utf-8"))
+        alive, lines = 0, []
+        for name, pid in pids.items():
+            try:
+                os.kill(pid, 0)
+                running = True
+            except OSError:
+                running = False
+            alive += running
+            log = (ROOT / "outputs" / f"{name}.log").read_text(encoding="utf-8", errors="replace")
+            done = log.count("rollout done")
+            tail = [l for l in log.splitlines() if "episodes ok" in l or "Error" in l][-1:]
+            lines.append(f"{name}: {'running' if running else 'finished'}, {done} attempts done {tail}")
+        if not alive or time.time() >= deadline:
+            print("\n".join(lines))
+            print("ALL_DONE" if not alive else "STILL_RUNNING", flush=True)
+            return
+        time.sleep(30)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=["select", "ingest", "compare"])
+    ap.add_argument("cmd", choices=["select", "ingest", "compare", "launch", "status"])
     ap.add_argument("traces", nargs="?")
     ap.add_argument("--model")
+    ap.add_argument("--null-models", nargs="*", default=[])
+    ap.add_argument("--bash-models", nargs="*", default=[])
+    ap.add_argument("--rollouts", type=int, default=2)
+    ap.add_argument("--concurrency", type=int, default=3)
+    ap.add_argument("--wait", type=int, default=0)
     args = ap.parse_args()
     if args.cmd == "select":
         cmd_select()
     elif args.cmd == "ingest":
         cmd_ingest(args.traces, args.model)
+    elif args.cmd == "launch":
+        cmd_launch(args.null_models, args.bash_models, args.rollouts, args.concurrency)
+    elif args.cmd == "status":
+        cmd_status(args.wait)
     else:
         cmd_compare()
 
