@@ -161,7 +161,7 @@ Findings:
   writes the file, runs it and fixes it over 12-15 turns. But it rereads about 100k tokens of
   (mostly cached) context and writes 8-11k tokens per attempt, about $0.019 against
   $0.002-0.006 for gpt-oss. A pairing with Qwen would have exceeded the budget cap, so the
-  bash comparison uses gpt-oss-120b and gpt-oss-20b. Qwen was excluded for cost, not performance.
+  proposed bash comparison uses gpt-oss-120b and gpt-oss-20b. Qwen would be excluded for cost, not performance.
 - **Harness fit:** both gpt-oss models first call `apply_patch`, the file-editing command of
   the Codex harness they were trained with. It does not exist in this sandbox.
   - In 5 of 8 gpt-oss tool calls on c0014/c0033, the model then recovered with `cat > file`

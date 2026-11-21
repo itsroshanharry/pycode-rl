@@ -56,7 +56,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
   - Qwen 9B costs about $0.019 per bash attempt (12-15 turns, about 100k cached input tokens),
     about 4x gpt-oss, so a Qwen pairing would exceed the $7 cap.
   - gpt-oss models try the Codex `apply_patch` command first (harness mismatch).
-- **Decision (user):** bash comparison on gpt-oss-120b + gpt-oss-20b (same family; cons
+- **Proposed (awaiting the user's go-ahead):** bash comparison on gpt-oss-120b + gpt-oss-20b (same family; cons
   recorded in REPORT), 20 tasks x 2 attempts, about $0.40.
 - **Pitfall (again):** `pgrep -f`/`pkill -f` patterns match the ssh session's own command
   line. Wait on PIDs (`wait`) or use a pattern that cannot occur in the command itself.
