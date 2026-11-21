@@ -46,7 +46,7 @@ def cmd_select() -> None:
     print(json.dumps(sel, indent=1))
 
 
-def cmd_ingest(traces: str, model: str) -> None:
+def cmd_ingest(traces: str, model: str, harness: str) -> None:
     meta = lb._meta()
     opener = gzip.open if traces.endswith(".gz") else open
     rows = []
@@ -55,7 +55,7 @@ def cmd_ingest(traces: str, model: str) -> None:
             if line.strip():
                 rec = json.loads(line)
                 for doc in rec.get("traces") or [rec]:
-                    row = lb._compact(doc, model, "vf-run:bash", meta)
+                    row = lb._compact(doc, model, f"vf-run:{harness}", meta)
                     info = doc.get("info") or {}
                     act = [n for n in (doc.get("nodes") or []) if (n.get("message") or n).get("role") == "assistant"]
                     calls = doc.get("calls") or []
@@ -68,14 +68,38 @@ def cmd_ingest(traces: str, model: str) -> None:
                         "completion_tokens": sum(((c.get("usage") or {}).get("completion_tokens") or 0) for c in calls),
                         "truncated": any(c.get("finish_reason") == "length" for c in calls),
                         "stop_condition": doc.get("stop_condition"),
+                        **_tool_stats(doc),
                     })
                     rows.append(row)
-    out = OUT / f"rollouts_{lb._short(model)}_bash.jsonl.gz"
+    out = OUT / f"rollouts_{lb._short(model)}_{harness}.jsonl.gz"
     OUT.mkdir(parents=True, exist_ok=True)
     with gzip.open(out, "wt", encoding="utf-8") as f:
         for r in sorted(rows, key=lambda r: (r["task_id"], r["trace_id"])):
             f.write(json.dumps(r) + "\n")
-    print(f"wrote {len(rows)} rows -> {out.relative_to(ROOT)}")
+    print(f"wrote {len(rows)} rows -> {_rel(out)}")
+
+
+def _rel(path: Path) -> str:
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
+def _tool_stats(doc: dict) -> dict:
+    """Harness-fit evidence: tool calls, calls to the non-existent Codex `apply_patch` command,
+    and commands that ran Python (the model testing its own code)."""
+    calls = apply_patch = ran_python = 0
+    for node in doc.get("nodes") or []:
+        msg = node.get("message") or node
+        if msg.get("role") != "assistant":
+            continue
+        for tc in msg.get("tool_calls") or []:
+            args = str((tc.get("function") or tc).get("arguments"))
+            calls += 1
+            apply_patch += "apply_patch" in args
+            ran_python += "python" in args and "cat >" not in args
+    return {"tool_calls": calls, "apply_patch_calls": apply_patch, "ran_python_calls": ran_python}
 
 
 def _load(path: Path) -> list[dict]:
@@ -88,10 +112,14 @@ def cmd_compare() -> None:
     sel = json.loads((OUT / "selection.json").read_text(encoding="utf-8"))["tasks"]
     result: dict = {"tasks": sel, "models": {}}
     rng = random.Random(SEED)
-    for bash_file in sorted(OUT.glob("rollouts_*_bash.jsonl.gz")):
+    for bash_file in sorted(OUT.glob("rollouts_*_bash.jsonl.gz")):  # one per model
         bash = [r for r in _load(bash_file) if r["task_id"] in sel]
         model = bash[0]["model"]
-        null = [r for r in _load(LB / f"rollouts_{lb._short(model)}.jsonl.gz") if r["task_id"] in sel]
+        # leaderboard attempts if the model is on the leaderboard, else this study's own null run
+        null_file = LB / f"rollouts_{lb._short(model)}.jsonl.gz"
+        if not null_file.exists():
+            null_file = OUT / f"rollouts_{lb._short(model)}_null.jsonl.gz"
+        null = [r for r in _load(null_file) if r["task_id"] in sel]
         per = {}
         for name, rows in (("null", null), ("bash", bash)):
             by = collections.defaultdict(list)
@@ -120,6 +148,10 @@ def cmd_compare() -> None:
             "model_cost_per_attempt": {"null": round(sum(r["cost"] or 0 for r in null) / len(null), 5),
                                        "bash": round(sum(r["cost"] or 0 for r in bash) / len(bash), 5)},
             "bash_truncated_rate": round(sum(r["truncated"] for r in bash) / len(bash), 3),
+            "null_baseline": _rel(null_file), "null_attempts": len(null), "bash_attempts": len(bash),
+            "bash_tool_fit": {k: round(sum(r.get(k) or 0 for r in bash) / len(bash), 2)
+                              for k in ("tool_calls", "apply_patch_calls", "ran_python_calls")},
+            "bash_attempts_with_apply_patch": sum((r.get("apply_patch_calls") or 0) > 0 for r in bash),
         }
     (OUT / "summary.json").write_text(json.dumps(result, indent=1) + "\n", encoding="utf-8")
     print(json.dumps(result, indent=1))
@@ -181,6 +213,7 @@ def main() -> None:
     ap.add_argument("cmd", choices=["select", "ingest", "compare", "launch", "status"])
     ap.add_argument("traces", nargs="?")
     ap.add_argument("--model")
+    ap.add_argument("--harness", choices=["null", "bash"], default="bash", help="ingest: which run the traces come from")
     ap.add_argument("--null-models", nargs="*", default=[])
     ap.add_argument("--bash-models", nargs="*", default=[])
     ap.add_argument("--rollouts", type=int, default=2)
@@ -190,7 +223,7 @@ def main() -> None:
     if args.cmd == "select":
         cmd_select()
     elif args.cmd == "ingest":
-        cmd_ingest(args.traces, args.model)
+        cmd_ingest(args.traces, args.model, args.harness)
     elif args.cmd == "launch":
         cmd_launch(args.null_models, args.bash_models, args.rollouts, args.concurrency)
     elif args.cmd == "status":
