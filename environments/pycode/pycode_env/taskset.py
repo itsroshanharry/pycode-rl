@@ -12,11 +12,12 @@ Design (see NOTES.md for the reasoning):
 - Grade once in `finalize` and store it on `trace.info`; the reward and metrics read it.
 - Infrastructure failures raise (never a silent 0.0), so they show up as errors rather
   than as model failures.
-- Tool-using variant (`--env.taskset.solution file` with `--env.agent.harness.id bash`): the
-  agent writes /work/solution.py and may run it. Grading then uses isolated scoring: a fresh
-  sandbox receives only that file, and the grade is computed in the scoring phase (network
-  locked). A marker file proves the grading sandbox is not the agent's. Never combine a
-  shell-equipped harness with the default `reply` mode, which grades in the agent's sandbox.
+- Tool-using variant (`--env.taskset.solution file` with `--env.agent.harness.id bash`):
+  `PyCodeFileTask` (a subclass; the default `PyCodeTask` is unchanged). The agent writes
+  /work/solution.py and may run it. Grading uses isolated scoring: a fresh sandbox receives
+  only that file, and the grade is computed in the scoring phase (network locked). A marker
+  file proves the grading sandbox is not the agent's. Never combine a shell-equipped harness
+  with the default `reply` mode, which grades in the agent's sandbox.
 """
 
 from __future__ import annotations
@@ -72,9 +73,6 @@ class PyCodeData(vf.TaskData):
     reference: str
     mutants: list[str] = []
     meta: dict = {}
-    solution_mode: str = "reply"
-    """"reply": grade the last fenced code block of the reply (null harness, shared scoring).
-    "file": grade /work/solution.py (tool-using harness, isolated scoring)."""
 
 
 class PyCodeTaskConfig(vf.TaskConfig):
@@ -117,20 +115,50 @@ class PyCodeTask(vf.Task[PyCodeData, vf.State, PyCodeTaskConfig]):
         return grade
 
     async def finalize(self, trace: vf.Trace, runtime: vf.Runtime) -> None:
-        if self.data.solution_mode == "file":
-            await self._collect_file_solution(trace, runtime)
-            return
         code = extract_code(trace.last_reply)
         if not code:
             trace.info["grade"] = {"score": 0.0, "passed": 0, "total": 0, "no_code": True}
             return
         trace.info["grade"] = await self._grade(runtime, code)
 
-    async def _collect_file_solution(self, trace: vf.Trace, runtime: vf.Runtime) -> None:
-        """File mode, in the SOLVER sandbox. The agent had a shell here (it could have edited
-        pytest, planted sitecustomize.py or left a background process), so nothing is graded
-        here. The solution is normalized to one regular file, the only artifact that crosses
-        into the fresh grading sandbox."""
+    @vf.reward(weight=1.0)
+    async def passed_all_tests(self, trace: vf.Trace) -> float:
+        return float(trace.info["grade"]["score"])
+
+    @vf.metric
+    async def grading_details(self, trace: vf.Trace) -> dict[str, float]:
+        g = trace.info["grade"]
+        return {
+            "frac_tests_passed": g["passed"] / g["total"] if g["total"] else 0.0,
+            "no_code": float(bool(g.get("no_code"))),
+            "load_error": float(bool(g.get("load_error"))),
+            "call_timeouts": float(g.get("timeouts", 0)),
+        }
+
+    async def validate(self, runtime: vf.Runtime) -> bool:
+        """Gold check for `vf-validate`: reference passes every test, and enough
+        mutants fail. (`vf-validate` has already run `setup` on this runtime.)"""
+        ref = await self._grade(runtime, self.data.reference)
+        if ref["score"] != 1.0:
+            return False
+        mutants = self.data.mutants
+        if len(mutants) < MIN_MUTANTS:
+            return False
+        killed = 0
+        for m in mutants:
+            killed += (await self._grade(runtime, m))["score"] == 0.0
+        return killed >= MIN_KILLED
+
+
+class PyCodeFileTask(PyCodeTask):
+    """File mode, for tool-using harnesses. Only `finalize` and `grading_details` differ:
+    setup, the grader call, the reward and `validate` are inherited unchanged."""
+
+    async def finalize(self, trace: vf.Trace, runtime: vf.Runtime) -> None:
+        """Runs in the SOLVER sandbox. The agent had a shell here (it could have edited pytest,
+        planted sitecustomize.py or left a background process), so nothing is graded here.
+        The solution is normalized to one regular file, the only artifact that crosses into
+        the fresh grading sandbox."""
         await runtime.write(SOLVER_MARKER, b"1")
         res = await runtime.run(
             ["sh", "-c", 'if [ -f "$0" ] && [ ! -L "$0" ]; then stat -c %s "$0"; else echo missing; fi',
@@ -153,11 +181,13 @@ class PyCodeTask(vf.Task[PyCodeData, vf.State, PyCodeTaskConfig]):
         await runtime.write(SOLUTION_PATH, code.encode() if source != "oversized" else b"")
         trace.info["solution_source"] = source
 
-    async def _grade_file_solution(self, trace: vf.Trace, runtime: vf.Runtime | None) -> None:
-        """File mode, in the GRADING sandbox (isolated scoring: fresh box, network locked,
-        only /work/solution.py restored)."""
-        if self.data.solution_mode != "file" or runtime is None:
-            raise RuntimeError("no grade: reply mode grades in finalize; file mode needs a scoring runtime")
+    @vf.metric
+    async def grading_details(self, trace: vf.Trace, runtime: vf.Runtime | None = None) -> dict[str, float]:
+        """Runs in the GRADING sandbox (isolated scoring: fresh box, network locked, only
+        /work/solution.py restored). This is the only metric and metrics run before rewards,
+        so the grade is computed here exactly once; the inherited reward then reads it."""
+        if runtime is None:
+            raise RuntimeError("file mode grades in the scoring phase and needs its runtime")
         res = await runtime.run(["sh", "-c", f'test -e "{SOLVER_MARKER}" && echo shared || echo fresh'], {})
         if res.stdout.strip() != "fresh":
             # grading in the agent's own sandbox would let a shell-using agent tamper with it
@@ -168,38 +198,7 @@ class PyCodeTask(vf.Task[PyCodeData, vf.State, PyCodeTaskConfig]):
         else:
             trace.info["grade"] = await self._grade(runtime, code)
         trace.info["graded_in_fresh_sandbox"] = True
-
-    @vf.reward(weight=1.0)
-    async def passed_all_tests(self, trace: vf.Trace) -> float:
-        return float(trace.info["grade"]["score"])
-
-    @vf.metric
-    async def grading_details(self, trace: vf.Trace, runtime: vf.Runtime | None = None) -> dict[str, float]:
-        # Metrics run before rewards, and this is the only metric, so file-mode grading happens
-        # here exactly once (inside the scoring phase, after the network policy is applied).
-        if "grade" not in trace.info:
-            await self._grade_file_solution(trace, runtime)
-        g = trace.info["grade"]
-        return {
-            "frac_tests_passed": g["passed"] / g["total"] if g["total"] else 0.0,
-            "no_code": float(bool(g.get("no_code"))),
-            "load_error": float(bool(g.get("load_error"))),
-            "call_timeouts": float(g.get("timeouts", 0)),
-        }
-
-    async def validate(self, runtime: vf.Runtime) -> bool:
-        """Gold check for `vf-validate`: reference passes every test, and enough
-        mutants fail. (`vf-validate` has already run `setup` on this runtime.)"""
-        ref = await self._grade(runtime, self.data.reference)
-        if ref["score"] != 1.0:
-            return False
-        mutants = self.data.mutants
-        if len(mutants) < MIN_MUTANTS:
-            return False
-        killed = 0
-        for m in mutants:
-            killed += (await self._grade(runtime, m))["score"] == 0.0
-        return killed >= MIN_KILLED
+        return await super().grading_details(trace)
 
 
 class PyCodeConfig(vf.TasksetConfig):
@@ -231,16 +230,16 @@ class PyCodeTaskset(vf.Taskset[PyCodeTask, PyCodeConfig]):
             if self.config.solution not in ("reply", "file"):
                 raise ValueError(f"taskset.solution must be 'reply' or 'file', not {self.config.solution!r}")
             file_mode = self.config.solution == "file"
+            task_cls = PyCodeFileTask if file_mode else PyCodeTask
             mode_fields = (
                 {"artifacts": [vf.Artifact(source=SOLUTION_PATH)],
                  "scoring": vf.ScoringConfig(mode="isolated")} if file_mode else {}
             )
-            yield PyCodeTask(
+            yield task_cls(
                 PyCodeData(
                     id=r["id"],
                     name=r["id"],
                     prompt=f"{INSTRUCTION_FILE if file_mode else INSTRUCTION}\n\n{r['prompt']}",
-                    solution_mode=self.config.solution,
                     **mode_fields,
                     entry_point=r["entry_point"],
                     tests=r["tests"],
