@@ -130,3 +130,45 @@ truncated > no code > load error > call timeout > wrong answer.
 - That makes them good candidates for the question: does a shell, where the model can run its
   own tests, reduce wrong answers and load errors?
 - Measure the failure-mode shift per model, not only the score.
+
+## F8. Bash-harness probes (2026-11-21): tool use costs differ a lot by model, and harness fit matters
+
+Setup:
+- `vf-run` in the Codespace, `--env.agent.harness.id bash --env.taskset.solution file`, max 16 turns.
+- Sampling as on the leaderboard: temperature 1.0, reasoning effort low, max_tokens 16384.
+- 2 tasks (c0014, c0033) x 1 bash attempt per model, plus a no-tools regression check and a
+  Qwen no-tools baseline (2 tasks x 2 attempts).
+- Total about $0.07. Traces are in `outputs/probes/` (git-ignored).
+
+Mechanics:
+- All 6 bash attempts were graded in a fresh sandbox; the solver-marker check passed.
+- No errors and no truncation.
+- In 5 of 6 attempts the model wrote `/work/solution.py`. Once, gpt-oss-120b replied with a
+  code block instead, and the fallback graded that block.
+- The default no-tools path still grades normally after the refactor (gpt-oss-20b, c0014: 23 of 24 tests).
+
+| Model | Task | No tools | Bash result | Turns | Tool calls (apply_patch / ran own code) | Input tokens (cached) | Output tokens | Model $ per attempt |
+|---|---|---|---|---|---|---|---|---|
+| gpt-oss-120b | c0014 | 3/4 (leaderboard) | pass, 24/24 | 5 | 4 (2 / 1) | 3.6k (8.3k) | 3.0k | 0.0061 |
+| gpt-oss-120b | c0033 | 1/4 (leaderboard) | pass, 27/27 (reply fallback) | 2 | 1 (1 / 0) | 1.7k (0.6k) | 2.0k | 0.0023 |
+| gpt-oss-20b | c0014 | 2/4 (leaderboard) | fail, 0/24 (NameError `Solution`) | 5 | 4 (2 / 1) | 5.3k (9.9k) | 4.2k | 0.0041 |
+| gpt-oss-20b | c0033 | 1/4 (leaderboard) | fail, 22/27 | 5 | 4 (0 / 0) | 2.6k (5.1k) | 2.0k | 0.0020 |
+| qwen3.5-9b | c0014 | 0/2 (probe) | fail, 23/24 | 15 | 14 (0 / 10) | 4.2k (96k) | 8.4k | 0.0175 |
+| qwen3.5-9b | c0033 | 0/2 (probe; 1 truncated at 16k) | pass, 27/27 | 12 | 11 (0 / 8) | 7.4k (102k) | 10.8k | 0.0195 |
+
+Findings:
+- **Tool-loop cost varies about 4x between models.** Qwen 9B works the way an agent should: it
+  writes the file, runs it and fixes it over 12-15 turns. But it rereads about 100k tokens of
+  (mostly cached) context and writes 8-11k tokens per attempt, about $0.019 against
+  $0.002-0.006 for gpt-oss. A pairing with Qwen would have exceeded the budget cap, so the
+  bash comparison uses gpt-oss-120b and gpt-oss-20b. Qwen was excluded for cost, not performance.
+- **Harness fit:** both gpt-oss models first call `apply_patch`, the file-editing command of
+  the Codex harness they were trained with. It does not exist in this sandbox.
+  - In 5 of 8 gpt-oss tool calls on c0014/c0033, the model then recovered with `cat > file`
+    or a Python writer.
+  - Once (gpt-oss-120b, c0033) it gave up on the tools and answered with a code block.
+  - gpt-oss ran its own code 0-1 times per attempt, against Qwen's 8-10.
+  - So part of a bash-vs-null difference for gpt-oss can be harness mismatch rather than the
+    value of tools. Measure it per attempt in the main run (apply_patch attempts, test runs).
+- gpt-oss-20b's 0/24 on c0014 was its own bug: the module referenced an undefined `Solution`
+  (a LeetCode-style class habit), not a grading problem.

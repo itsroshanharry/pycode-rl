@@ -37,6 +37,30 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 **How to run things:** see CLAUDE.md section 3 (Codespace workflow), section 7 (gate order) and section 9 (hosted command).
 
+## 2026-11-21: Bash harness variant built; probes; model choice
+
+- **Code:**
+  - `taskset.solution = "file"` uses the new subclass `PyCodeFileTask`. `PyCodeTask` is
+    byte-identical to the leaderboard version; only `load()` picks the class and instruction.
+  - The agent writes `/work/solution.py`.
+  - Isolated scoring: that file is the only artifact, normalized to a plain file in the
+    solver's `finalize`, and graded in the scoring phase of a fresh sandbox with the network
+    locked. The solver-marker check refuses to grade in the agent's own box.
+  - If the file is missing, the reply's last code block is graded, recorded as `reply_fallback`.
+  - Not pushed to the Hub (local `vf-run` only).
+- **Task sample (pre-registered, `data/reports/harness/selection.json`):** 20 random tasks
+  (seed 2026) from the 53 whose difficulty-filter pass rate is <= 0.5. They are chosen from
+  the filter's attempts, not the leaderboard's, to avoid regression-to-the-mean bias.
+- **Probes (about $0.07):** see REPORT F8.
+  - The mechanics work: fresh-sandbox grading, file delivery, fallback, no-tools regression.
+  - Qwen 9B costs about $0.019 per bash attempt (12-15 turns, about 100k cached input tokens),
+    about 4x gpt-oss, so a Qwen pairing would exceed the $7 cap.
+  - gpt-oss models try the Codex `apply_patch` command first (harness mismatch).
+- **Decision (user):** bash comparison on gpt-oss-120b + gpt-oss-20b (same family; cons
+  recorded in REPORT), 20 tasks x 2 attempts, about $0.40.
+- **Pitfall (again):** `pgrep -f`/`pkill -f` patterns match the ssh session's own command
+  line. Wait on PIDs (`wait`) or use a pattern that cannot occur in the command itself.
+
 ## 2026-11-20: Leaderboard wave 1 + grader v2 bug found and fixed (0.2.1)
 
 - **Wave 1 on 0.2.0** (all 75 tasks x 4, temperature 1.0, reasoning low, max_tokens 16384, -c 8). Wallet $7.52 -> $6.16, so **$1.37**: model fees $1.01, the rest sandboxes. Analysis with `pipeline/07_leaderboard.py`.
