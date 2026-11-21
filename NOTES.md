@@ -6,12 +6,14 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 ## CURRENT STATUS (read this first in a new session), updated 2026-11-21
 
-**Where we are:** the leaderboard is done (4 models, hosted, `data/reports/leaderboard/`), the null vs bash comparison is done (local, `data/reports/harness/`, REPORT F8-F9), and **0.2.2** is pushed (PRIVATE) with the final README, `taskset.ids` and the harness guard.
-- **Published now:** `itsroshanharry/pycode-env` **0.2.2** (wheel sha256 `7fac02a6...`, dataset `119ed403...`, grader v3). The leaderboard ran on 0.2.0 (wave 1) and 0.2.1 (wave 2); 0.2.2 changes no grading code.
-- **Wallet:** $3.19 left, so spend is about $6.81 against the $7 cap (about $0.19 of room).
+**Where we are:** the leaderboard is done (4 models, hosted, `data/reports/leaderboard/`), the null vs bash comparison is done (local, `data/reports/harness/`, REPORT F8-F9), and **0.2.3** is pushed (PRIVATE) with the final README, `taskset.ids`, the harness guard and the hosted file-mode fix (REPORT F10).
+- **Published now:** `itsroshanharry/pycode-env` **0.2.3** (wheel sha256 `72fb7cfa...`, dataset `119ed403...`, grader v3). The leaderboard ran on 0.2.0 (wave 1) and 0.2.1 (wave 2); 0.2.2-0.2.3 change no reply-mode grading behaviour.
+- **Wallet:** $3.162 left, so spend is about $6.84 against the $7 cap (about $0.16 of room).
 - **Next steps:**
   1. User: share the DeepSeek, Gemma and gpt-oss-20b runs to the Hub leaderboard (only gpt-oss-120b is shared).
-  2. Hosted bash smoke test, needs user approval: 1 task x 1 attempt, gpt-oss-120b, about $0.04. The hosted `-a '{"agent": {"harness": ...}}'` path in the README is not yet verified.
+  2. ~~Hosted bash smoke test~~ done: failed on 0.2.2 (guard caught the hosted rebuild bug, REPORT F10), passed on 0.2.3.
+  2b. README attribution wording (replace "author" / "by hand" with who did each step), waiting on the user: did they
+      write pc-hw-002 / pc-hw-005 (labelled "human"), and how to describe their role. Then push 0.2.4.
   3. REPORT leaderboard chapter; move the near-miss / first-failing-test columns into `07_leaderboard.py`.
   4. Make the environment public at the end; optional PR.
   - Not run (budget): qwen3.5-9b leaderboard row, cross-benchmark calibration.
@@ -48,6 +50,32 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 - the SWE-env reward-hack audit is out of scope.
 
 **How to run things:** see CLAUDE.md section 3 (Codespace workflow), section 7 (gate order) and section 9 (hosted command).
+
+## 2026-11-21: Hosted bash smoke test failed on 0.2.2 (the guard caught it); fixed in 0.2.3
+
+- **Smoke test `bqwkoajiiurkbz6zviyw1q0t`** (gpt-oss-120b, bash, `solution: file`, ids [pc-c-0001]): FAILED in 3 s
+  with our guard's EnvError. The env args arrived correctly (`eval_config.env_args` shows `solution: file`), and the
+  agent override worked (harness bash), but the task was a plain `PyCodeTask`. Cost about $0.006 (runner sandbox only).
+- **Root cause (prime-rl `src/prime_rl/env/server.py`, `EnvServer._build_task`):** hosted evals run `uv run eval`
+  (prime-rl). The client runs `load()`, but only each task's `TaskData.model_dump()` crosses the wire; the env server
+  rebuilds the task as `type(taskset).task_type()`, the class declared in `vf.Taskset[PyCodeTask, ...]`. Choosing
+  `PyCodeFileTask` per row in `load()` is therefore lost in hosted runs (local `vf-run` keeps the objects).
+- **Without the guard** that hosted run would have graded the reply's code block in the agent's own sandbox
+  (`PyCodeTask.finalize`), ignored `/work/solution.py`, and skipped the fresh-sandbox marker check: wrong and
+  hackable, with no error. Defense in depth paid off: the guard checks the *data* plus the harness, at run time.
+- **Fix (0.2.3):** the mode lives in the data (`PyCodeData.solution`, copied from `taskset.solution`), and the
+  declared class is a new `PyCodeAnyTask(PyCodeFileTask)` that routes `finalize`/`grading_details` to the
+  `PyCodeTask` or `PyCodeFileTask` hooks by `data.solution`. Both of those classes are unchanged; `load()` yields
+  `PyCodeAnyTask` so local runs follow the hosted path. The guard now reads `task.data.solution`.
+  - Rule for v1 tasksets: **anything that differs per task must be in `TaskData`**, never in the Python class.
+- **Tests:** a helper replicates `_build_task` (dump -> validate -> declared class); dispatch tests use a fake
+  in-memory runtime. Codespace suite 51 passed. Local real runs: no tools reply 30/30 (PyCodeAnyTask), bash file
+  30/30 with `solution_source=file`, `graded_in_fresh_sandbox=True`. About $0.01.
+- **Hosted smoke test on 0.2.3 `oqimyvumyopakf92d7cayxzv`: COMPLETED**, 1 sample, 0 errors. Trace
+  `c9cf04ea37d348acb4a386ac7a457742`: task type `PyCodeAnyTask`, `solution_source=file`,
+  `graded_in_fresh_sandbox=true`, 28/30 tests (reward 0: a model miss on `test_invalid`, not infra), 16 tool-call
+  messages, and it tried `apply_patch` first again. **The README's hosted bash command is verified.**
+- Wallet after both smoke tests: $3.162, so spend is about $6.84 against the $7 cap (billing may still lag a little).
 
 ## 2026-11-21: 0.2.2 pushed: `taskset.ids`, harness guard, final README
 

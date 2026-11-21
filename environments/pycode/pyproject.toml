@@ -1,6 +1,6 @@
 [project]
 name = "pycode-env"
-version = "0.2.2"
+version = "0.2.3"
 description = "Python function-implementation tasks graded by hidden pytest suites in a Prime sandbox."
 readme = "README.md"
 tags = ["code", "single-turn", "execution", "tool-use", "v1"]

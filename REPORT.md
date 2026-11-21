@@ -226,3 +226,21 @@ Limitations:
 - Cost: estimated $0.57 from the probes, actual $0.79, because Nemotron's thinking per attempt
   in the full run was longer than in the 2-task probe. Probes this small under-estimate
   long-tail token use.
+
+## F10. Hosted runs rebuild tasks from data; a run-time guard caught a silent grading bug (2026-11-21)
+
+- **What happened:** the first hosted bash run (0.2.2, smoke test `bqwkoajiiurkbz6zviyw1q0t`) failed in 3 seconds
+  with the environment's own guard error: "harness 'bash' gives the agent tools: add solution file". The run
+  had asked for `solution: file`.
+- **Cause:** hosted evals run through prime-rl's env server. It receives only each task's data and rebuilds the
+  task as the class the taskset declares (`EnvServer._build_task`). The environment chose the file-mode class
+  per task inside `load()`, which works locally but is lost in hosted runs.
+- **What the guard prevented:** without it, the hosted run would have graded the reply's code block inside the
+  agent's own sandbox, ignored the solution file and skipped the fresh-sandbox check. The scores would have looked
+  normal and been both wrong and open to tampering.
+- **Fix (0.2.3):** the mode is now a data field, and one declared task class routes to the reply or file
+  behaviour from it. Tests replicate the server's rebuild step.
+- **Lessons:**
+  - In verifiers v1, everything that differs per task must be in `TaskData`, not in the Python class.
+  - Check invariants at run time where they are used, not only at configuration time.
+  - Test the hosted path, not just the local one.
