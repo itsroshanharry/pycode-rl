@@ -37,6 +37,19 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 
 **How to run things:** see CLAUDE.md section 3 (Codespace workflow), section 7 (gate order) and section 9 (hosted command).
 
+## 2026-11-21: Hub leaderboard format (user shared gpt-oss-120b's run from the dashboard)
+
+- **Sharing:** only from the dashboard's Share button. The CLI cannot change an existing evaluation's visibility
+  ("Visibility can only be set when creating a new evaluation", prime_cli evals.py). Local v1 runs cannot be
+  uploaded as evaluations: `prime eval push` is the v0 flow; v1 local runs only upload as traces.
+- **Leaderboard:** one list per environment, one row per shared evaluation, sorted by Avg Reward.
+  - Columns: model, status, samples ("All examples x 4 rollouts"), reasoning effort, avg reward, published by, created.
+  - Not shown: our metrics, package version, env args. The version appears only in the detail panel's run command
+    (`pycode-env@0.2.1`). It is visible to the owner while the env is private.
+- **Consequence:** a bash run would be an unlabelled second row for the same model, ranked against no-tools runs
+  on a different task subset. Proposal: the leaderboard holds the 4 no-tools runs only; the bash comparison goes
+  in README/REPORT F9.
+
 ## 2026-11-21: Bash harness variant built; probes; model choice
 
 - **Code:**
