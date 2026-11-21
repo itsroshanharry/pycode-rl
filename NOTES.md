@@ -112,6 +112,12 @@ Every entry in this log, newest first (generated from the headings; entries are 
 - **Pitfall recorded for completeness:** besides the c0038 quote case below, a bash heredoc also collapsed `\\` in
   a regex while editing `pipeline/07_leaderboard.py` on 2026-11-21. It was fixed with the editor tool and a raw
   string. No data impact.
+- **Repo clean-up before going public (user decision):**
+  - deleted `Claude Setup.exe`, a 7.5 MB installer committed by accident in `92ea91c` on 2026-11-18;
+  - deleted `drafts/`; `README_hub_draft.md` was superseded by `environments/pycode/README.md`;
+  - added `*.exe` to `.gitignore`.
+  Both files remain in git history (the user chose not to rewrite it). Earlier entries that mention
+  `drafts/README_hub_draft.md` refer to that history.
 
 ## 2026-11-21: 0.2.4: README attribution and per-stage methods
 

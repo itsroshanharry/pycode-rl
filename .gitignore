@@ -21,3 +21,6 @@ outputs/
 
 # public benchmark corpora downloaded by pipeline/04_contamination.py (not redistributed)
 data/external/
+
+# installers and other binaries never belong in the repo
+*.exe
