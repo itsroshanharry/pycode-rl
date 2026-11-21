@@ -17,7 +17,9 @@ Design (see NOTES.md for the reasoning):
   /work/solution.py and may run it. Grading uses isolated scoring: a fresh sandbox receives
   only that file, and the grade is computed in the scoring phase (network locked). A marker
   file proves the grading sandbox is not the agent's. Never combine a shell-equipped harness
-  with the default `reply` mode, which grades in the agent's sandbox.
+  with the default `reply` mode, which grades in the agent's sandbox: `PyCodeEnv.run`
+  refuses that combination.
+- `taskset.ids` selects a fixed subset of tasks (hosted runs have no `--select` flag).
 """
 
 from __future__ import annotations
@@ -211,6 +213,10 @@ class PyCodeConfig(vf.TasksetConfig):
     """"reply" (default, for the null harness): the answer is the reply's code block.
     "file" (for tool-using harnesses such as bash): the agent writes /work/solution.py, and
     grading switches to isolated scoring with that file as the only artifact."""
+    ids: list[str] = []
+    """Load only these task ids (empty = every task in `split`). Hosted runs have no task
+    selection flag, so this is how they reproduce a fixed subset. Every id must exist in
+    `split`; use split "all" to select from both splits."""
     task: PyCodeTaskConfig = PyCodeTaskConfig()
 
 
@@ -221,11 +227,25 @@ class PyCodeTaskset(vf.Taskset[PyCodeTask, PyCodeConfig]):
                 raw = f.read()
         else:
             raw = files("pycode_env").joinpath("data/dataset.jsonl").read_text(encoding="utf-8")
+        wanted = set(self.config.ids)
+        if wanted:
+            # Fail loudly on a typo or a wrong split, instead of silently running fewer tasks.
+            in_split = {
+                r["id"] for r in map(json.loads, filter(str.strip, raw.splitlines()))
+                if self.config.split in ("all", r["split"])
+            }
+            if missing := sorted(wanted - in_split):
+                raise ValueError(
+                    f"taskset.ids not found in split {self.config.split!r}: {missing} "
+                    "(use split 'all' to select from both splits)"
+                )
         for line in raw.splitlines():
             if not line.strip():
                 continue
             r = json.loads(line)
             if self.config.split not in ("all", r["split"]):
+                continue
+            if wanted and r["id"] not in wanted:
                 continue
             if self.config.solution not in ("reply", "file"):
                 raise ValueError(f"taskset.solution must be 'reply' or 'file', not {self.config.solution!r}")
@@ -265,6 +285,17 @@ class PyCodeEnvConfig(vf.EnvConfig):
 
 class PyCodeEnv(vf.Env[PyCodeEnvConfig]):
     async def run(self, task: vf.Task, agents: vf.Agents) -> None:
+        # Reply mode grades in the agent's own sandbox (shared scoring). That is safe only
+        # when the agent has no tools: with a shell it could plant files that fake a pass.
+        # Refuse the combination before the model is called; Prime records the error on the
+        # episode, so it can never be mistaken for a model score.
+        harness_id = agents.agent.harness.config.id
+        if harness_id != "null" and not isinstance(task, PyCodeFileTask):
+            raise ValueError(
+                f"harness {harness_id!r} gives the agent tools: add --env.taskset.solution file "
+                "(hosted: -a '{\"taskset\": {\"solution\": \"file\"}}'), which grades the "
+                "solution file in a fresh sandbox"
+            )
         await agents.agent.run(task)
 
 
