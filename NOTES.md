@@ -59,6 +59,13 @@ Every entry in this log, newest first (generated from the headings; entries are 
   2b. ~~README attribution wording~~ done in 0.2.4 (see the entry below).
   3. REPORT leaderboard chapter; move the near-miss / first-failing-test columns into `07_leaderboard.py`.
   4. Make the environment public at the end; optional PR.
+  5. **Plan for 2026-11-22 (user):** go public.
+     - Optional first: redact the third-party mentions at NOTES.md (the "Nikhil's accounts" line) and the
+       Windows username in the 2 difficulty report paths (asked, not yet answered).
+     - Make the GitHub repo public.
+     - Add the repo link and `license = "MIT"` to `environments/pycode`, push 0.2.5, then make the Hub env public.
+     - Share the DeepSeek, Gemma and gpt-oss-20b runs to the leaderboard.
+     - Upstream contribution work (prime-rl F10 issue, SWE review) is deferred to a later project.
   - Not run (budget): qwen3.5-9b leaderboard row, cross-benchmark calibration.
 
 **History below this line is the 2026-11-20 status, kept for reference.**
