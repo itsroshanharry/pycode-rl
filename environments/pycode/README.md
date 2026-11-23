@@ -399,3 +399,9 @@ band and prompt version (seed 2026).
   can fail on these tasks; it does not establish that tools never help.
 
 Dataset sha256 `119ed403e4977450209a44a3c2d99e7661fd0c17611c9525b7e8f1d182fc2680`.
+
+## Source, report and license
+
+- Pipeline, raw evidence and decision log: [github.com/itsroshanharry/pycode-rl](https://github.com/itsroshanharry/pycode-rl).
+- Full report (funnel, every leaderboard table, findings, costs, limitations): [REPORT.md](https://github.com/itsroshanharry/pycode-rl/blob/main/REPORT.md).
+- License: MIT.

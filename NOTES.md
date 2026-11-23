@@ -7,6 +7,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 Every entry in this log, newest first (generated from the headings; entries are unchanged).
 
 - [CURRENT STATUS (read this first in a new session), updated 2026-11-21](#current-status-read-this-first-in-a-new-session-updated-2026-11-21)
+- [2026-11-23: Going public](#2026-11-23-going-public)
 - [2026-11-21: MIT license; upstream contribution candidates (nothing opened)](#2026-11-21-mit-license-upstream-contribution-candidates-nothing-opened)
 - [2026-11-21: REPORT.md and NOTES.md structured (additions only)](#2026-11-21-reportmd-and-notesmd-structured-additions-only)
 - [2026-11-21: 0.2.4: README attribution and per-stage methods](#2026-11-21-024-readme-attribution-and-per-stage-methods)
@@ -101,6 +102,17 @@ Every entry in this log, newest first (generated from the headings; entries are 
 - the SWE-env reward-hack audit is out of scope.
 
 **How to run things:** see CLAUDE.md section 3 (Codespace workflow), section 7 (gate order) and section 9 (hosted command).
+
+## 2026-11-23: Going public
+
+- **GitHub:** `itsroshanharry/pycode-rl` set to PUBLIC (`gh repo edit --visibility public`).
+- **0.2.5 pushed** (wheel sha256 `60dac31f...`, same dataset `119ed403`): `license = "MIT"`, `LICENSE` in the
+  wheel, `[project.urls] Repository`, and a "Source, report and license" section in the Hub README.
+- **Hub visibility:** `prime env push --visibility PUBLIC` did NOT change it; `prime env status` still says
+  PRIVATE. The CLI (prime-cli `commands/env.py:768`) only sends visibility when the environment is created, so an
+  existing environment's visibility must be changed in the dashboard.
+- **Leaderboard sharing:** the user shared the DeepSeek, Gemma and gpt-oss-20b runs (gpt-oss-120b was already
+  shared), so all 4 no-tools runs are on the Hub leaderboard.
 
 ## 2026-11-21: MIT license; upstream contribution candidates (nothing opened)
 

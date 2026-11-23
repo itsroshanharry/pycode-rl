@@ -375,7 +375,7 @@ Sandbox math: 1 vCPU/1 GiB/5 GiB ~ $0.034/hr (launch rates through Dec 22, 2026)
 
 ## 11. Publishing and contributing
 
-- `prime env push --path environments/pycode --visibility PRIVATE --runtime v1 --plain` (use `--auto-bump` for version bumps; public at the end). The package **must use the flat layout** (`environments/pycode/pycode_env/`); `prime env push` does not detect `src/` layouts. Currently pushed: `itsroshanharry/pycode-env` 0.2.4 (grader v3, `taskset.ids`, harness guard, hosted file-mode fix, README with per-stage methods and attribution), PRIVATE. Requires a username set on the Prime profile and `prime login`. Install by others: `prime env install <owner>/pycode-env`.
+- `prime env push --path environments/pycode --visibility PRIVATE --runtime v1 --plain` (use `--auto-bump` for version bumps; public at the end). The package **must use the flat layout** (`environments/pycode/pycode_env/`); `prime env push` does not detect `src/` layouts. Currently pushed: `itsroshanharry/pycode-env` 0.2.5 (0.2.4 + MIT license, repo link), visibility set in the dashboard (the CLI only sets it at creation). GitHub repo is PUBLIC since 2026-11-23. Requires a username set on the Prime profile and `prime login`. Install by others: `prime env install <owner>/pycode-env`.
 - README on the Hub must state: what the tasks are, how they were generated (AI-generated, with the validation funnel numbers), verifier design, known limitations.
 - **PR target:** after publishing, look for a small useful contribution to `PrimeIntellect-ai/verifiers` or `prime-envs` (docs fix, bug, or a new env). Read their PR guidelines first. Open PRs only with the user's approval of the diff.
 
