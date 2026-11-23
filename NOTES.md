@@ -7,6 +7,7 @@ Running log of doc ambiguities resolved, design decisions, and cost. Newest firs
 Every entry in this log, newest first (generated from the headings; entries are unchanged).
 
 - [CURRENT STATUS (read this first in a new session), updated 2026-11-21](#current-status-read-this-first-in-a-new-session-updated-2026-11-21)
+- [2026-11-23: Hosted RL training: pricing checked (no spend, nothing started)](#2026-11-23-hosted-rl-training-pricing-checked-no-spend-nothing-started)
 - [2026-11-23: Going public](#2026-11-23-going-public)
 - [2026-11-21: MIT license; upstream contribution candidates (nothing opened)](#2026-11-21-mit-license-upstream-contribution-candidates-nothing-opened)
 - [2026-11-21: REPORT.md and NOTES.md structured (additions only)](#2026-11-21-reportmd-and-notesmd-structured-additions-only)
@@ -102,6 +103,32 @@ Every entry in this log, newest first (generated from the headings; entries are 
 - the SWE-env reward-hack audit is out of scope.
 
 **How to run things:** see CLAUDE.md section 3 (Codespace workflow), section 7 (gate order) and section 9 (hosted command).
+
+## 2026-11-23: Hosted RL training: pricing checked (no spend, nothing started)
+
+- **Sources:**
+  - docs `hosted-training/{hosted-rl,getting-started,models,billing,environment-model,end-to-end-run}.md`;
+  - CLI `prime train gpus` and `prime train models` (prime 0.21.0).
+- **Product:** "Hosted RL (Beta)", full-parameter RL (no LoRA; the shared LoRA service is retired). Started with
+  `prime train configs/rl.toml`, using a prime-rl TOML with `mode = "rl"` and a `[deployment]` block
+  (num_train_gpus, num_infer_gpus).
+- **Billing:**
+  - per GPU-hour from when the pods are ready, prorated to the second, with no minimum;
+  - queueing and image pulls are not billed; downloading an uncached model is;
+  - the wallet must have a spendable balance;
+  - volumes cost $0.09/GiB-month, and traces are charged separately.
+- **Rates on 2026-11-23** ($/GPU-hr): RTX_PRO_6000B_96GB $3.89 (available), H100_80GB $4.79, H200_141GB $4.90,
+  B200_180GB $6.80, B300_262GB $8.10 (the last four listed as busy).
+- **Smallest run:** 1 trainer GPU + 1 inference GPU, so about **$7.8/hr** on RTX PRO 6000.
+- **Small pre-cached models:** Qwen3.5-0.8B/2B/4B/9B, Llama-3.2-1B/3B-Instruct, gpt-oss-20b, among others.
+- **v1 environments** are supported in the TOML (`[[orchestrator.train.source]]` plus `env.taskset` /
+  `env.agent.harness`). The docs show only runtime-bundled tasksets and do not say whether any Hub v1 environment
+  (ours needs containers) works directly. Untested.
+- **Assessment given to the user:**
+  - a smoke run (about 15-30 min) is about $2-4 plus rollout sandboxes; a real run is about $10-30+;
+  - the wallet has $3.16, and auto top-up stays off;
+  - the RL signal risk: small models probably score near 0 on these tasks (qwen3.5-9b probe 0/4, partial credit
+    only), and GRPO-style updates learn nothing from groups where every attempt scores 0.
 
 ## 2026-11-23: Going public
 
