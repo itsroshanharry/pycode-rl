@@ -9,7 +9,7 @@ Every entry in this log, newest first (generated from the headings; entries are 
 - [CURRENT STATUS (read this first in a new session), updated 2026-11-21](#current-status-read-this-first-in-a-new-session-updated-2026-11-21)
 - [2026-11-23: Hosted RL training: pricing checked (no spend, nothing started)](#2026-11-23-hosted-rl-training-pricing-checked-no-spend-nothing-started)
 - [2026-11-23: Going public](#2026-11-23-going-public)
-- [2026-11-21: MIT license; upstream contribution candidates (nothing opened)](#2026-11-21-mit-license-upstream-contribution-candidates-nothing-opened)
+- [2026-11-21: MIT license](#2026-11-21-mit-license)
 - [2026-11-21: REPORT.md and NOTES.md structured (additions only)](#2026-11-21-reportmd-and-notesmd-structured-additions-only)
 - [2026-11-21: 0.2.4: README attribution and per-stage methods](#2026-11-21-024-readme-attribution-and-per-stage-methods)
 - [2026-11-21: Hosted bash smoke test failed on 0.2.2 (the guard caught it); fixed in 0.2.3](#2026-11-21-hosted-bash-smoke-test-failed-on-022-the-guard-caught-it-fixed-in-023)
@@ -60,7 +60,7 @@ Every entry in this log, newest first (generated from the headings; entries are 
   2. ~~Hosted bash smoke test~~ done: failed on 0.2.2 (guard caught the hosted rebuild bug, REPORT F10), passed on 0.2.3.
   2b. ~~README attribution wording~~ done in 0.2.4 (see the entry below).
   3. REPORT leaderboard chapter; move the near-miss / first-failing-test columns into `07_leaderboard.py`.
-  4. Make the environment public at the end; optional PR.
+  4. Make the environment public at the end.
   5. **Plan for 2026-11-22 (user):** go public.
      - ~~Redact the third-party name and the Windows username~~ done 2026-11-21: the git-identity note now says
        "another user's accounts", and the 2 difficulty report paths say `<local temp>/difficulty-r8.jsonl`.
@@ -68,7 +68,6 @@ Every entry in this log, newest first (generated from the headings; entries are 
      - Make the GitHub repo public.
      - Add the repo link and `license = "MIT"` to `environments/pycode`, push 0.2.5, then make the Hub env public.
      - Share the DeepSeek, Gemma and gpt-oss-20b runs to the leaderboard.
-     - Upstream contribution work (prime-rl F10 issue, SWE review) is deferred to a later project.
   - Not run (budget): qwen3.5-9b leaderboard row, cross-benchmark calibration.
 
 **History below this line is the 2026-11-20 status, kept for reference.**
@@ -141,59 +140,10 @@ Every entry in this log, newest first (generated from the headings; entries are 
 - **Leaderboard sharing:** the user shared the DeepSeek, Gemma and gpt-oss-20b runs (gpt-oss-120b was already
   shared), so all 4 no-tools runs are on the Hub leaderboard.
 
-## 2026-11-21: MIT license; upstream contribution candidates (nothing opened)
+## 2026-11-21: MIT license
 
-- **License:** MIT (`LICENSE`, "Copyright (c) 2026 Roshan Kumar"), linked from the repo README. The Hub package's
-  `pyproject.toml` has no `license` field yet; add one with the next push.
-- **Contribution plan** (CLAUDE.md deliverable 6, section 11): one small, useful PR to a Prime repo, opened only
-  after the user approves the diff. Reference clones were refreshed on 2026-11-21: verifiers `96f0707`, prime-rl
-  `2b1fc1270`, prime-cli `6062f9e`.
-- **verifiers `AGENTS.md`** says `docs/` are "kept intentionally minimal ... Don't touch them unless your change
-  breaks their assumptions". So a docs-only PR is unlikely to be welcome; prefer a code fix.
-- **Candidates, best first:**
-  1. **Served runs silently change a task's class (our F10).**
-     - Still present on prime-rl main: `src/prime_rl/env/worker.py:105-106,135` rebuilds every task as
-       `type(taskset).task_type()` from data that `orchestrator/dispatcher.py:640` dumps with
-       `task.data.model_dump(mode="json")`.
-     - A `load()` that yields a subclass of the declared type works locally but changes behaviour in hosted runs,
-       with no error.
-     - Proposed fix: fail fast on a type mismatch, either in the dispatcher before dumping, or in the worker by
-       comparing the type name.
-     - Start with an issue and a minimal repro, then a PR if the maintainers agree on where the check belongs.
-  2. **prime-cli crashes on Windows when stdout is cp1252.**
-     - `prime eval run --hosted` prints "[green]✓ Hosted evaluation started" (`commands/evals.py:1775,1787` on
-       main). It crashes with UnicodeEncodeError *after* the eval is created.
-     - A user who re-runs then creates a duplicate, paid eval.
-     - Workaround: `PYTHONUTF8=1`.
-     - Fix candidate: make the console output encoding-safe.
-  3. **The Hub copy of `primeintellect/humaneval`** is still 0.1.0 and still calls `runtime.prepare_execution`
-     (`taskset.py:66`). It failed on the hosted runner on 2026-11-16. Whether it still fails on today's runner is
-     not re-tested (a hosted probe costs about $0.01). That fix is a maintainer re-publish, so it would be an
-     issue, not a PR.
-- **The user's SWE reward-hack audit plan** (a PR to `prime-envs` for `swesmith_env` plus 1-2 neighbours) was
-  checked against prime-envs main (`c881465`) and its open PRs. No spend.
-  - **The 2026-11-18 lead was misread.** `swesmith_env/taskset.py:206` ("agent edits to tests are included as-is")
-    describes the patch captured in `finalize` *before* scoring restores test files. It is not about scoring:
-    `run_tests` does revert the known F2P/P2P files.
-  - **The real weaknesses are different:**
-    - grading runs in the agent's own container (no `ScoringConfig`, so shared), so conftest, sitecustomize or
-      pytest tampering survives;
-    - `git checkout HEAD~1` is relative to the agent's HEAD;
-    - the reference solution can be reached through branch history.
-    - Resources are 4 vCPU / 4 GiB / 10 GiB, about $0.13/hr per sandbox.
-  - **Already covered by open PR #943** (snimu, opened 2026-10-02, review required, +111/-30): fresh-container
-    grading of the captured patch, `HEAD~1` anchored, git history scrubbed, 19k empty prompts skipped, with
-    end-to-end verification on a real instance.
-  - **The same 2026-10-02 sweep has open PRs for the neighbours:** r2e_gym #925, openswe #941,
-    swebench_verified #947, swebench_multilingual #944, swelego #940, swerebench_v2 #954, scaleswe #937 and
-    nl2repobench #929. pi_deepswe (PROTECTED-path filter, separate verifier container) and swebench_pro already
-    grade separately. multiswe has no open grading fix that we found; its open #817 is about images.
-  - **Conclusion:** the PR as planned would duplicate #943.
-  - **Alternatives:**
-    - an independent model-free reproduction review on #943 (main vs branch);
-    - a multiswe fix in #943's pattern;
-    - the prime-rl F10 issue above.
-    Any SWE sandbox work needs the user to raise the $7 cap.
+- **License:** MIT (`LICENSE`, "Copyright (c) 2026 Roshan Kumar"), linked from the repo README. Added to the Hub
+  package in 0.2.5 (see 2026-11-23).
 
 ## 2026-11-21: REPORT.md and NOTES.md structured (additions only)
 
